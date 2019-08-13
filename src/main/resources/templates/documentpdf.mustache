@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Товары</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
+   <style>
+      body{
+         font-family: sans-serif;
+      }
+      input {
+         width: 100%;
+         margin: 2px;
+         font-size: 11pt;
+      }
+
+      select {
+         width: 101%;
+         margin: 2px;
+         font-size: 11pt;
+      }
+
+      .w30 {
+         width: 31%;
+      }
+      .main-btn-form-exit {
+         font-size: 15px;
+         width: 100px;
+         background-color: #caccd1;
+         color: white;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+         border: none
+      }
+      .main-btn{
+         font-size: 20px;
+         width: 120px;
+         background-color: #179E98;
+         height: 40px;
+         text-decoration: none;
+         border-radius: 9px;
+      }
+      .main-btn2 {
+         font-size: 15px;
+         width: 100px;
+         background-color: #179E98;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+      }
+
+
+      #customers {
+         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+         border-collapse: collapse;
+         width: 100%;
+      }
+
+      #customers td, #customers th {
+         border: 1px solid #ddd;
+         padding: 8px;
+      }
+
+      #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+      #customers tr:hover {background-color: #ddd;}
+
+      .header-table{
+         padding-top: 12px;
+         padding-bottom: 12px;
+         text-align: center;
+         background-color: #2C6FAF;
+         color: white;
+         font-size: 10px;
+      }
+      .main-btn-form{
+         font-size: 15px;
+         width: 100px;
+         background-color: #179E98;
+         color: white;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+         border: none
+      }
+
+      #customers {
+         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+         border-collapse: collapse;
+         width: 100%;
+      }
+
+      #customers td, #customers th {
+         border: 1px solid #ddd;
+         padding: 3px;
+         font-size: 13px;
+      }
+
+      #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+      #customers tr:hover {background-color: #ddd;}
+
+      #customers th{
+         padding-top: 10px;
+         padding-bottom: 10px;
+         text-align: center;
+         background-color: #727b6b;
+         color: white;
+         font-size: 12px;
+
+      }
+
+   </style>
+</head>
+<body>
+
+
+
+<table  border="0" cellpadding="2" cellspacing="2" align="center" style="width:100%">
+   <tr>
+      <td style="width: 50%">
+         <p>
+            <div>
+
+         <p style=" text-align: left;">
+            <a href="/producttable" style="text-decoration: none">
+
+               <div class="main-btn2" style="    width: 140px;">
+         <p style="color: white; padding-top: 7px;     text-align: center;">
+            Список товаров
+         </p>
+         </div>
+         </a>
+         </p>
+
+         </div>
+
+         </p>
+      </td>
+      <td style="width: 50%">
+         <p>
+            <div>
+               <form action="/logout" method="post">
+         <p style=" text-align: right;">
+            <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
+
+         <input type="submit" value="Выйти"
+                                                                               class="main-btn-form-exit" />
+         </p>
+         </form>
+         </div>
+
+         </p>
+      </td>
+   </tr>
+
+</table>
+
+
+
+
+<p></p>
+<div style="text-align:center; ">
+   <table id="customers"  align="center" border="1" cellpadding="2" cellspacing="0"
+          style="width:100%;     border-color: lightgray; font-family: serif;
+           border: 1px solid black;
+           border-collapse: collapse">
+      <tbody>
+      <tr>
+
+         <th>Наименование товара</th>
+         <th>Пол</th>
+         <th>Размер</th>
+         <th>Торговая Марка</th>
+         <th>Номер коробки</th>
+         <th>Импортер</th>
+         <th>Производитель</th>
+         <th>Артикул</th>
+         <th>Внешний Код</th>
+         </tr>
+      {{#products}}
+         <div>
+
+
+            <tr style="text-align:left; font-size:9px">
+               <td>{{productName}}</td>
+               <td>{{gender}}</td>
+               <td>{{size}}</td>
+               <td>{{trademark}}</td>
+               <td>{{boxNumber}}</td>
+               <td>{{importer}}</td>
+               <td>{{manufacturer}}</td>
+               <td>{{article}}</td>
+               <td>{{code}}</td>
+
+            </tr>
+         </div>
+      {{/products}}
+      </tbody>
+   </table>
+
+</div>
+<p></p>
+<div style="text-align:center; ">
+   <table id="customers"  align="center" border="1" cellpadding="2" cellspacing="0"
+          style="width:100%;     border-color: lightgray; font-family: serif;
+           border: 1px solid black;
+           border-collapse: collapse">
+      <tbody>
+      <tr class="header-table">
+
+
+         <th>Состав</th>
+         <th>Сезон</th>
+         <th>Штрихкод</th>
+         <th>Примечание</th>
+         <th>Дата Прихода</th>
+         <th>Количество</th>
+         <th>Цена Ввоза</th>
+         <th>Коэффициент</th>
+         <th>Цена Розничная</th>
+         <th>Страна Ввоза</th>
+         <th>Валюта</th>
+         <th>Курс</th>
+      </tr>
+      {{#products}}
+         <div>
+
+
+            <tr style="text-align:left; font-size:9px">
+
+               <td>{{composition}}</td>
+               <td>{{season}}</td>
+               <td>{{barcode}}</td>
+               <td>{{note}}</td>
+               <td>{{dateArrive}}</td>
+               <td>{{quantity}}</td>
+               <td>{{importPrice}}</td>
+               <td>{{coefficient}}</td>
+               <td>{{retailPrice}}</td>
+               <td>{{countryOfEntry}}</td>
+               <td>{{currency}}</td>
+               <td>{{course}}</td>
+
+
+            </tr>
+         </div>
+      {{/products}}
+      </tbody>
+   </table>
+
+</div>
+<div>
+   {{#products}}
+
+
+   <div>
+  <!--    <p>Этикетка. Штрихкод "{{barcode}}".</p>-->
+      <form method="post" action="/getpdf">
+         <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+         <input type="text" name="filter" value="{{barcode}}" style="display: none">
+         <p>Количество этикеток.</p>
+         <input type="text" name="count" value="1" style="width: 15%;" >
+         <p></p>
+         <button type="submit" class="main-btn-form" style="    width: 210px; background-color: #FFA073">Сформировать и скачать</button>
+      </form>
+
+</div>
+   <p></p>
+<div>
+
+   <form method="post" action="/kassa">
+      <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+      <input type="text" name="filter" value="{{id}}" style="display: none" >
+
+      <button type="submit" class="main-btn-form" style="    width: 210px; background-color: #FACB1D;">Продать</button>
+   </form>
+{{/products}}
+</div>
+
+</div>
+</body>
+</html>

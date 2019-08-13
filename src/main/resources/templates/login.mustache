@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Войти</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
+   <style>
+      body{
+         font-family: sans-serif;
+      }
+      th, td {
+         padding-top: 10px;
+
+      }
+      .login-row{
+         height: 25px;
+         font-size: 18px;
+      }
+      .main-btn-form{
+         font-size: 15px;
+         width: 100px;
+         background-color: #179E98;
+         color: white;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+         border: none
+      }
+
+   </style>
+
+</head>
+<body>
+<form action="/login" method="post">
+    <div style="text-align:center;  margin-top: 80px;" >
+        <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px">
+            <tbody>
+            <tr>
+               <td colspan="2" style="padding:10px ; font-size: 18px" >Войдите в систему</td>
+            </tr>
+            <tr>
+                <td style="text-align:right">Пользователь:</td>
+                <td style="text-align:left;
+                height: 25px;
+                font-size: 18px;">
+                   <input  name="username" type="text" class="login-row" /></td>
+            </tr>
+            <tr>
+                <td style="text-align:right">Пароль:</td>
+                <td style="text-align:left;">
+                   <input name="password" type="password" class="login-row"/></td>
+            </tr>
+            <tr>
+                <td style="text-align:right"><input name="_csrf" type="hidden" value="{{_csrf.token}}" /></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Войти" class="main-btn-form"/></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td style="text-align:right; display: none"><a href="/registration">Add new user</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+
+</body>
+</html>

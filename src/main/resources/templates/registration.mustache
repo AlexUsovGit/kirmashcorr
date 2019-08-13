@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+   <title>Пользователи </title>
+</head>
+<body>
+<div align="center">Добавить нового пользователя</div>
+<p style="    text-align: center;    color: red;">
+   {{#message}}
+      {{message}}
+   {{/message}}
+</p>
+
+<form action="/registration" method="post">
+   <div>
+      <table align="center" border="0" cellpadding="2" cellspacing="1" style="width:500px">
+         <tbody>
+         <tr>
+            <td style="text-align:right">New User Name :</td>
+            <td><input name="username" type="text"/></td>
+         </tr>
+
+         <tr>
+            <td style="text-align:right">New Password:</td>
+            <td><input name="password" type="password"/></td>
+         </tr>
+         <tr>
+         <tr>
+            <td style="text-align:right">Role:</td>
+            <td><input name="role" type="text"/></td>
+         </tr>
+         <tr>
+
+         <tr>
+            <td style="text-align:right">showAdmin</td>
+            <td><input name="showAdmin" type="checkbox"/></td>
+         </tr>
+         <tr>
+            <td style="text-align:right">showSklad</td>
+            <td><input name="showSklad" type="checkbox"/></td>
+         </tr>
+         <tr>
+            <td style="text-align:right">showReport</td>
+            <td><input name="showReport" type="checkbox"/></td>
+         </tr>
+         <tr>
+            <td style="text-align:right">showStore</td>
+            <td><input name="showStore" type="checkbox"/></td>
+         </tr>
+
+            <td>&nbsp;</td>
+            <td><input name="_csrf" type="hidden" value="{{_csrf.token}}"/></td>
+         </tr>
+         <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="Зарегистрировать"/></td>
+         </tr>
+         </tbody>
+      </table>
+
+      <p>&nbsp;</p>
+   </div>
+</form>
+</body>
+</html>

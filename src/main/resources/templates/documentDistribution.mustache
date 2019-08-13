@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+   <title>Товары</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!--===============================================================================================-->
+   <link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
+   <style>
+      body {
+         font-family: sans-serif;
+      }
+
+      input {
+         width: 100%;
+         margin: 2px;
+         font-size: 11pt;
+      }
+
+      select {
+         width: 101%;
+         margin: 2px;
+         font-size: 11pt;
+      }
+
+      .w30 {
+         width: 31%;
+      }
+
+      .main-btn-form-exit {
+         font-size: 15px;
+         width: 100px;
+         background-color: #caccd1;
+         color: white;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+         border: none
+      }
+
+      .main-btn {
+         font-size: 20px;
+         width: 120px;
+         background-color: #179E98;
+         height: 40px;
+         text-decoration: none;
+         border-radius: 9px;
+      }
+
+      .main-btn2 {
+         font-size: 15px;
+         width: 100px;
+         background-color: #179E98;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+      }
+
+
+      #customers {
+         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+         border-collapse: collapse;
+         width: 100%;
+      }
+
+      #customers td, #customers th {
+         border: 1px solid #ddd;
+         padding: 8px;
+      }
+
+      #customers tr:nth-child(even) {
+         background-color: #f2f2f2;
+      }
+
+      #customers tr:hover {
+         background-color: #ddd;
+      }
+
+      .header-table {
+         padding-top: 12px;
+         padding-bottom: 12px;
+         text-align: center;
+         background-color: #2C6FAF;
+         color: white;
+         font-size: 10px;
+      }
+
+      .main-btn-form {
+         font-size: 15px;
+         width: 100px;
+         background-color: #179E98;
+         color: white;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+         border: none
+      }
+
+      .input-count {
+         width: 90%;
+         margin: 2px;
+         margin-left: 5px;
+         font-size: 11pt;
+         margin-right: 5px;
+         text-align: right;
+      }
+
+      #customers {
+         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+         border-collapse: collapse;
+         width: 100%;
+      }
+
+      #customers td, #customers th {
+         border: 1px solid #ddd;
+         padding: 3px;
+         font-size: 13px;
+      }
+
+      #customers tr:nth-child(even) {
+         background-color: #f2f2f2;
+      }
+
+      #customers tr:hover {
+         background-color: #ddd;
+      }
+
+      #customers th {
+         padding-top: 10px;
+         padding-bottom: 10px;
+         text-align: center;
+         background-color: #727b6b;
+         color: white;
+         font-size: 12px;
+
+      }
+
+      .id {
+
+      }
+
+   </style>
+</head>
+<body>
+
+
+
+
+<table border="0" cellpadding="2" cellspacing="2" align="center" style="width:100%; font-size: 11px">
+   <tr>
+      <td>
+         <div style="width: 50%">
+
+            <form method="get" action="/producttable">
+               <button type="submit" class="main-btn-form" style="width: 150px">Список товаров
+               </button>
+            </form>
+         </div>
+      </td>
+      <td style="width: 50%">
+         <div>
+            <form action="/logout" method="post">
+               <p style=" text-align: right;">
+                  <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
+                  <button type="submit" class="main-btn-form-exit">Выйти
+                  </button>
+               </p>
+            </form>
+         </div>
+      </td>
+   </tr>
+
+</table>
+
+
+<p></p>
+<div style="text-align:center; ">
+   <table id="customers" align="center" border="1" cellpadding="2" cellspacing="0"
+          style="width:100%;     border-color: lightgray; font-family: serif;
+           border: 1px solid black;
+           border-collapse: collapse">
+      <tbody>
+      <tr>
+
+         <th>Наименование товара</th>
+         <th>Пол</th>
+         <th>Торговая марка</th>
+         <th>Всего</th>
+         <th>Выбрано</th>
+
+
+         <!-- М1: ГРИН
+          М2: СОВЕТСКАЯ
+          М3: ПРИВОКЗАЛЬНАЯ
+          М4:ЮЖНЫЙ
+          М5:КИРОВА
+          М6:КАЛИНОВСКОГО
+          М7:СОВЕСТКАЯ(2)
+ -->
+         <th>М1:ГРИН</th>
+         <th>М2:СОВЕТСКАЯ</th>
+         <th>М3:ПРИВОКЗАЛЬНАЯ</th>
+         <th>М4:ЮЖНЫЙ</th>
+         <th>М5:КИРОВА</th>
+         <th>М6:КАЛИНОВСКОГО</th>
+         <th>М7:СОВЕСТКАЯ(2)</th>
+         <th>СКЛАД</th>
+         <th>ID</th>
+      </tr>
+      {{#products}}
+         <div>
+
+
+            <tr style="text-align:left; font-size:9px">
+               <td>{{productName}}</td>
+               <td>{{gender}}</td>
+               <td>{{trademark}}</td>
+               <td><p style="font-weight: bold; text-align: center; padding: 1px; margin: 1px; font-size: 20px;">
+                  <input type="number" name="quantity" readonly value="{{quantity}}" autocomplete="off" required
+                         class="input-count"
+                         style="border: none; background: transparent;">
+               </p></td>
+               <td><p style="font-weight: bold; text-align: center; padding: 1px; margin: 1px; font-size: 20px;">
+                  <input type="number" name="all" readonly value="0" autocomplete="off" required class="input-count"
+                         style="border: none; background: transparent;">
+               </p></td>
+               <td><input type="number" name="m1" value="0" autocomplete="off" required class="input-count"
+                          onchange='calcSumProduct()'></td>
+               <td><input type="number" name="m2" value="0" autocomplete="off" required class="input-count"
+                          onchange='calcSumProduct()'></td>
+               <td><input type="number" name="m3" value="0" autocomplete="off" required class="input-count"
+                          onchange='calcSumProduct()'></td>
+               <td><input type="number" name="m4" value="0" autocomplete="off" required class="input-count"
+                          onchange='calcSumProduct()'></td>
+               <td><input type="number" name="m5" value="0" autocomplete="off" required class="input-count"
+                          onchange='calcSumProduct()'></td>
+               <td><input type="number" name="m6" value="0" autocomplete="off" required class="input-count"
+                          onchange='calcSumProduct()'></td>
+               <td><input type="number" name="m7" value="0" autocomplete="off" required class="input-count"
+                          onchange='calcSumProduct()'></td>
+               <td><p style="font-weight: bold; text-align: center; padding: 1px; margin: 1px; font-size: 20px;">
+                  <input type="number" name="sklad" readonly value="0" autocomplete="off" required class="input-count"
+                         style="border: none; background: transparent;">
+               </p></td>
+               <td class="id">{{id}}</td>
+            </tr>
+         </div>
+
+      {{/products}}
+      </tbody>
+   </table>
+
+</div>
+<p></p>
+<div>
+   <form method="post" action="/addDistrDoc" onsubmit= "generateString()">
+      <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+      <input type="text" name="distrArray" value="" style="display: none;">
+      <button type="submit" name="distrib" class="main-btn-form" style="    width: 170px; background-color: #FFA073">
+         Распределить
+      </button>
+   </form>
+
+</div>
+
+
+<script>
+   function generateString() {
+
+      var count = document.getElementsByName("all").length;
+      var paramString = "";
+      for (var i = 0; i < count; i++) {
+         paramString = paramString +
+                 document.getElementsByClassName("id")[i].innerText + ":" +
+                 document.getElementsByName("all")[i].value + ":" +
+                 document.getElementsByName("m1")[i].value + ":" +
+                 document.getElementsByName("m2")[i].value + ":" +
+                 document.getElementsByName("m3")[i].value + ":" +
+                 document.getElementsByName("m4")[i].value + ":" +
+                 document.getElementsByName("m5")[i].value + ":" +
+                 document.getElementsByName("m6")[i].value + ":" +
+                 document.getElementsByName("m7")[i].value  + ":" +
+                 document.getElementsByName("sklad")[i].value + ";"
+      }
+      document.getElementsByName("distrArray")[0].value = paramString;
+   }
+
+
+   function calcSumProduct() {
+      var count = document.getElementsByName("all").length;
+      var countError = 0;
+      for (var i = 0; i < count; i++) {
+
+
+         document.getElementsByName("all")[i].value =
+                 parseInt(document.getElementsByName("m1")[i].value, 10) +
+                 parseInt(document.getElementsByName("m2")[i].value, 10) +
+                 parseInt(document.getElementsByName("m3")[i].value, 10) +
+                 parseInt(document.getElementsByName("m4")[i].value, 10) +
+                 parseInt(document.getElementsByName("m5")[i].value, 10) +
+                 parseInt(document.getElementsByName("m6")[i].value, 10) +
+                 parseInt(document.getElementsByName("m7")[i].value, 10);
+         var balance
+                 =
+                 parseInt(document.getElementsByName("quantity")[i].value, 10) - parseInt(document.getElementsByName("all")[i].value, 10);
+         document.getElementsByName("sklad")[i].value = balance;
+         if (balance < 0 || parseInt(document.getElementsByName("all")[i].value, 10) < 0) {
+            document.getElementsByName("all")[i].style.color = 'red';
+            document.getElementsByName("sklad")[i].style.color = 'red';
+            alert('Превышено максимальное количество товара N' + (i + 1) + ' либо распределено отрицательное количество.')
+            countError = countError + 1;
+
+         } else {
+            document.getElementsByName("all")[i].style.color = 'black';
+            document.getElementsByName("sklad")[i].style.color = 'black';
+
+
+         }
+         if (document.getElementsByName("all")[i].value == "") {
+            alert('Количество товара не может быть "пусто"');
+            countError = countError + 1;
+
+         }
+      }
+      if (countError > 0) {
+         document.getElementsByName("distrib")[0].style.backgroundColor = 'lightgray'
+         document.getElementsByName("distrib")[0].disabled = true;
+      } else {
+         document.getElementsByName("distrib")[0].style.backgroundColor = '#FFA073'
+         document.getElementsByName("distrib")[0].disabled = false;
+      }
+
+   }
+</script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+   <title>Товары</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!--===============================================================================================-->
+   <link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
+   <style>
+      body {
+         font-family: sans-serif;
+      }
+
+      input {
+         width: 96%;
+         margin: 2px;
+         font-size: 11pt;
+
+      }
+
+      select {
+         width: 97%;
+         margin: 2px;
+         font-size: 11pt;
+      }
+
+      .w30 {
+         width: 30.3%;
+      }
+      . chk_distr{
+
+      }
+
+      .main-btn-form-exit {
+         font-size: 15px;
+         width: 100px;
+         background-color: #caccd1;
+         color: white;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+         border: none
+      }
+
+      .main-btn {
+         font-size: 20px;
+         width: 120px;
+         background-color: #179E98;
+         height: 40px;
+         text-decoration: none;
+         border-radius: 9px;
+      }
+
+      .main-btn2 {
+         font-size: 15px;
+         width: 100px;
+         background-color: #179E98;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+      }
+
+      .main-btn-form {
+         font-size: 15px;
+         width: 100px;
+         background-color: #179E98;
+         color: white;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+         border: none
+      }
+
+      .sort_ico_asc {
+         background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3cpath d='M0 0h24v24H0z' fill='none'/%3e%3c/svg%3e");
+
+         width: 18px;
+         border: none;
+         height: 20px;
+
+      }
+
+      .sort_ico_desc {
+         background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18'%3e%3cpath d='M7 14l5-5 5 5z'/%3e%3cpath d='M0 0h24v24H0z' fill='none'/%3e%3c/svg%3e");
+         width: 18px;
+         border: none;
+         height: 20px;
+
+      }
+      .select_all{
+       /*  background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18'%3e%3cpath d='M0 0h24v24H0z' fill='none'/%3e%3cpath d='M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3e%3c/svg%3e");*/
+      /*   background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath fill='%23646b5e' d='M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3e%3c/g%3e%3c/svg%3e");
+      */   background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath stroke='null' stroke-opacity='null' stroke-width='null' fill='%23666' d='M3.967 4.93h15.738v14.098H3.967z'/%3e%3cpath fill='%23fff' d='M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3e%3c/g%3e%3c/svg%3e");
+         width: 18px;
+         border: none;
+         height: 18px;
+      }
+
+      .deselect_all
+      {
+        /* background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath stroke='null' stroke-opacity='null' stroke-width='null' fill='%23fff' d='M2.689 3h18v18h-18z'/%3e%3c/g%3e%3c/svg%3e");
+       */  background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath stroke='null' stroke-opacity='null' stroke-width='null' fill='%23fff' d='M3.967 4.93h15.738v14.098H3.967z'/%3e%3cpath fill='%23fff' d='M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3e%3c/g%3e%3c/svg%3e");
+         width: 18px;
+         border: none;
+         height: 20px;
+      }
+
+
+      #customers {
+         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+         border-collapse: collapse;
+         width: 100%;
+      }
+
+      #customers td, #customers th {
+         border: 1px solid #ddd;
+         padding: 3px;
+         font-size: 13px;
+      }
+
+      #customers tr:nth-child(even) {
+         background-color: #f2f2f2;
+      }
+
+      #customers tr:hover {
+         background-color: #ddd;
+      }
+
+      #customers th {
+         padding-top: 0px;
+         padding-bottom: 0px;
+         text-align: center;
+         background-color: #727b6b;
+         color: white;
+         font-size: 12px;
+
+      }
+
+      input::-webkit-calendar-picker-indicator {
+         opacity: 100;
+         color: #727b6b;
+      }
+
+   </style>
+
+</head>
+<body>
+<script>
+   var productList = '';
+</script>
+
+<table border="0" cellpadding="2" cellspacing="2" align="center" style="width:100%; font-size: 11px">
+   <tr>
+      <td>
+         <div style="width: 50%">
+
+            <form method="get" action="/main">
+               <button type="submit" class="main-btn-form">Главная
+               </button>
+            </form>
+         </div>
+      </td>
+      <td style="width: 50%">
+         <div>
+            <form action="/logout" method="post">
+               <p style=" text-align: right;">
+                  <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
+
+                  <button type="submit" class="main-btn-form-exit">Выйти
+                  </button>
+               </p>
+            </form>
+         </div>
+      </td>
+   </tr>
+
+</table>
+
+
+<div>
+   <table width="100%">
+      <tr>
+         <td width="17%">
+            <form method="get" action="/productadd">
+               <!--<input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">-->
+               <button type="submit" class="main-btn-form" style="width: 150px; background-color: #FFA073">Добавить
+                  товар
+               </button>
+            </form>
+         </td>
+         <td  width="17%">
+            <form method="post" action="documentDistribution">
+               <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
+               <input type="text" name="id" value="1" style="display: none">
+
+               <button type="submit" class="main-btn-form" style="width: 170px; background-color: #FACB1D">Распределить
+                  товары
+               </button>
+            </form>
+         </td>
+         <td  width="17%">
+{{#showAdmin}}
+            <form method="post" action="getProducts" >
+               <input type="hidden" name="_csrf" value="{{_csrf.token}}" >
+               <input type="text"  autocomplete="off" name="myfilter" value="{{filterValue}}" style="display: none"  >
+               <button type="submit" class="main-btn-form" style="width: 170px; background-color: #107C41">Выгрузить в Excel
+               </button>
+            </form>
+{{/showAdmin}}
+
+         </td>
+         <td width="49%">
+            <table width="100%"  style="text-align: right">
+<tr>
+  <!-- <td style="width: 25%; text-align: right;">  Строка поиска.</td>-->
+
+   <td width="75%"> <form method="post" action="/producttableFilter" >
+      <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+
+      <input type="text"  autocomplete="off" name="myfilter" value="{{filterValue}}" style="width: 50%; height: 20px"
+               placeholder="Поиск">
+      <button type="submit" class="main-btn-form" style="    width: 150px;     background-color: #FFA073;">Искать</button>
+   </form></td>
+   <td width="25%"> <form method="get" action="/producttable">
+      <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+      <button type="submit" class="main-btn-form" style="    width: 150px;     background-color: #FACB1D;">Сбросить</button>
+   </form></td>
+</tr>
+            </table>
+         </td>
+
+
+      </tr>
+   </table>
+</div>
+
+
+
+<div style="margin-top: 5px">
+
+
+
+
+</div>
+<div style="text-align:center; ">
+   <table id="customers" align="center" border="1" cellpadding="2" cellspacing="0"
+          style="width:100%;     border-color: lightgray; font-family: serif;
+           border: 1px solid black;
+           border-collapse: collapse">
+      <tbody>
+      <tr class="header-table">
+         <th >
+       <!--     <input type="checkbox" name="isDistrib" onclick="selectAll(this)" value="1" checked   style="    width: 18px;
+                                        height: 18px;
+                                        margin-left: 5px;
+                                        margin-right: 5px;
+                                    ">
+            <input type="checkbox" name="isDistrib" onclick="deselectAll(this)" value="1"    style="    width: 18px;
+                                        height: 18px;
+                                        margin-left: 5px;
+                                        margin-right: 5px;
+                                    ">
+-->
+           <form method="post" action="addAllToDistrib">
+                  <input type="hidden" name="_csrf" value="{{_csrf.token}}" >
+                  <input type="text" name="myfilter" value="{{filterValue}}" style="display: none">
+
+                  <button type="submit" class="select_all" name="selectAll"
+                          >
+                  </button>
+               </form>
+                  <form method="post" action="deleteAllFromDistrib">
+                     <input type="hidden" name="_csrf" value="{{_csrf.token}}" >
+                     <input type="text" name="myfilter" value="{{filterValue}}" style="display: none">
+
+                     <button type="submit" class="deselect_all" name="deselectAll"
+                             >
+                     </button>
+                  </form>
+
+
+
+
+
+
+         </th>
+         <th>...</th>
+         <th style="display: none;">add</th>
+         <th style="display: none;">id</th>
+         <th style="display: none;">id</th>
+         <th>
+            Наименование товара
+
+         </th>
+         <th>Пол
+
+         </th>
+         <th>Размер</th>
+         <th>Торговая Марка
+
+         </th>
+         <!-- <th>Импортер</th>
+          <th>Производитель</th>-->
+         <th>Артикул</th>
+         <th>Внешний Код</th>
+         <th>Номер коробки</th>
+         <th>Сезон</th>
+         <!--   <th>Штрихкод</th>-->
+         <th>Примечание</th>
+         <th>Дата Прихода</th>
+         <th>Всего</th>
+         <th>Распределен</th>
+         <th>На складе</th>
+         <!-- <th>Цена Ввоза</th>
+          <th>Коэффициент</th>
+          <th>Цена Розничная</th>
+          <th>Страна Ввоза</th>
+          <th>Валюта</th>
+          <th>Курс</th>-->
+      </tr>
+      {{#products}}
+         <div>
+
+
+            <tr style="text-align:left; font-size:9px">
+               <td style="width: 27px">
+
+
+                  <input type="checkbox" class="chk_distr" onclick="onClickHandler(this)"   style="    width: 18px;
+                                        height: 18px;
+                                        margin-left: 5px;
+                                        margin-right: 5px;
+
+                                    ">
+
+
+               </td>
+               <td style="display: none" >
+                  <form method="post" action="addToDistrib">
+                     <input type="hidden" name="_csrf" value="{{_csrf.token}}" >
+                     <input type="text" name="id" value="{{id}}" style="display: none">
+                     <input type="text" name="myfilter" value="{{filterValue}}" style="display: none">
+
+                     <button type="submit" class="main-btn-form" style="display: none" >...
+                     </button>
+                  </form>
+
+               </td>
+               <td  style="display: none">
+                  <form method="post" action="deleteFromDistrib">
+                     <input type="hidden" name="_csrf" value="{{_csrf.token}}" >
+                     <input type="text" name="id" value="{{id}}" style="display: none">
+                     <input type="text" name="myfilter" value="{{filterValue}}" style="display: none">
+
+                     <button type="submit" class="main-btn-form" style="display: none">...
+                     </button>
+                  </form>
+
+               </td>
+               <script>
+                  function onClickHandler(cb) {
+                     if (cb.checked == true) {
+                        cb.parentElement.parentElement.children[1].children[0].lastElementChild.click();
+                     } else {
+
+                        cb.parentElement.parentElement.children[2].children[0].lastElementChild.click();
+                     }
+
+                  }
+
+                  function selectAll(cbAll) {
+                     document.getElementsByName('selectAll')[0].click();
+                    /*    cbAll.parentElement.parentElement.children[1].children[0].lastElementChild.click();
+                        console.log(cbAll.checked);*/
+                  }
+                  function deselectAll(cbAll) {
+                     document.getElementsByName('deselectAll')[0].click();
+               /*      cbAll.parentElement.parentElement.children[2].children[0].lastElementChild.click();
+                     console.log(cbAll.checked);*/
+                  }
+
+
+                  function copyValue() {
+                     document.getElementsByName('filter')[0].value =
+                     document.getElementsByName('barcode')[0].value;
+                  }
+
+
+               </script>
+               <td>
+                  <form method="post" action="searchdoc">
+                     <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
+                     <input type="text" name="filter" value="{{barcode}}" style="display: none">
+
+                     <button type="submit" class="main-btn-form" style="
+                           height: 20px;
+                         border-radius: 5px;
+                         background-color: #727b6b;
+                         width: 24px;
+                                   ">...
+                     </button>
+                  </form>
+
+               </td>
+               <td style="display: none">{{id}}</td>
+               <td>{{productName}}</td>
+               <td>{{gender}}</td>
+               <td>{{size}}</td>
+               <td>{{trademark}}</td>
+               <!-- <td>{{importer}}</td>
+                    <td>{{manufacturer}}</td>
+                  -->
+               <td>{{article}}</td>
+               <td>{{code}}</td>
+               <td>{{boxNumber}}</td>
+               <td>{{season}}</td>
+               <!-- <td>{{barcode}}</td>-->
+               <td>{{note}}</td>
+               <td>{{dateArrive}}</td>
+               <td>{{quantity}}</td>
+               <td>{{isDistrib}}</td>
+               <td>20</td>
+
+
+            </tr>
+         </div>
+      {{/products}}
+      </tbody>
+   </table>
+
+   <table>
+      {{#infos}}
+         <tr>
+            <td>
+               {{countSklad}}
+            </td>
+         </tr>
+      {{/infos}}
+
+   </table>
+
+</div>
+<script>
+   function validate(evt) {
+      var theEvent = evt || window.event;
+
+      // Handle paste
+      if (theEvent.type === 'paste') {
+         key = event.clipboardData.getData('text/plain');
+      } else {
+         // Handle key press
+         var key = theEvent.keyCode || theEvent.which;
+         key = String.fromCharCode(key);
+      }
+      var regex = /[0-9]|\./;
+      if (!regex.test(key)) {
+         theEvent.returnValue = false;
+         if (theEvent.preventDefault) theEvent.preventDefault();
+      }
+   }
+
+
+</script>
+
+
+</body>
+<script>
+   window.onload = function () {
+      var checkBoxes = document.querySelectorAll('.chk_distr');
+
+      for (var i = 0; i < checkBoxes.length; i++) {
+         if (checkBoxes[i].parentElement.parentElement.children[17].innerText == "0" ) {
+            // alert('true');
+            checkBoxes[i].checked = false;
+         } else {
+            checkBoxes[i].checked = true;
+            //alert('false');
+         }
+
+      }
+
+
+   }
+</script>
+</html>
