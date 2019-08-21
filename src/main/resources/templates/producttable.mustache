@@ -188,7 +188,7 @@
                </button>
             </form>
          </td>
-         <td  width="17%">
+         <td  width="17%" style="visibility: hidden">
             <form method="post" action="documentDistribution">
                <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
                <input type="text" name="id" value="1" style="display: none">
@@ -249,7 +249,7 @@
            border-collapse: collapse">
       <tbody>
       <tr class="header-table">
-         <th >
+         <th  style="display: none" >
        <!--     <input type="checkbox" name="isDistrib" onclick="selectAll(this)" value="1" checked   style="    width: 18px;
                                         height: 18px;
                                         margin-left: 5px;
@@ -265,7 +265,7 @@
                   <input type="hidden" name="_csrf" value="{{_csrf.token}}" >
                   <input type="text" name="myfilter" value="{{filterValue}}" style="display: none">
 
-                  <button type="submit" class="select_all" name="selectAll"
+                  <button type="submit" class="select_all" name="selectAll" style="display: none"
                           >
                   </button>
                </form>
@@ -273,7 +273,7 @@
                      <input type="hidden" name="_csrf" value="{{_csrf.token}}" >
                      <input type="text" name="myfilter" value="{{filterValue}}" style="display: none">
 
-                     <button type="submit" class="deselect_all" name="deselectAll"
+                     <button type="submit" class="deselect_all" name="deselectAll" style="display: none"
                              >
                      </button>
                   </form>
@@ -309,8 +309,8 @@
          <th>Примечание</th>
          <th>Дата Прихода</th>
          <th>Всего</th>
-         <th>Распределен</th>
-         <th>На складе</th>
+         <th style="display: none" >Распределен</th>
+         <th style="display: none" >На складе</th>
          <!-- <th>Цена Ввоза</th>
           <th>Коэффициент</th>
           <th>Цена Розничная</th>
@@ -323,7 +323,7 @@
 
 
             <tr style="text-align:left; font-size:9px">
-               <td style="width: 27px">
+               <td style="width: 27px; display: none">
 
 
                   <input type="checkbox" class="chk_distr" onclick="onClickHandler(this)"   style="    width: 18px;
@@ -417,9 +417,9 @@
                <!-- <td>{{barcode}}</td>-->
                <td>{{note}}</td>
                <td>{{dateArrive}}</td>
-               <td>{{quantity}}</td>
-               <td>{{isDistrib}}</td>
-               <td>20</td>
+               <td >{{quantity}}</td>
+               <td style="display: none">{{isDistrib}}</td>
+               <td style="display: none">20</td>
 
 
             </tr>

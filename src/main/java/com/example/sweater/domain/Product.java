@@ -36,6 +36,7 @@ public class Product implements Serializable {
     private String course;
     private Integer isDistrib;
     private String boxNumber;
+    private String author;
 
 
 
@@ -53,7 +54,8 @@ public class Product implements Serializable {
     public Product(String productName, String gender, String size, String trademark, String importer,
                    String manufacturer, String article, String code, String composition, String season, String barcode,
                    String note, String quantity, String dateArrive, String importPrice, String coefficient,
-                   String retailPrice, String countryOfEntry, String currency, String course, Integer isDistrib, String boxNumber) {
+                   String retailPrice, String countryOfEntry, String currency, String course, Integer isDistrib,
+                   String boxNumber, String author) {
         this.productName = productName;
         this.gender = gender;
         this.size = size;
@@ -76,6 +78,7 @@ public class Product implements Serializable {
         this.course = course;
         this.isDistrib = isDistrib;
         this.boxNumber = boxNumber;
+        this.author = author;
     }
 
     public String getStringDate(){
@@ -233,6 +236,14 @@ public class Product implements Serializable {
 
 
         return dateArrive;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public void setDateArrive(String dateArrive) {

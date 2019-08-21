@@ -129,7 +129,14 @@ public class ProductController {
         model.put("showSklad", currentUser.isShowSklad());
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
-        Product product = productRepo.findFirst1ByOrderByIdDesc();
+      //  Product product = productRepo.findFirst1ByOrderByIdDesc();
+        Product product;
+        if(productRepo.findFirst1ByAuthorOrderByIdDesc(currentUser.getUsername()) == null){
+            product = productRepo.findFirst1ByOrderByIdDesc();
+        }else{
+            product = productRepo.findFirst1ByAuthorOrderByIdDesc(currentUser.getUsername());
+        }
+
         model.put("product", product);
         return "productadd";
 
@@ -141,13 +148,13 @@ public class ProductController {
                       String code, String composition, String season, String barcode, String note,
                       String quantity, String dateArrive, String importPrice, String coefficient,
                       String retailPrice, String countryOfEntry, String currency, String course,
-                      Integer isDistrib, String boxNumber,
+                      Integer isDistrib, String boxNumber, String author,
                       Map<String, Object> model) throws ParseException {
 
         Product product = new Product(productName, gender, size, trademark, importer,
                 manufacturer, article, code, composition, season, barcode, note,
                 quantity, dateArrive, importPrice, coefficient, retailPrice, countryOfEntry, currency,
-                course, isDistrib, boxNumber);
+                course, isDistrib, boxNumber, author);
 
         product.setIsDistrib(0);
         productRepo.save(product);
