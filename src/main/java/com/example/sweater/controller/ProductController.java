@@ -41,6 +41,10 @@ public class ProductController {
     private UserRepo userRepo;
     @Autowired
     private FilterRepo filterRepo;
+    private int AllCounter;
+    private int FiltredCounter;
+    private int PageCounter;
+
 
 
     @Autowired
@@ -50,11 +54,17 @@ public class ProductController {
     @GetMapping("/producttable")
     public String producttable(Map<String, Object> model) {
         Iterable<Product> products = productRepo.findFirst50ByOrderByIdDesc();
+
         model.put("products", products);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findByUsername(name);
 
+        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+        //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        model.put("AllCounter", AllCounter);
+        model.put("PageCounter", PageCounter);
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());
@@ -97,6 +107,7 @@ public class ProductController {
         model.put("showStore", currentUser.isShowStore());
 
 
+
         Filter filter = new Filter(myfilter);
         filterRepo.save(filter);
         String filterValue = "";
@@ -106,7 +117,16 @@ public class ProductController {
             filterValue = filter1.getValue();
         }
         model.put("filterValue", filterValue);
+        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+        //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        PageCounter = products.size();
+        model.put("AllCounter", AllCounter);
+        model.put("PageCounter", PageCounter);
+
+
         return "producttable";
+
+
     }
 
     @GetMapping("/productadd")
@@ -129,6 +149,13 @@ public class ProductController {
         model.put("showSklad", currentUser.isShowSklad());
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
+
+        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+        //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        model.put("AllCounter", AllCounter);
+        model.put("PageCounter", PageCounter);
+
       //  Product product = productRepo.findFirst1ByOrderByIdDesc();
         Product product;
         if(productRepo.findFirst1ByAuthorOrderByIdDesc(currentUser.getUsername()) == null){
@@ -182,6 +209,12 @@ public class ProductController {
         model.put("showSklad", currentUser.isShowSklad());
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
+
+        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+        //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        model.put("AllCounter", AllCounter);
+        model.put("PageCounter", PageCounter);
 
         String filterValue = "";
         model.put("filterValue", filterValue);
@@ -341,6 +374,12 @@ public class ProductController {
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
 
+        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+        //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        model.put("AllCounter", AllCounter);
+        model.put("PageCounter", PageCounter);
+
         String filterValue = "";
 
         Iterable<Filter> filters = filterRepo.findAll();
@@ -412,6 +451,12 @@ public class ProductController {
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
 
+        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+        //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        model.put("AllCounter", AllCounter);
+        model.put("PageCounter", PageCounter);
+
 
         return "producttable";
     }
@@ -472,6 +517,12 @@ public class ProductController {
         model.put("showSklad", currentUser.isShowSklad());
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
+
+        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+        //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        model.put("AllCounter", AllCounter);
+        model.put("PageCounter", PageCounter);
 
 
 
