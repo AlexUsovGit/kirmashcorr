@@ -9,6 +9,7 @@ import java.util.List;
 public interface ProductRepo extends CrudRepository<Product, Integer> {
 
     List<Product> findAllByOrderByIdDesc();
+    List<Product> findFirst50ByOrderByIdDesc();
     List<Product> findByBarcode(String barcode);
     List<Product> findAllByOrderByProductNameAsc();
     List<Product> findAllByOrderByProductNameDesc();

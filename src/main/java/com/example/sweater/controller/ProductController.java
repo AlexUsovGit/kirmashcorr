@@ -49,7 +49,7 @@ public class ProductController {
 
     @GetMapping("/producttable")
     public String producttable(Map<String, Object> model) {
-        Iterable<Product> products = productRepo.findAllByOrderByIdDesc();
+        Iterable<Product> products = productRepo.findFirst50ByOrderByIdDesc();
         model.put("products", products);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -111,7 +111,7 @@ public class ProductController {
 
     @GetMapping("/productadd")
     public String productadd(Map<String, Object> model) {
-        Iterable<Product> products = productRepo.findAllByOrderByIdDesc();
+        Iterable<Product> products = productRepo.findFirst50ByOrderByIdDesc();
         model.put("products", products);
 
         Iterable<Composition> compositions = compositionRepo.findAll();
@@ -163,7 +163,7 @@ public class ProductController {
         productRepo.save(product);
 
 
-        Iterable<Product> products = productRepo.findAllByOrderByIdDesc();
+        Iterable<Product> products = productRepo.findFirst50ByOrderByIdDesc();
         model.put("products", products);
 
         Iterable<Composition> compositions = compositionRepo.findAll();
@@ -211,7 +211,7 @@ public class ProductController {
 
 
         } else {
-            products = productRepo.findAllByOrderByIdDesc();
+            products = productRepo.findFirst50ByOrderByIdDesc();
 
 
         }
