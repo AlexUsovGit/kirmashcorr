@@ -47,7 +47,8 @@ public class Exports {
                 "Валюта",
                 "Курс",
                 "Стоимость ввоза",
-                "Стоимость розничная"
+                "Стоимость розничная",
+                "Магазин"
         };
 
 
@@ -138,6 +139,8 @@ public class Exports {
             cell.setCellValue(String.valueOf( arrCost).replace(".", ","));
             cell = row.createCell(colNum++);
             cell.setCellValue(String.valueOf( retCost).replace(".", ","));
+            cell = row.createCell(colNum++);
+            cell.setCellValue(product.getAuthor());
 
 
         }

@@ -20,6 +20,7 @@ public interface ProductRepo extends CrudRepository<Product, Integer> {
     List<Product> findAllByOrderByProductNameDesc();
     List<Product> findAllByOrderByGenderAsc();
     Product findFirst1ByOrderByIdDesc ();
+    Product findFirst1ByBarcode(String barcode);
     Product findFirst1ByAuthorOrderByIdDesc (String author);
 
     List<Product> findByBarcodeOrderByIdAsc(String filter);

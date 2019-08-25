@@ -188,6 +188,7 @@ public class ProductController {
         product.setIsDistrib(0);
         productRepo.save(product);
 
+
         product.setBarcode(getBarcodesText(product.getId()));
         productRepo.save(product);
 
