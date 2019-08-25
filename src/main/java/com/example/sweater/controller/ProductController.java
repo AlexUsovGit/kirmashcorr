@@ -84,14 +84,16 @@ public class ProductController {
     public String producttableFilter(@RequestParam String myfilter, Map<String, Object> model) {
 
         List<Product> products = new ArrayList<>();
-
+        products.addAll(productRepo.findByFilterOrderByIdAsc( myfilter.toUpperCase()));
+        /*
         products.addAll(productRepo.findByBarcode(myfilter));
-        products.addAll(productRepo.findByProductNameOrderByIdAsc(myfilter));
+
+        products.addAll(productRepo.findByAuthorOrderByIdAsc(myfilter));
         products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
         products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
         products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
         products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
-
+*/
         model.put("products", products);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -283,7 +285,7 @@ public class ProductController {
 
         if (myfilter != null && !myfilter.isEmpty()) {
             products.addAll(productRepo.findByBarcode(myfilter));
-            products.addAll(productRepo.findByProductNameOrderByIdAsc(myfilter));
+            products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter));
             products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
             products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
             products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
@@ -343,7 +345,7 @@ public class ProductController {
         }
         if (myfilter != null && !myfilter.isEmpty()) {
             products.addAll(productRepo.findByBarcode(myfilter));
-            products.addAll(productRepo.findByProductNameOrderByIdAsc(myfilter));
+            products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter));
             products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
             products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
             products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
@@ -401,11 +403,12 @@ public class ProductController {
 
         if (myfilter != null && !myfilter.isEmpty()) {
             products.addAll(productRepo.findByBarcode(myfilter));
-            products.addAll(productRepo.findByProductNameOrderByIdAsc(myfilter));
+            products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter));
             products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
             products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
             products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
             products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
+            products.addAll(productRepo.findByAuthorOrderByIdAsc(myfilter));
             for (Product product : products) {
                 product.setIsDistrib(1);
 
@@ -468,7 +471,7 @@ public class ProductController {
 
         if (myfilter != null && !myfilter.isEmpty()) {
             products.addAll(productRepo.findByBarcode(myfilter));
-            products.addAll(productRepo.findByProductNameOrderByIdAsc(myfilter));
+            products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter));
             products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
             products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
             products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
@@ -566,5 +569,112 @@ public class ProductController {
 
 
         return barcodeTxt;
+    }
+
+    @GetMapping("/productAddList")
+    public String addList() {
+
+        Product product;
+        ArrayList <String>  arrayListproduct = new ArrayList();
+        arrayListproduct.add("Майка");
+        arrayListproduct.add("Джинсы");
+        arrayListproduct.add("Кепка детская");
+        arrayListproduct.add("Трусы");
+
+        ArrayList <String>  arrayListGender = new ArrayList();
+        arrayListGender.add("МУЖ");
+        arrayListGender.add("ЖЕН");
+        arrayListGender.add("ДЕТ");
+
+
+
+        String authorS;
+        String seasonS;
+        String boxS;
+        for (int i = 0;i<=50; i++){
+            if (i<30){
+                authorS = "kirmash_p2";
+            } else{
+                authorS = "kirmash_b2";
+            }
+
+            if (i<30){
+                seasonS = "ЛЕТО";
+            } else{
+                seasonS = "ЗИМА";
+            }
+
+            for (String s : arrayListGender) {
+                for (String s1 : arrayListproduct) {
+                    product = new Product(
+                            s1,
+                            s,
+                            "-",
+                            "DG",
+                            "ИП Роденя А.М. УНП 291482064 РБ  225254  Брестская обл., Ивацевичский р-н, аг.Воля, ул.Административная, 16",
+                            "Unionwin Import & Export Co. Limited, адрес: ГОНКОНГ, Room 905 WorkingbergComm BLDG 41-47 Marble RD",
+                            "-",
+                            "-",
+                            "100% Хлопок",
+                            seasonS,
+                            "",
+                            "-",
+                            "5" +i,
+                            "2019-08-23",
+                            "2",
+                            "1",
+                            "8",
+                            "РФ",
+                            "USD",
+                            "2.2",
+                            1,
+                            "box-"+i,
+                            authorS);
+
+                    productRepo.save(product);
+
+                    product.setBarcode(getBarcodesText(product.getId()));
+                    productRepo.save(product);
+
+
+                }
+
+            }
+
+
+        }
+
+
+
+        /*Iterable<Product> products = productRepo.findFirst50ByOrderByIdDesc();
+        model.put("products", products);
+
+        Iterable<Composition> compositions = compositionRepo.findAll();
+        model.put("compositions", compositions);
+
+        Iterable<ProductName> productNames = productNameRepo.findAll();
+        model.put("productNames", productNames);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        User currentUser = userRepo.findByUsername(name);
+
+        model.put("currentUser", currentUser);
+        model.put("currentRole", currentUser.getRoles().toString());
+        model.put("currentUserName", currentUser.getUsername());
+        model.put("showAdmin", currentUser.isShowAdmin());
+        model.put("showSklad", currentUser.isShowSklad());
+        model.put("showReport", currentUser.isShowReport());
+        model.put("showStore", currentUser.isShowStore());
+
+        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+        //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        model.put("AllCounter", AllCounter);
+        model.put("PageCounter", PageCounter);
+
+        String filterValue = "";
+        model.put("filterValue", filterValue);*/
+
+        return "login";
     }
 }

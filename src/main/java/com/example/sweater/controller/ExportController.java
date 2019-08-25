@@ -47,7 +47,7 @@ public class ExportController {
         ResponseEntity<byte[]> response = null;
         if(myfilter != null && !myfilter.isEmpty()){
             products.addAll(productRepo.findByBarcode(myfilter));
-            products.addAll(productRepo.findByProductNameOrderByIdAsc(myfilter));
+            products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter));
             products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
             products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
             products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
