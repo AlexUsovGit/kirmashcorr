@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+   <title>Магазин</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!--===============================================================================================-->
+   <link rel="icon" type="image/png" href="../images/icons/shop.ico"/>
+   <style>
+      body {
+         font-family: sans-serif;
+      }
+
+      input {
+         width: 96%;
+         margin: 2px;
+         font-size: 11pt;
+
+      }
+
+      select {
+         width: 97%;
+         margin: 2px;
+         font-size: 11pt;
+      }
+
+
+
+      .main-btn-form-exit {
+         font-size: 15px;
+         width: 100px;
+         background-color: #caccd1;
+         color: white;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+         border: none
+      }
+
+
+
+
+
+      .main-btn-form {
+         font-size: 15px;
+         width: 100px;
+         background-color: #179E98;
+         color: white;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+         border: none
+      }
+
+      .sort_ico_asc {
+         background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3cpath d='M0 0h24v24H0z' fill='none'/%3e%3c/svg%3e");
+
+         width: 18px;
+         border: none;
+         height: 20px;
+
+      }
+
+      .sort_ico_desc {
+         background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18'%3e%3cpath d='M7 14l5-5 5 5z'/%3e%3cpath d='M0 0h24v24H0z' fill='none'/%3e%3c/svg%3e");
+         width: 18px;
+         border: none;
+         height: 20px;
+
+      }
+
+      .select_all {
+         /*  background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18'%3e%3cpath d='M0 0h24v24H0z' fill='none'/%3e%3cpath d='M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3e%3c/svg%3e");*/
+         /*   background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath fill='%23646b5e' d='M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3e%3c/g%3e%3c/svg%3e");
+         */
+         background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath stroke='null' stroke-opacity='null' stroke-width='null' fill='%23666' d='M3.967 4.93h15.738v14.098H3.967z'/%3e%3cpath fill='%23fff' d='M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3e%3c/g%3e%3c/svg%3e");
+         width: 18px;
+         border: none;
+         height: 18px;
+      }
+
+      .deselect_all {
+         /* background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath stroke='null' stroke-opacity='null' stroke-width='null' fill='%23fff' d='M2.689 3h18v18h-18z'/%3e%3c/g%3e%3c/svg%3e");
+        */
+         background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath stroke='null' stroke-opacity='null' stroke-width='null' fill='%23fff' d='M3.967 4.93h15.738v14.098H3.967z'/%3e%3cpath fill='%23fff' d='M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3e%3c/g%3e%3c/svg%3e");
+         width: 18px;
+         border: none;
+         height: 20px;
+      }
+
+      .download-btn {
+         background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath fill='%23facb1d' d='M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z'/%3e%3c/g%3e%3c/svg%3e");
+         width: 20px;
+         border: none;
+         height: 18px;
+         margin-left: -5px;
+         background-position-x: center;
+         background-position-y: 3px;
+         background-repeat: no-repeat;
+         background-size: 24px;
+      }
+  .delete-btn {
+    /*   background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath fill='%23de4215' d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'/%3e%3c/g%3e%3c/svg%3e");
+    */
+     background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath fill='%23de4215' d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'/%3e%3c/g%3e%3c/svg%3e");
+     width: 25px;
+     border: none;
+     height: 25px;
+     margin-left: 5px;
+     background-position-x: -2px;
+     background-repeat: no-repeat;
+     background-size: 24px;
+      }
+      #customers {
+         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+         border-collapse: collapse;
+         width: 100%;
+      }
+
+      #customers td, #customers th {
+         border: 1px solid #ddd;
+         padding: 3px;
+         font-size: 16px;
+      }
+
+      #customers tr:nth-child(even) {
+         background-color: #f2f2f2;
+      }
+
+      #customers tr:hover {
+         background-color: #ddd;
+      }
+
+      #customers th {
+         padding-top: 0px;
+         padding-bottom: 0px;
+         text-align: center;
+         background-color: #727b6b;
+         color: white;
+         font-size: 16px;
+
+      }
+
+      input::-webkit-calendar-picker-indicator {
+         opacity: 100;
+         color: #727b6b;
+      }
+
+      /* The Modal (background) */
+      .modal {
+       /*  display: none;*/ /* Hidden by default */
+         position: fixed; /* Stay in place */
+         z-index: 1; /* Sit on top */
+         padding-top: 100px; /* Location of the box */
+         left: 0;
+         top: 0;
+         width: 100%; /* Full width */
+         height: 100%; /* Full height */
+         overflow: auto; /* Enable scroll if needed */
+         background-color: rgb(0,0,0); /* Fallback color */
+         background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      }
+
+      /* Modal Content */
+      .modal-content {
+         background-color: #fefefe;
+         margin: auto;
+         padding: 20px;
+         border: 1px solid #888;
+         width: 50%;
+      }
+
+      /* The Close Button */
+      .close {
+         color: #aaaaaa;
+         float: right;
+         font-size: 28px;
+         font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+         color: #000;
+         text-decoration: none;
+         cursor: pointer;
+      }
+   </style>
+
+</head>
+<body>
+<script>
+   var productList = '';
+</script>
+
+<table border="0" cellpadding="2" cellspacing="2" align="center" style="width:100%; font-size: 11px">
+   <tr>
+      <td>
+         <div style="width: 50%">
+
+            <form method="get" action="/main">
+               <button type="submit" class="main-btn-form">Главная
+               </button>
+            </form>
+         </div>
+      </td>
+      <td style="width: 50%">
+         <div>
+            <form action="/logout" method="post">
+               <p style=" text-align: right;">
+                  <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
+
+                  <button type="submit" class="main-btn-form-exit">Выйти
+                  </button>
+               </p>
+            </form>
+         </div>
+      </td>
+   </tr>
+
+</table>
+
+<div style="margin-top: 15px; margin-bottom: 15px">
+   <table style="width: 100%">
+      <tr>
+         <td width="25%">
+            <form method="post" action="/findProduct">
+               <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+
+               <input type="text" autocomplete="off" name="myfilter" value=""
+                      style="width: 50%; height: 20px"
+                      placeholder="Штрихкод">
+               <button type="submit" class="main-btn-form"
+                       style="    width: 150px;     background-color: #FFA073;">Найти
+               </button>
+            </form>
+         </td>
+         <td width="25%"></td>
+         <td width="25%"></td>
+
+         <td width="25%">
+            <table>
+               <tr>
+                  <td>Чек №</td>
+                  <td>12036</td>
+               </tr>
+               <tr>
+                  <td>Всего товаров:</td>
+                  <td>6</td>
+               </tr>
+               <tr>
+                  <td>На сумму:</td>
+                  <td>123,5</td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+</div>
+
+<div>
+
+            <table style="width: 100%" id="customers">
+
+
+               <thead>
+               <th>Номер чека</th>
+               <th>Наименование</th>
+               <th>Штрихкод</th>
+               <th>Цена, BYN</th>
+               <th>Количество</th>
+               <th>Скидка,%</th>
+               <th>Итого, BYN</th>
+               <th>...</th>
+
+
+               </thead>
+               {{#receipts}}
+               <tr>
+                  <td id="taxnumber{{barcode}}"> {{receiptNumber}} </td>
+                  <td id="name{{barcode}}" >{{productName}} {{gender}}</td>
+                  <td id="barcode{{barcode}}">{{barcode}}</td>
+                  <td id="price{{barcode}}" style="text-align: center">{{retailPrice}}</td>
+
+                  <td id="count{{barcode}}" style="text-align: center"> {{count}}</td>
+                  <td id="discount{{barcode}}" style="text-align: center"> {{discount}}</td>
+
+
+                  <td id="cost{{barcode}}" style="text-align: center">{{cost}}</td>
+
+                  <td><input type="button" class="delete-btn"></td>
+
+               </tr>
+               {{/receipts}}
+            </table>
+
+
+</div>
+
+
+
+
+
+
+<script>
+   function validate(evt) {
+      var theEvent = evt || window.event;
+
+      // Handle paste
+      if (theEvent.type === 'paste') {
+         key = event.clipboardData.getData('text/plain');
+      } else {
+         // Handle key press
+         var key = theEvent.keyCode || theEvent.which;
+         key = String.fromCharCode(key);
+      }
+      var regex = /[0-9]|\./;
+      if (!regex.test(key)) {
+         theEvent.returnValue = false;
+         if (theEvent.preventDefault) theEvent.preventDefault();
+      }
+   }
+
+
+</script>
+
+
+</body>
+<script>
+   window.onload = function () {
+       if ( document.getElementById('currentcount') == null)
+       {
+
+       }else
+       {
+          document.getElementById('currentcount').select();
+       }
+
+
+
+   }
+</script>
+
+
+
+<!-- Trigger/Open The Modal -->
+<button id="myBtn">Open Modal</button>
+
+<!-- The Modal -->
+{{#showProduct}}
+<div id="myModal" class="modal">
+
+   <!-- Modal content -->
+   <div class="modal-content" >
+      <form method="post" action="/main" onsubmit="refreshCurrentData()">
+      <span class="close">&times;</span>
+      <h3 id="currentid" style="text-align: center; margin-block-end: 0px;">{{filterValue}}</h3>
+      <p style="text-align: center">Введите количество товара и размер скидки (символ % вводить не нужно).</p>
+     <div style="text-align: center">
+        Количество:
+      <input id="currentcount" type="text" autocomplete="off" name="count" value="1"
+             style="width: 20%; height: 20px"
+             placeholder="Количество">
+        Скидка,%:
+      <input  type="text" autocomplete="off" name="discount" value="0"
+             style="width: 20%; height: 20px"
+             placeholder="Скидка">
+        <div style="margin-top: 15px">
+      <button type="submit" class="main-btn-form"
+              style=" width: 100px;     background-color: #FFA073;">Добавить
+      </button>
+        </div>
+     </div>
+      </form>
+   </div>
+
+</div>
+{{/showProduct}}
+
+
+{{#showExeption}}
+   <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+         <span class="close">&times;</span>
+         <p style="text-align:  center;">Товар не найден! Попробуйте отсканировать штрихкод еще раз.</p>
+   <div style="text-align: center">
+         <button type="button" class="main-btn-form" onclick="hideModal()"
+                 style="    width: 150px;     background-color: #FFA073;">Ок
+         </button>
+   </div>
+      </div>
+
+   </div>
+{{/showExeption}}
+
+<script>
+   // Get the modal
+   var modal = document.getElementById("myModal");
+
+   // Get the button that opens the modal
+   var btn = document.getElementById("myBtn");
+
+   // Get the <span> element that closes the modal
+   var span = document.getElementsByClassName("close")[0];
+
+   // When the user clicks the button, open the modal
+   btn.onclick = function() {
+      modal.style.display = "block";
+   }
+
+   // When the user clicks on <span> (x), close the modal
+   span.onclick = function() {
+      modal.style.display = "none";
+   }
+
+   // When the user clicks anywhere outside of the modal, close it
+   window.onclick = function(event) {
+      if (event.target == modal) {
+         modal.style.display = "none";
+      }
+   }
+   function hideModal() {
+      modal.style.display = "none";
+   }
+
+
+   function refreshCurrentData (){
+
+   }
+
+</script>
+</html>

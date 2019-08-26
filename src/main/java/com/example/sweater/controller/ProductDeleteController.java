@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.Map;
 
 @Controller
-public class ProductDelete {
+public class ProductDeleteController {
     @Autowired
     private ProductRepo productRepo;
     @Autowired
