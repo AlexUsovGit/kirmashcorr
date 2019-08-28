@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class CompositionController {
@@ -54,7 +55,9 @@ public class CompositionController {
         Iterable<Composition> compositions;
 
         if(filter!=null && !filter.isEmpty()){
-            compositionRepo.deleteById(Long.valueOf(filter));
+            Long id = Long.valueOf(filter);
+  /*          Optional<Composition> compositionCurr  = compositionRepo.findById(id);
+            compositionRepo.delete(compositionCurr);*/
         }else {
 
         }

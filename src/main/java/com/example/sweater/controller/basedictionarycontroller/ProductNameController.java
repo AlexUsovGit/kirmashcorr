@@ -18,7 +18,7 @@ public class ProductNameController {
 
     @GetMapping("/productname")
     public String productname(Map<String, Object> model) {
-        Iterable<ProductName> productNames = productNameRepo.findAll();
+        Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
         model.put("productNames",productNames);
 
         return "productname";
@@ -29,7 +29,7 @@ public class ProductNameController {
         ProductName productName = new ProductName(label,"autor","active",new Date(System.currentTimeMillis()));
         productNameRepo.save(productName);
 
-        Iterable<ProductName> productNames = productNameRepo.findAll();
+        Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
         model.put("productNames",productNames);
 
         return "productname";

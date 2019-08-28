@@ -139,7 +139,7 @@ public class ProductController {
         Iterable<Composition> compositions = compositionRepo.findAll();
         model.put("compositions", compositions);
 
-        Iterable<ProductName> productNames = productNameRepo.findAll();
+        Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
         model.put("productNames", productNames);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -199,7 +199,7 @@ public class ProductController {
         Iterable<Composition> compositions = compositionRepo.findAll();
         model.put("compositions", compositions);
 
-        Iterable<ProductName> productNames = productNameRepo.findAll();
+        Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
         model.put("productNames", productNames);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -258,7 +258,7 @@ public class ProductController {
         model.put("compositions", compositions);
 
 
-        Iterable<ProductName> productNames = productNameRepo.findAll();
+        Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
         model.put("productNames", productNames);
 
 
@@ -303,7 +303,7 @@ public class ProductController {
 
         Iterable<Composition> compositions = compositionRepo.findAll();
         model.put("compositions", compositions);
-        Iterable<ProductName> productNames = productNameRepo.findAll();
+        Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
         model.put("productNames", productNames);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -363,7 +363,7 @@ public class ProductController {
 
         Iterable<Composition> compositions = compositionRepo.findAll();
         model.put("compositions", compositions);
-        Iterable<ProductName> productNames = productNameRepo.findAll();
+        Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
         model.put("productNames", productNames);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -441,7 +441,7 @@ public class ProductController {
 
         Iterable<Composition> compositions = compositionRepo.findAll();
         model.put("compositions", compositions);
-        Iterable<ProductName> productNames = productNameRepo.findAll();
+        Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
         model.put("productNames", productNames);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -508,7 +508,7 @@ public class ProductController {
 
         Iterable<Composition> compositions = compositionRepo.findAll();
         model.put("compositions", compositions);
-        Iterable<ProductName> productNames = productNameRepo.findAll();
+        Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
         model.put("productNames", productNames);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
