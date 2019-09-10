@@ -20,8 +20,7 @@ import java.util.Map;
 
 @Controller
 public class MainController {
-    @Autowired
-    private MessageRepo messageRepo;
+
     @Autowired
     private UserRepo userRepo;
 
@@ -35,9 +34,6 @@ public class MainController {
     @GetMapping("/main")
     public String main(Map<String, Object> model) {
 
-        Iterable<Message> messages = messageRepo.findAll();
-
-        model.put("messages", messages);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         String roles = "";
@@ -54,7 +50,6 @@ public class MainController {
         boolean active;
 
 
-
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());
         model.put("showAdmin", currentUser.isShowAdmin());
@@ -66,28 +61,5 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping("/main")
-    public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
-        Message message = new Message(text, tag);
-        messageRepo.save(message);
-
-        Iterable<Message> messages = messageRepo.findAll();
-        model.put("messages", messages);
-
-        return "main";
-    }
-
-    @PostMapping("filter")
-    public String filter(@RequestParam String filter, Map<String, Object> model) {
-        Iterable<Message> messages;
-
-        if (filter != null && !filter.isEmpty()) {
-            messages = messageRepo.findByTag(filter);
-        } else {
-            messages = messageRepo.findAll();
-        }
-        model.put("messages", messages);
-        return "main";
-    }
 
 }
