@@ -8,7 +8,6 @@ import com.example.sweater.domain.User;
 import com.example.sweater.domain.basedictionary.Composition;
 import com.example.sweater.domain.basedictionary.ProductName;
 import com.example.sweater.repos.FilterRepo;
-import com.example.sweater.repos.InfoClassRepo;
 import com.example.sweater.repos.ProductRepo;
 import com.example.sweater.repos.UserRepo;
 import com.example.sweater.repos.basedictionaryrepos.CompositionRepo;
@@ -46,14 +45,15 @@ public class ProductController {
     private int PageCounter;
 
 
-
-    @Autowired
-    private InfoClassRepo infoClassRepo;
-
-
     @GetMapping("/producttable")
-    public String producttable(Map<String, Object> model) {
-        Iterable<Product> products = productRepo.findFirst50ByOrderByIdDesc();
+    public String producttable(@RequestParam String author, Map<String, Object> model) {
+        Iterable<Product> products;
+        if(author.equals("admin")){
+            products = productRepo.findFirst50ByOrderByIdDesc();
+        }else{
+            products = productRepo.findFirst50ByAuthor(author);
+        }
+
 
         model.put("products", products);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -84,7 +84,7 @@ public class ProductController {
     public String producttableFilter(@RequestParam String myfilter, Map<String, Object> model) {
 
         List<Product> products = new ArrayList<>();
-        products.addAll(productRepo.findByFilterOrderByIdAsc( myfilter.toUpperCase()));
+        products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter.toUpperCase()));
         /*
         products.addAll(productRepo.findByBarcode(myfilter));
 
@@ -107,7 +107,6 @@ public class ProductController {
         model.put("showSklad", currentUser.isShowSklad());
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
-
 
 
         Filter filter = new Filter(myfilter);
@@ -158,11 +157,11 @@ public class ProductController {
         model.put("AllCounter", AllCounter);
         model.put("PageCounter", PageCounter);
 
-      //  Product product = productRepo.findFirst1ByOrderByIdDesc();
+        //  Product product = productRepo.findFirst1ByOrderByIdDesc();
         Product product;
-        if(productRepo.findFirst1ByAuthorOrderByIdDesc(currentUser.getUsername()) == null){
+        if (productRepo.findFirst1ByAuthorOrderByIdDesc(currentUser.getUsername()) == null) {
             product = productRepo.findFirst1ByOrderByIdDesc();
-        }else{
+        } else {
             product = productRepo.findFirst1ByAuthorOrderByIdDesc(currentUser.getUsername());
         }
 
@@ -328,7 +327,7 @@ public class ProductController {
     }
 
     @PostMapping("/deleteFromDistrib")
-    public String delDistrib(@RequestParam String id,@RequestParam String myfilter, Map<String, Object> model) throws IOException {
+    public String delDistrib(@RequestParam String id, @RequestParam String myfilter, Map<String, Object> model) throws IOException {
         List<Product> products = new ArrayList<>();
 
 
@@ -359,7 +358,7 @@ public class ProductController {
 
         }
 
-          model.put("products", products);
+        model.put("products", products);
 
         Iterable<Composition> compositions = compositionRepo.findAll();
         model.put("compositions", compositions);
@@ -395,11 +394,9 @@ public class ProductController {
     }
 
     @PostMapping("/addAllToDistrib")
-    public String setAllDistrib(@RequestParam String myfilter, Map<String, Object> model)  {
+    public String setAllDistrib(@RequestParam String myfilter, Map<String, Object> model) {
 
         List<Product> products = new ArrayList<>();
-
-
 
 
         if (myfilter != null && !myfilter.isEmpty()) {
@@ -529,7 +526,6 @@ public class ProductController {
         model.put("PageCounter", PageCounter);
 
 
-
         return "producttable";
     }
 
@@ -576,32 +572,31 @@ public class ProductController {
     public String addList() {
 
         Product product;
-        ArrayList <String>  arrayListproduct = new ArrayList();
+        ArrayList<String> arrayListproduct = new ArrayList();
         arrayListproduct.add("Майка");
         arrayListproduct.add("Джинсы");
         arrayListproduct.add("Кепка детская");
         arrayListproduct.add("Трусы");
 
-        ArrayList <String>  arrayListGender = new ArrayList();
+        ArrayList<String> arrayListGender = new ArrayList();
         arrayListGender.add("МУЖ");
         arrayListGender.add("ЖЕН");
         arrayListGender.add("ДЕТ");
 
 
-
         String authorS;
         String seasonS;
         String boxS;
-        for (int i = 0;i<=50; i++){
-            if (i<30){
+        for (int i = 0; i <= 50; i++) {
+            if (i < 30) {
                 authorS = "kirmash_p2";
-            } else{
+            } else {
                 authorS = "kirmash_b2";
             }
 
-            if (i<30){
+            if (i < 30) {
                 seasonS = "ЛЕТО";
-            } else{
+            } else {
                 seasonS = "ЗИМА";
             }
 
@@ -620,7 +615,7 @@ public class ProductController {
                             seasonS,
                             "",
                             "-",
-                            "5" +i,
+                            "5" + i,
                             "2019-08-23",
                             "2",
                             "1",
@@ -629,7 +624,7 @@ public class ProductController {
                             "USD",
                             "2.2",
                             1,
-                            "box-"+i,
+                            "box-" + i,
                             authorS);
 
                     productRepo.save(product);

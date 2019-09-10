@@ -5,7 +5,7 @@
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:53836/sweater</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/sweater</jdbc-url>
     </data-source>
   </component>
 </project>
