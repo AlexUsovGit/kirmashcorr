@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface ReceiptRepo extends CrudRepository<Receipt, Integer> {
+public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
 
     List<Receipt> findAllByOrderByIdDesc();
 
@@ -24,7 +24,6 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Integer> {
             " or UPPER(date_arrive) like %:filter%" +
             " ORDER by Id DESC", nativeQuery = true)
     List<Receipt> findByFilterOrderByIdAsc(String filter);
-
 
 
 
