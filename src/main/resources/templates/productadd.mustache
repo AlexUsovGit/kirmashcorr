@@ -112,11 +112,14 @@
     <tr>
         <td>
             <div style="width: 50%">
+               <form method="get" action="/producttable">
+                  <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
+                  <input type="text" name="author" value="{{currentUserName}}" style="display: none">
+                  <button type="submit" class="main-btn-form" style="width: 150px; background-color: #179E98">
+                     Список товаров.
+                  </button>
+               </form>
 
-                <form method="get" action="/producttable">
-                    <button type="submit" class="main-btn-form" style="width: 150px">Список товаров
-                    </button>
-                </form>
             </div>
         </td>
         <td style="width: 50%">
@@ -207,9 +210,11 @@
                                     retailPrice = Math.round(price * 10) / 10;
                                 } else {
                                     if (ost < 0.4 && ost != 0) {
-                                        retailPrice = Math.floor(price);
+                                        /*retailPrice = Math.floor(price);  */
+                                        retailPrice = price;
                                     } else {
-                                        retailPrice = Math.ceil(price);
+                                        /*retailPrice = Math.ceil(price);*/
+                                        retailPrice = price;
                                     }
 
                                 }

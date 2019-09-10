@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Товары</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
+   <title>Товары</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!--===============================================================================================-->
+   <link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
    <style>
-      body{
+      body {
          font-family: sans-serif;
       }
+
       input {
          width: 100%;
          margin: 2px;
@@ -25,6 +26,7 @@
       .w30 {
          width: 31%;
       }
+
       .main-btn-form-exit {
          font-size: 15px;
          width: 100px;
@@ -35,7 +37,8 @@
          border-radius: 9px;
          border: none
       }
-      .main-btn{
+
+      .main-btn {
          font-size: 20px;
          width: 120px;
          background-color: #179E98;
@@ -43,6 +46,7 @@
          text-decoration: none;
          border-radius: 9px;
       }
+
       .main-btn2 {
          font-size: 15px;
          width: 100px;
@@ -64,11 +68,15 @@
          padding: 8px;
       }
 
-      #customers tr:nth-child(even){background-color: #f2f2f2;}
+      #customers tr:nth-child(even) {
+         background-color: #f2f2f2;
+      }
 
-      #customers tr:hover {background-color: #ddd;}
+      #customers tr:hover {
+         background-color: #ddd;
+      }
 
-      .header-table{
+      .header-table {
          padding-top: 12px;
          padding-bottom: 12px;
          text-align: center;
@@ -76,7 +84,8 @@
          color: white;
          font-size: 10px;
       }
-      .main-btn-form{
+
+      .main-btn-form {
          font-size: 15px;
          width: 100px;
          background-color: #179E98;
@@ -99,11 +108,15 @@
          font-size: 13px;
       }
 
-      #customers tr:nth-child(even){background-color: #f2f2f2;}
+      #customers tr:nth-child(even) {
+         background-color: #f2f2f2;
+      }
 
-      #customers tr:hover {background-color: #ddd;}
+      #customers tr:hover {
+         background-color: #ddd;
+      }
 
-      #customers th{
+      #customers th {
          padding-top: 10px;
          padding-bottom: 10px;
          text-align: center;
@@ -118,27 +131,16 @@
 <body>
 
 
-
-<table  border="0" cellpadding="2" cellspacing="2" align="center" style="width:100%">
+<table  style="width:100%; text-align: center;">
    <tr>
-      <td style="width: 50%">
-         <p>
-            <div>
-
-         <p style=" text-align: left;">
-            <a href="/producttable" style="text-decoration: none">
-
-               <div class="main-btn2" style="    width: 140px;">
-         <p style="color: white; padding-top: 7px;     text-align: center;">
-            Список товаров
-         </p>
-         </div>
-         </a>
-         </p>
-
-         </div>
-
-         </p>
+      <td style="width: 50%; text-align: left">
+         <form method="get" action="/producttable">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
+            <input type="text" name="author" value="{{currentUserName}}" style="display: none">
+            <button type="submit" class="main-btn-form" style="width: 150px; background-color: #179E98">
+               Список товаров.
+            </button>
+         </form>
       </td>
       <td style="width: 50%">
          <p>
@@ -147,8 +149,8 @@
          <p style=" text-align: right;">
             <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
 
-         <input type="submit" value="Выйти"
-                                                                               class="main-btn-form-exit" />
+            <input type="submit" value="Выйти"
+                   class="main-btn-form-exit"/>
          </p>
          </form>
          </div>
@@ -160,11 +162,9 @@
 </table>
 
 
-
-
 <p></p>
 <div style="text-align:center; ">
-   <table id="customers"  align="center" border="1" cellpadding="2" cellspacing="0"
+   <table id="customers" align="center" border="1" cellpadding="2" cellspacing="0"
           style="width:100%;     border-color: lightgray; font-family: serif;
            border: 1px solid black;
            border-collapse: collapse">
@@ -181,7 +181,7 @@
          <th>Производитель</th>
          <th>Артикул</th>
          <th>Внешний Код</th>
-         </tr>
+      </tr>
       {{#products}}
          <div>
 
@@ -207,7 +207,7 @@
 </div>
 <p></p>
 <div style="text-align:center; ">
-   <table id="customers"  align="center" border="1" cellpadding="2" cellspacing="0"
+   <table id="customers" align="center" border="1" cellpadding="2" cellspacing="0"
           style="width:100%;     border-color: lightgray; font-family: serif;
            border: 1px solid black;
            border-collapse: collapse">
@@ -259,28 +259,31 @@
    {{#products}}
 
 
+      <div>
+         <!--    <p>Этикетка. Штрихкод "{{barcode}}".</p>-->
+         <form method="post" action="/getpdf">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+            <input type="text" name="filter" value="{{barcode}}" style="display: none">
+            <p>Количество этикеток.</p>
+            <input type="text" name="count" value="1" style="width: 15%;">
+            <p></p>
+            <button type="submit" class="main-btn-form" style="    width: 210px; background-color: #FFA073">Сформировать
+               и скачать
+            </button>
+         </form>
+
+      </div>
+      <p></p>
    <div>
-  <!--    <p>Этикетка. Штрихкод "{{barcode}}".</p>-->
-      <form method="post" action="/getpdf">
+
+      <form method="post" action="/kassa">
          <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-         <input type="text" name="filter" value="{{barcode}}" style="display: none">
-         <p>Количество этикеток.</p>
-         <input type="text" name="count" value="1" style="width: 15%;" >
-         <p></p>
-         <button type="submit" class="main-btn-form" style="    width: 210px; background-color: #FFA073">Сформировать и скачать</button>
+         <input type="text" name="filter" value="{{id}}" style="display: none">
+
+         <button type="submit" class="main-btn-form" style="    width: 210px; background-color: #FACB1D;">Продать
+         </button>
       </form>
-
-</div>
-   <p></p>
-<div>
-
-   <form method="post" action="/kassa">
-      <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-      <input type="text" name="filter" value="{{id}}" style="display: none" >
-
-      <button type="submit" class="main-btn-form" style="    width: 210px; background-color: #FACB1D;">Продать</button>
-   </form>
-{{/products}}
+   {{/products}}
 </div>
 
 </div>

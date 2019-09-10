@@ -41,7 +41,6 @@ public class ProductController {
     @Autowired
     private FilterRepo filterRepo;
     private int AllCounter;
-    private int FiltredCounter;
     private int PageCounter;
 
 
@@ -50,8 +49,12 @@ public class ProductController {
         Iterable<Product> products;
         if(author.equals("admin")){
             products = productRepo.findFirst50ByOrderByIdDesc();
+            AllCounter = productRepo.findAllByOrderByIdDesc().size();
+            PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
         }else{
             products = productRepo.findFirst50ByAuthor(author);
+            AllCounter = productRepo.findAllByAuthorOrderByIdDesc(author).size();
+            PageCounter = productRepo.findFirst50ByAuthor(author).size();
         }
 
 
@@ -60,9 +63,6 @@ public class ProductController {
         String name = auth.getName();
         User currentUser = userRepo.findByUsername(name);
 
-        AllCounter = productRepo.findAllByOrderByIdDesc().size();
-        //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
         model.put("AllCounter", AllCounter);
         model.put("PageCounter", PageCounter);
         model.put("currentUser", currentUser);
@@ -81,19 +81,25 @@ public class ProductController {
     }
 
     @PostMapping("/producttableFilter")
-    public String producttableFilter(@RequestParam String myfilter, Map<String, Object> model) {
+    public String producttableFilter(@RequestParam String myfilter, @RequestParam String author, Map<String, Object> model) {
 
         List<Product> products = new ArrayList<>();
-        products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter.toUpperCase()));
-        /*
-        products.addAll(productRepo.findByBarcode(myfilter));
+        if(myfilter.equals("")){
+            products.addAll(productRepo.findFirst50ByOrderByIdDesc());
+        }else{
+            products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter.toUpperCase()));
+        }
 
-        products.addAll(productRepo.findByAuthorOrderByIdAsc(myfilter));
-        products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
-        products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
-        products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
-        products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
-*/
+        if(author.equals("admin")){
+
+            AllCounter = productRepo.findAllByOrderByIdDesc().size();
+            PageCounter = products.size();
+        }else{
+            AllCounter = productRepo.findAllByAuthorOrderByIdDesc(author).size();
+            PageCounter = products.size();
+        }
+
+
         model.put("products", products);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -118,16 +124,9 @@ public class ProductController {
             filterValue = filter1.getValue();
         }
         model.put("filterValue", filterValue);
-        AllCounter = productRepo.findAllByOrderByIdDesc().size();
-        //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        PageCounter = products.size();
         model.put("AllCounter", AllCounter);
         model.put("PageCounter", PageCounter);
-
-
         return "producttable";
-
-
     }
 
     @GetMapping("/productadd")
@@ -259,7 +258,19 @@ public class ProductController {
 
         Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
         model.put("productNames", productNames);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        User currentUser = userRepo.findByUsername(name);
 
+        model.put("AllCounter", AllCounter);
+        model.put("PageCounter", PageCounter);
+        model.put("currentUser", currentUser);
+        model.put("currentRole", currentUser.getRoles().toString());
+        model.put("currentUserName", currentUser.getUsername());
+        model.put("showAdmin", currentUser.isShowAdmin());
+        model.put("showSklad", currentUser.isShowSklad());
+        model.put("showReport", currentUser.isShowReport());
+        model.put("showStore", currentUser.isShowStore());
 
         return "documentpdf";
     }
