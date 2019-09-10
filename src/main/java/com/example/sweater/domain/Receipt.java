@@ -46,6 +46,8 @@ public class Receipt implements Serializable {
         this.gender = gender;
     }
 
+
+
     public long getId() {
         return id;
     }

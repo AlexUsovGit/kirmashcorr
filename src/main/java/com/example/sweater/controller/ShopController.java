@@ -63,7 +63,7 @@ public class ShopController {
 
     @PostMapping("/findProduct")
     public String productFilter(@RequestParam String myfilter, Map<String, Object> model) {
-
+        Long id  ;
         /*  DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");*/
         Date date = new Date();
         ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByOrderByIdDesc();
@@ -78,9 +78,9 @@ public class ShopController {
                     currentProduct.getRetailPrice(), date, "0", "0",
                     currentProduct.getRetailPrice(), "temp", currentProduct.getGender());
             receiptRepo.save(receipt);
+            id=  receipt.getId();
 
-
-
+            model.put("id", id);
             model.put("showProduct", true);
             model.put("showExeption", false);
 
@@ -109,6 +109,7 @@ public class ShopController {
         model.put("productCounter", productCounter);
 
 
+
         Filter filter = new Filter(myfilter);
         filterRepo.save(filter);
         String filterValue = "";
@@ -123,15 +124,71 @@ public class ShopController {
     }
 
     @PostMapping("/deleteFromReceipt")
-    public String deleteFromReceipt(@RequestParam String myfilter, @RequestParam String id, Map<String, Object> model) {
+    public String deleteFromReceipt(
+            @RequestParam String myfilter, @RequestParam String id,
+                        Map<String, Object> model) {
 
         /*  DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");*/
-        Date date = new Date();
+
         ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByOrderByIdDesc();
         String currentReceiptNumber = String.valueOf(receiptNumber.getId());
         Integer productCounter = 0;
         Long longId = new Long(id);
         receiptRepo.deleteById(longId);
+        List<Product> products = new ArrayList<>();
+        products.addAll(productRepo.findByBarcodeOrderByIdAsc(myfilter.toUpperCase()));
+
+
+        Iterable<Receipt> receipts = receiptRepo.findAllByReceiptNumberOrderBySaleDateDesc(currentReceiptNumber);
+        productCounter = receiptRepo.findAllByReceiptNumberOrderBySaleDateDesc(currentReceiptNumber).size();
+        model.put("receipts", receipts);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        User currentUser = userRepo.findByUsername(name);
+
+        model.put("currentUser", currentUser);
+        model.put("currentRole", currentUser.getRoles().toString());
+        model.put("currentUserName", currentUser.getUsername());
+        model.put("showAdmin", currentUser.isShowAdmin());
+        model.put("showSklad", currentUser.isShowSklad());
+        model.put("showReport", currentUser.isShowReport());
+        model.put("showStore", currentUser.isShowStore());
+        model.put("receiptNumber", receiptNumber.getId());
+        model.put("productCounter", productCounter);
+
+
+
+        Filter filter = new Filter(myfilter);
+        filterRepo.save(filter);
+        String filterValue = "";
+
+        Iterable<Filter> filters = filterRepo.findAll();
+        for (Filter filter1 : filters) {
+            filterValue = filter1.getValue();
+        }
+        model.put("filterValue", filterValue);
+
+        return "shop";
+    }
+
+    @GetMapping("/updateIntoReceipt")
+    public String updateIntoReceipt(
+            @RequestParam String myfilter, @RequestParam String id,
+            @RequestParam String count, @RequestParam String discount,
+            Map<String, Object> model) {
+
+
+
+        ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByOrderByIdDesc();
+        String currentReceiptNumber = String.valueOf(receiptNumber.getId());
+        Integer productCounter = 0;
+        Long longId = new Long(id);
+        Receipt receipt = receiptRepo.findFirstById(longId);
+        receipt.setCount(count);
+        receipt.setDiscount(discount);
+        receiptRepo.save(receipt);
+
         List<Product> products = new ArrayList<>();
         products.addAll(productRepo.findByBarcodeOrderByIdAsc(myfilter.toUpperCase()));
 

@@ -25,6 +25,10 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
             " ORDER by Id DESC", nativeQuery = true)
     List<Receipt> findByFilterOrderByIdAsc(String filter);
 
+      Receipt findFirstById(Long id);
+
+
+
 
 
 }
