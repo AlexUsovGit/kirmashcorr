@@ -32,9 +32,10 @@ public class ShopController {
     private int PageCounter;
     private Product currentProduct;
 
+
     @GetMapping("/shop")
     public String show(Map<String, Object> model) {
-
+        Double AllCost = 0.00;
         Integer productCounter = 0;
         Iterable<Product> products = null;
         /*       products= productRepo.findFirst50ByOrderByIdDesc();*/
@@ -55,6 +56,7 @@ public class ShopController {
         model.put("showStore", currentUser.isShowStore());
         model.put("receiptNumber", receiptNumber.getId());
         model.put("productCounter", productCounter);
+        model.put("AllCost", AllCost);
 
 
         return "shop";
@@ -64,6 +66,7 @@ public class ShopController {
     @PostMapping("/findProduct")
     public String productFilter(@RequestParam String myfilter, Map<String, Object> model) {
         Long id  ;
+        Double AllCost = 0.00;
         /*  DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");*/
         Date date = new Date();
         ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByOrderByIdDesc();
@@ -93,6 +96,10 @@ public class ShopController {
         Iterable<Receipt> receipts = receiptRepo.findAllByReceiptNumberOrderBySaleDateDesc(currentReceiptNumber);
         productCounter = receiptRepo.findAllByReceiptNumberOrderBySaleDateDesc(currentReceiptNumber).size();
         model.put("receipts", receipts);
+        for (Receipt receipt1 : receipts) {
+
+            AllCost = AllCost +Double.parseDouble(receipt1.getCost());
+        }
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -107,6 +114,7 @@ public class ShopController {
         model.put("showStore", currentUser.isShowStore());
         model.put("receiptNumber", receiptNumber.getId());
         model.put("productCounter", productCounter);
+        model.put("AllCost", AllCost);
 
 
 
@@ -129,7 +137,7 @@ public class ShopController {
                         Map<String, Object> model) {
 
         /*  DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");*/
-
+        Double AllCost = 0.00;
         ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByOrderByIdDesc();
         String currentReceiptNumber = String.valueOf(receiptNumber.getId());
         Integer productCounter = 0;
@@ -142,6 +150,10 @@ public class ShopController {
         Iterable<Receipt> receipts = receiptRepo.findAllByReceiptNumberOrderBySaleDateDesc(currentReceiptNumber);
         productCounter = receiptRepo.findAllByReceiptNumberOrderBySaleDateDesc(currentReceiptNumber).size();
         model.put("receipts", receipts);
+        for (Receipt receipt1 : receipts) {
+
+            AllCost = AllCost +Double.parseDouble(receipt1.getCost());
+        }
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -156,6 +168,7 @@ public class ShopController {
         model.put("showStore", currentUser.isShowStore());
         model.put("receiptNumber", receiptNumber.getId());
         model.put("productCounter", productCounter);
+        model.put("AllCost", AllCost);
 
 
 
@@ -178,7 +191,7 @@ public class ShopController {
             @RequestParam String count, @RequestParam String discount,
             Map<String, Object> model) {
 
-
+        Double AllCost = 0.00;
 
         ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByOrderByIdDesc();
         String currentReceiptNumber = String.valueOf(receiptNumber.getId());
@@ -187,6 +200,8 @@ public class ShopController {
         Receipt receipt = receiptRepo.findFirstById(longId);
         receipt.setCount(count);
         receipt.setDiscount(discount);
+        receipt.setCost(String.valueOf (Double.parseDouble(receipt.getRetailPrice()) *
+                (100-Integer.parseInt(discount))/100*Integer.parseInt(count)));
         receiptRepo.save(receipt);
 
         List<Product> products = new ArrayList<>();
@@ -195,6 +210,10 @@ public class ShopController {
 
         Iterable<Receipt> receipts = receiptRepo.findAllByReceiptNumberOrderBySaleDateDesc(currentReceiptNumber);
         productCounter = receiptRepo.findAllByReceiptNumberOrderBySaleDateDesc(currentReceiptNumber).size();
+        for (Receipt receipt1 : receipts) {
+
+            AllCost = AllCost +Double.parseDouble(receipt1.getCost());
+        }
         model.put("receipts", receipts);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -210,6 +229,7 @@ public class ShopController {
         model.put("showStore", currentUser.isShowStore());
         model.put("receiptNumber", receiptNumber.getId());
         model.put("productCounter", productCounter);
+        model.put("AllCost", AllCost);
 
 
         Filter filter = new Filter(myfilter);

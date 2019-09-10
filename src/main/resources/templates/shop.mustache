@@ -232,7 +232,16 @@
                </button>
             </form>
          </td>
-         <td width="25%"></td>
+         <td width="25%">
+
+            <form method="get" action="/shop">
+               <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
+               <input type="text" name="author" value="{{currentUserName}}" style="display: none">
+               <button type="submit" class="main-btn-form" style="width: 60%; background-color: #DE4215">
+                  ПРОДАТЬ
+               </button>
+            </form>
+         </td>
          <td width="25%"></td>
 
          <td width="25%">
@@ -247,7 +256,7 @@
                </tr>
                <tr>
                   <td>На сумму:</td>
-                  <td>123,5</td>
+                  <td>{{AllCost}}</td>
                </tr>
             </table>
          </td>
@@ -368,7 +377,7 @@
 
 
                <div style="margin-top: 15px">
-                  <input type="text" name="id" value="{{id}}" >
+                  <input type="text" name="id" value="{{id}}"  style="display: none">
                   <button type="submit" class="main-btn-form"
                           style=" width: 100px;     background-color: #FFA073;">Добавить
                   </button>
