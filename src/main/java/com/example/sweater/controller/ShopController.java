@@ -46,7 +46,7 @@ public class ShopController {
         Date date = new Date();
         ReceiptNumber receiptNumber = new ReceiptNumber(name, date, "temp");
         receiptNumberRepo.save(receiptNumber);
-
+        Iterable<Receipt> allReceipt = receiptRepo.findAll();
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());
@@ -57,6 +57,7 @@ public class ShopController {
         model.put("receiptNumber", receiptNumber.getId());
         model.put("productCounter", productCounter);
         model.put("AllCost", AllCost);
+        model.put("allReceipt", allReceipt);
 
 
         return "shop";
@@ -101,6 +102,8 @@ public class ShopController {
             AllCost = AllCost +Double.parseDouble(receipt1.getCost());
         }
 
+        Iterable<Receipt> allReceipt = receiptRepo.findAll();
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findByUsername(name);
@@ -115,6 +118,7 @@ public class ShopController {
         model.put("receiptNumber", receiptNumber.getId());
         model.put("productCounter", productCounter);
         model.put("AllCost", AllCost);
+        model.put("allReceipt", allReceipt);
 
 
 
@@ -154,7 +158,7 @@ public class ShopController {
 
             AllCost = AllCost +Double.parseDouble(receipt1.getCost());
         }
-
+        Iterable<Receipt> allReceipt = receiptRepo.findAll();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findByUsername(name);
@@ -169,6 +173,7 @@ public class ShopController {
         model.put("receiptNumber", receiptNumber.getId());
         model.put("productCounter", productCounter);
         model.put("AllCost", AllCost);
+        model.put("allReceipt", allReceipt);
 
 
 
@@ -216,6 +221,8 @@ public class ShopController {
         }
         model.put("receipts", receipts);
 
+        Iterable<Receipt> allReceipt = receiptRepo.findAll();
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findByUsername(name);
@@ -230,6 +237,7 @@ public class ShopController {
         model.put("receiptNumber", receiptNumber.getId());
         model.put("productCounter", productCounter);
         model.put("AllCost", AllCost);
+        model.put("allReceipt", allReceipt);
 
 
         Filter filter = new Filter(myfilter);

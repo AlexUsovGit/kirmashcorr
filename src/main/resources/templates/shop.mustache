@@ -221,12 +221,14 @@
    <table style="width: 100%">
       <tr>
          <td width="25%">
-            <form method="post" action="/findProduct">
+            <form method="post" action="/findProduct" onsubmit="selectInput();">
                <input type="hidden" name="_csrf" value="{{_csrf.token}}">
 
                <input type="text" autocomplete="off" name="myfilter" value=""
                       style="width: 50%; height: 20px"
-                      placeholder="Штрихкод">
+                      placeholder="Штрихкод"
+               id = "searchString"
+               >
                <button type="submit" class="main-btn-form"
                        style="    width: 150px;     background-color: #FFA073;">Найти
                </button>
@@ -313,6 +315,53 @@
 
 </div>
 
+<div style="margin-top: 50px">
+    <h3>Все продажи</h3>
+</div>
+
+
+<div>
+
+    <table style="width: 100%" id="customers">
+
+
+        <thead>
+        <th>Номер чека</th>
+        <th>Наименование</th>
+        <th>Штрихкод</th>
+        <th>Дата-время</th>
+        <th>Цена, BYN</th>
+
+        <th>Количество</th>
+        <th>Скидка,%</th>
+        <th>Итого, BYN</th>
+
+
+
+        </thead>
+        {{#allReceipt}}
+            <tr>
+                <td > {{receiptNumber}} </td>
+                <td>{{productName}} {{gender}}</td>
+                <td >{{barcode}}</td>
+                <td >{{saleDate}}</td>
+                <td  style="text-align: center">{{retailPrice}}</td>
+
+                <td style="text-align: center"> {{count}}</td>
+                <td  style="text-align: center"> {{discount}}</td>
+
+
+                <td  style="text-align: center">{{cost}}</td>
+
+                <td  style="text-align: center; display: none">{{id}}</td>
+
+
+            </tr>
+        {{/allReceipt}}
+    </table>
+
+
+</div>
 
 <script>
    function validate(evt) {
@@ -332,7 +381,9 @@
          if (theEvent.preventDefault) theEvent.preventDefault();
       }
    }
+function selectInput() {
 
+   }
 
 </script>
 
@@ -341,6 +392,11 @@
 <script>
    window.onload = function () {
       if (document.getElementById('currentcount') == null) {
+          if (document.getElementById('searchString') == null) {
+
+          } else {
+              document.getElementById('searchString').select();
+          }
 
       } else {
          document.getElementById('currentcount').select();
