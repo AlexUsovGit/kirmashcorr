@@ -1,6 +1,5 @@
 package com.example.sweater.repos;
 
-import com.example.sweater.domain.ColumnNames;
 import com.example.sweater.domain.TableNames;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
