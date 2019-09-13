@@ -11,16 +11,18 @@ import java.io.Serializable;
 @Entity
 //@Immutable
 //@Subselect(
-//        "SELECT table_name FROM information_schema.tables where table_schema = 'public'")
-public class TableNames implements Serializable {
+//        "SELECT table_name, column_name FROM information_schema.columns where table_schema = 'public' order by table_name ASC")
+public class ColumnNames implements Serializable {
     @Id
     private String table_name;
+    private String column_name;
 
-    public TableNames() {
+    public ColumnNames() {
     }
 
-    public TableNames(String table_name) {
+    public ColumnNames(String table_name, String column_name) {
         this.table_name = table_name;
+        this.column_name = column_name;
     }
 
     public String getTable_name() {
@@ -29,5 +31,13 @@ public class TableNames implements Serializable {
 
     public void setTable_name(String table_name) {
         this.table_name = table_name;
+    }
+
+    public String getColumn_name() {
+        return column_name;
+    }
+
+    public void setColumn_name(String column_name) {
+        this.column_name = column_name;
     }
 }
