@@ -1,5 +1,6 @@
 package com.example.sweater.export;
 
+import com.example.sweater.domain.AbstractObject;
 import com.example.sweater.domain.Product;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -16,15 +17,17 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class ExportsTables {
     private static final String FILE_NAME = "tables.xlsx";
 
-    public void createXlsx2(Iterable<Product> products) {
+    public void createXlsx2(List<AbstractObject> abstractObjects) {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
 
         XSSFSheet sheet = workbook.createSheet("Products");
+
         String[] headers = {
                 "Наименование товара",
                 "Пол",
@@ -77,8 +80,14 @@ public class ExportsTables {
             cell.setCellValue(header);
 
         }
+        for (AbstractObject abstractObject : abstractObjects) {
+            row = sheet.createRow(rowNum++);
+            colNum = 0;
+            cell = row.createCell(0);
+            cell.setCellValue(abstractObject.getInfo());
+        }
 
-        for (Product product : products) {
+     /*   for (Product product : products) {
             row = sheet.createRow(rowNum++);
             colNum = 0;
             cell = row.createCell(colNum++);
@@ -146,7 +155,7 @@ public class ExportsTables {
             cell.setCellValue(product.getBoxNumber());
 
 
-        }
+        }*/
 
 
         try {

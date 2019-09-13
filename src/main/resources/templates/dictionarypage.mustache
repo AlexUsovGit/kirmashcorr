@@ -142,7 +142,7 @@
 
        <tr>
            <td style=" padding-top: 15px;">
-               <form method="get" action="/getTables">
+               <form method="post" action="/getAlltables">
                    <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
                    <input type="text" name="author" value="{{currentUserName}}" style="display: none">
                    <button type="submit" class="menu-btn-form" style="color: #ff952b">
