@@ -24,7 +24,7 @@
       .menu-btn-form {
          font-size: 20px;
          width: 60%;
-         background-color: #1cbfb7;
+         background-color: #3D6E6C;
          color: white;
          height: 30px;
          text-decoration: none;
@@ -82,7 +82,7 @@
 </table>
 <table style="width:100%; text-align: center">
    <tbody>
-   {{#showSklad}}
+   {{#showAdmin}}
       <tr>
          <td style="padding-top: 15px;">
             <form method="get" action="/producttable">
@@ -94,8 +94,8 @@
             </form>
          </td>
       </tr>
-   {{/showSklad}}
-   {{#showReport}}
+   {{/showAdmin}}
+   {{#showAdmin}}
       <tr>
          <td style="padding-top: 15px;">
             <form method="get" action="/producttable">
@@ -108,8 +108,8 @@
          </td>
       </tr>
 
-   {{/showReport}}
-   {{#showStore}}
+   {{/showAdmin}}
+   {{#showAdmin}}
       <tr>
          <td style=" padding-top: 15px;">
             <form method="get" action="/shop">
@@ -121,7 +121,7 @@
             </form>
          </td>
       </tr>
-   {{/showStore}}
+   {{/showAdmin}}
 
    {{#showAdmin}}
 
@@ -136,6 +136,21 @@
             </form>
          </td>
       </tr>
+   {{/showAdmin}}
+
+   {{#showAdmin}}
+
+       <tr>
+           <td style=" padding-top: 15px;">
+               <form method="get" action="/getTables">
+                   <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
+                   <input type="text" name="author" value="{{currentUserName}}" style="display: none">
+                   <button type="submit" class="menu-btn-form" style="color: #ff952b">
+                       Выгрузить все таблицы.
+                   </button>
+               </form>
+           </td>
+       </tr>
    {{/showAdmin}}
 
    </tbody>

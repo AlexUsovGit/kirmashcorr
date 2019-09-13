@@ -28,6 +28,8 @@ public class ShopController {
     @Autowired
     ReceiptNumberRepo receiptNumberRepo;
 
+
+
     private int AllCounter;
     private int PageCounter;
     private Product currentProduct;
@@ -58,7 +60,6 @@ public class ShopController {
         model.put("productCounter", productCounter);
         model.put("AllCost", AllCost);
         model.put("allReceipt", allReceipt);
-
 
         return "shop";
     }

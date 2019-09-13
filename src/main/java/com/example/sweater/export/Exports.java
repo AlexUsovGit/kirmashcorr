@@ -137,9 +137,9 @@ public class Exports {
             arrCost = product.getDoubleQuantity() * product.getDoubleImportPrice();
             retCost = product.getDoubleQuantity() * product.getDoubleRetailPrice();
             cell = row.createCell(colNum++);
-            cell.setCellValue(String.valueOf( arrCost).replace(".", ","));
+            cell.setCellValue(String.valueOf(arrCost).replace(".", ","));
             cell = row.createCell(colNum++);
-            cell.setCellValue(String.valueOf( retCost).replace(".", ","));
+            cell.setCellValue(String.valueOf(retCost).replace(".", ","));
             cell = row.createCell(colNum++);
             cell.setCellValue(product.getAuthor());
             cell = row.createCell(colNum++);
@@ -147,19 +147,7 @@ public class Exports {
 
 
         }
-        /*
-        for (Object[] datatype : datatypes) {
-            Row row = sheet.createRow(rowNum++);
 
-            for (Object field : datatype) {
-                Cell cell = row.createCell(colNum++);
-                if (field instanceof String) {
-                    cell.setCellValue((String) field);
-                } else if (field instanceof Integer) {
-                    cell.setCellValue((Integer) field);
-                }
-            }
-        }*/
 
         try {
             FileOutputStream outputStream = new FileOutputStream(FILE_NAME);
