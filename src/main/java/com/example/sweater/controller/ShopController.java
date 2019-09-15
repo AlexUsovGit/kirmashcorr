@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +36,11 @@ public class ShopController {
 
     @GetMapping("/shop")
     public String show(Map<String, Object> model) {
+        int currentProductCounter = 0;
+        double currentSummCost = 0.00;
+
+        Date today = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Double AllCost = 0.00;
         Integer productCounter = 0;
         Iterable<Product> products = null;
@@ -46,7 +52,13 @@ public class ShopController {
         Date date = new Date();
         ReceiptNumber receiptNumber = new ReceiptNumber(name, date, "temp");
         receiptNumberRepo.save(receiptNumber);
-        Iterable<Receipt> allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername());
+        Iterable<Receipt> allReceipt =
+                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(),formatter.format(today));
+        for (Receipt receipt : allReceipt) {
+            currentProductCounter = currentProductCounter + Integer.parseInt(receipt.getCount());
+            currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
+        }
+
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());
@@ -58,6 +70,8 @@ public class ShopController {
         model.put("productCounter", productCounter);
         model.put("AllCost", AllCost);
         model.put("allReceipt", allReceipt);
+        model.put("currentProductCounter", currentProductCounter);
+        model.put("currentSummCost", currentSummCost);
 
 
         return "shop";
@@ -66,6 +80,10 @@ public class ShopController {
 
     @PostMapping("/findProduct")
     public String productFilter(@RequestParam String myfilter, Map<String, Object> model) {
+        int currentProductCounter = 0;
+        double currentSummCost = 0.00;
+        Date today = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Long id  ;
         Double AllCost = 0.00;
         /*  DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");*/
@@ -107,7 +125,13 @@ public class ShopController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findByUsername(name);
-        Iterable<Receipt> allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername());
+        Iterable<Receipt> allReceipt =
+                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(),formatter.format(today));
+        for (Receipt receipt : allReceipt) {
+            currentProductCounter = currentProductCounter + Integer.parseInt(receipt.getCount());
+            currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
+        }
+
 
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
@@ -120,7 +144,8 @@ public class ShopController {
         model.put("productCounter", productCounter);
         model.put("AllCost", AllCost);
         model.put("allReceipt", allReceipt);
-
+        model.put("currentProductCounter", currentProductCounter);
+        model.put("currentSummCost", currentSummCost);
 
 
         Filter filter = new Filter(myfilter);
@@ -140,6 +165,10 @@ public class ShopController {
     public String deleteFromReceipt(
             @RequestParam String myfilter, @RequestParam String id,
                         Map<String, Object> model) {
+        int currentProductCounter = 0;
+        double currentSummCost = 0.00;
+        Date today = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         /*  DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");*/
         Double AllCost = 0.00;
@@ -163,7 +192,13 @@ public class ShopController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findByUsername(name);
-        Iterable<Receipt> allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername());
+        Iterable<Receipt> allReceipt =
+                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(),formatter.format(today));
+        for (Receipt receipt : allReceipt) {
+            currentProductCounter = currentProductCounter + Integer.parseInt(receipt.getCount());
+            currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
+        }
+
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());
@@ -175,6 +210,8 @@ public class ShopController {
         model.put("productCounter", productCounter);
         model.put("AllCost", AllCost);
         model.put("allReceipt", allReceipt);
+        model.put("currentProductCounter", currentProductCounter);
+        model.put("currentSummCost", currentSummCost);
 
 
 
@@ -196,6 +233,10 @@ public class ShopController {
             @RequestParam String myfilter, @RequestParam String id,
             @RequestParam String count, @RequestParam String discount,
             Map<String, Object> model) {
+        int currentProductCounter = 0;
+        double currentSummCost = 0.00;
+        Date today = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         Double AllCost = 0.00;
 
@@ -203,12 +244,12 @@ public class ShopController {
         String currentReceiptNumber = String.valueOf(receiptNumber.getId());
         Integer productCounter = 0;
         Long longId = new Long(id);
-        Receipt receipt = receiptRepo.findFirstById(longId);
-        receipt.setCount(count);
-        receipt.setDiscount(discount);
-        receipt.setCost(String.valueOf (Double.parseDouble(receipt.getRetailPrice()) *
+        Receipt receiptCurrent = receiptRepo.findFirstById(longId);
+        receiptCurrent.setCount(count);
+        receiptCurrent.setDiscount(discount);
+        receiptCurrent.setCost(String.valueOf (Double.parseDouble(receiptCurrent.getRetailPrice()) *
                 (100-Integer.parseInt(discount))/100*Integer.parseInt(count)));
-        receiptRepo.save(receipt);
+        receiptRepo.save(receiptCurrent);
 
         List<Product> products = new ArrayList<>();
         products.addAll(productRepo.findByBarcodeOrderByIdAsc(myfilter.toUpperCase()));
@@ -227,7 +268,13 @@ public class ShopController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findByUsername(name);
-        Iterable<Receipt> allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername());
+        Iterable<Receipt> allReceipt =
+                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(),formatter.format(today));
+        for (Receipt receipt : allReceipt) {
+            currentProductCounter = currentProductCounter + Integer.parseInt(receipt.getCount());
+            currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
+        }
+
 
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
@@ -240,6 +287,8 @@ public class ShopController {
         model.put("productCounter", productCounter);
         model.put("AllCost", AllCost);
         model.put("allReceipt", allReceipt);
+        model.put("currentProductCounter", currentProductCounter);
+        model.put("currentSummCost", currentSummCost);
 
 
         Filter filter = new Filter(myfilter);

@@ -217,123 +217,43 @@
 
 </table>
 
-<div style="margin-top: 15px; margin-bottom: 15px">
-   <table style="width: 100%">
-      <tr>
-         <td width="25%">
-            <form method="post" action="/findProduct" onsubmit="selectInput();">
-               <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-
-               <input type="text" autocomplete="off" name="myfilter" value=""
-                      style="width: 50%; height: 20px"
-                      placeholder="Штрихкод"
-                      id="searchString"
-               >
-               <button type="submit" class="main-btn-form"
-                       style="    width: 150px;     background-color: #FFA073;">Найти
-               </button>
-            </form>
-         </td>
-         <td width="25%">
-
-            <form method="get" action="/shop">
-               <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
-               <input type="text" name="author" value="{{currentUserName}}" style="display: none">
-               <button type="submit" class="main-btn-form" style="width: 60%; background-color: #DE4215">
-                  ПРОДАТЬ
-               </button>
-            </form>
-         </td>
-         <td width="25%"></td>
-
-         <td width="25%">
-            <table>
-               <tr>
-                  <td>Чек №</td>
-                  <td>{{receiptNumber}}</td>
-               </tr>
-               <tr>
-                  <td>Всего товаров:</td>
-                  <td>{{productCounter}}</td>
-               </tr>
-               <tr>
-                  <td>На сумму:</td>
-                  <td>{{AllCost}}</td>
-               </tr>
-            </table>
-         </td>
-      </tr>
-   </table>
-</div>
-
-<div>
-
-   <table style="width: 100%" id="customers">
 
 
-      <thead>
-      <th>Номер чека</th>
-      <th>Наименование</th>
-      <th>Штрихкод</th>
-      <th>Цена, BYN</th>
-      <th>Количество</th>
-      <th>Скидка,%</th>
-      <th>Итого, BYN</th>
-      <th>...</th>
-
-
-      </thead>
-      {{#receipts}}
-         <tr>
-            <td id="taxnumber{{barcode}}"> {{receiptNumber}} </td>
-            <td id="name{{barcode}}">{{productName}} {{gender}}</td>
-            <td id="barcode{{barcode}}">{{barcode}}</td>
-            <td id="price{{barcode}}" style="text-align: center">{{retailPrice}}</td>
-
-            <td id="count{{barcode}}" style="text-align: center"> {{count}}</td>
-            <td id="discount{{barcode}}" style="text-align: center"> {{discount}}</td>
-
-
-            <td id="cost{{barcode}}" style="text-align: center">{{cost}}</td>
-
-            <td id="id{{barcode}}" style="text-align: center; display: none">{{id}}</td>
-            <td>
-               <form method="post" action="/deleteFromReceipt">
-                  <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
-                  <input type="text" name="id" value="{{id}}" style="display: none">
-                  <input type="text" name="myfilter" value="{{receiptNumber}}" style="display: none">
-                  <button type="submit" class="delete-btn">
-
-                  </button>
-               </form>
-            </td>
-
-         </tr>
-      {{/receipts}}
-   </table>
-
-
-</div>
-
-<div style="margin-top: 50px">
+<div style="margin-top: 10px">
    <table>
+
       <tr>
          <td style="width: 20%; text-align: right"><h3>Все продажи на </h3></td>
-         <td style="width: 20%; text-align: left"><h3 id="date"></h3></td>
-         <td style="width: 20%; text-align: left"></td>
+         <td style="width: 20%; text-align: left">
+            <input type="date" name="selectedDate" placeholder="Дата продажи" autocomplete="off" >
+         </td>
+         <td style="width: 20%; text-align: left">
+            <form method="get" action="/reportShopReceipt" onsubmit="copyDateValue()">
+               <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
+               <input type="text" name="author" value="{{currentUserName}}" style="display: none">
+
+              <input type="text" name="today"  style="display: none">
+               <button type="submit" class="main-btn-form" style="background-color: #ffa073">
+                  Показать
+               </button>
+            </form>
+         </td>
          <td style="width: 20%; text-align: right"><h3>Всего товаров (шт) - {{currentProductCounter}};</h3></td>
          <td style="width: 20%; text-align: right"><h3>Всего на сумму (BYN) - {{currentSummCost}}</h3></td>
       </tr>
    </table>
 
-   <script>
-      var current_datetime = new Date();
-      var formatted_date = current_datetime.getDate() + "-" + ("0" + (current_datetime.getMonth() + 1)).slice(-2) + "-" + current_datetime.getFullYear();
+<script>
+   function copyDateValue() {
+       if(document.getElementsByName('selectedDate')[0].value == ""){
+          document.getElementsByName('today')[0].value = "2000-01-01"
+       }else{
+          document.getElementsByName('today')[0].value =
+                  document.getElementsByName('selectedDate')[0].value;
+       }
 
-      document.getElementById("date").innerHTML = formatted_date;
-   </script>
-   <!--   <input type="date" name="sale_date" placeholder="Дата продажи"
-             autocomplete="off" >-->
+   }
+</script>
 </div>
 
 
