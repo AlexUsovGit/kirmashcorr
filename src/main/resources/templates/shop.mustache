@@ -316,7 +316,21 @@
 </div>
 
 <div style="margin-top: 50px">
-    <h3>Все продажи</h3>
+   <table>
+      <tr>
+         <td><h3>Все продажи на </h3></td>
+         <td><h3 id="date"></h3></td>
+      </tr>
+   </table>
+
+   <script>
+      var current_datetime = new Date();
+      var formatted_date = current_datetime.getDate() + "-" +("0" + (current_datetime.getMonth() + 1)).slice(-2) + "-" + current_datetime.getFullYear();
+
+      document.getElementById("date").innerHTML = formatted_date;
+   </script>
+   <input type="date" name="sale_date" placeholder="Дата продажи"
+          autocomplete="off" >
 </div>
 
 

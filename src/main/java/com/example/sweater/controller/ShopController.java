@@ -46,7 +46,7 @@ public class ShopController {
         Date date = new Date();
         ReceiptNumber receiptNumber = new ReceiptNumber(name, date, "temp");
         receiptNumberRepo.save(receiptNumber);
-        Iterable<Receipt> allReceipt = receiptRepo.findAll();
+        Iterable<Receipt> allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername());
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());
@@ -102,11 +102,12 @@ public class ShopController {
             AllCost = AllCost +Double.parseDouble(receipt1.getCost());
         }
 
-        Iterable<Receipt> allReceipt = receiptRepo.findAll();
+
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findByUsername(name);
+        Iterable<Receipt> allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername());
 
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
@@ -158,11 +159,11 @@ public class ShopController {
 
             AllCost = AllCost +Double.parseDouble(receipt1.getCost());
         }
-        Iterable<Receipt> allReceipt = receiptRepo.findAll();
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findByUsername(name);
-
+        Iterable<Receipt> allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername());
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());
@@ -221,11 +222,12 @@ public class ShopController {
         }
         model.put("receipts", receipts);
 
-        Iterable<Receipt> allReceipt = receiptRepo.findAll();
+
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findByUsername(name);
+        Iterable<Receipt> allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername());
 
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
