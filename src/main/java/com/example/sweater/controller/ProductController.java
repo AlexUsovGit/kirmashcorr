@@ -137,6 +137,7 @@ public class ProductController {
         Iterable<Composition> compositions = compositionRepo.findAll();
         model.put("compositions", compositions);
 
+
         Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
         model.put("productNames", productNames);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
