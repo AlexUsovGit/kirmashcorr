@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface ReceiptNumberRepo extends CrudRepository<ReceiptNumber, Long> {
 
     ReceiptNumber findFirst1ByOrderByIdDesc();
+    ReceiptNumber findFirst1ByAuthorOrderByIdDesc(String author);
 
 
 }

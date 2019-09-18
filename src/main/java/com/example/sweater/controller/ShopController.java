@@ -53,7 +53,7 @@ public class ShopController {
         ReceiptNumber receiptNumber = new ReceiptNumber(name, date, "temp");
         receiptNumberRepo.save(receiptNumber);
         Iterable<Receipt> allReceipt =
-                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(),formatter.format(today));
+                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(), formatter.format(today));
         for (Receipt receipt : allReceipt) {
             currentProductCounter = currentProductCounter + Integer.parseInt(receipt.getCount());
             currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
@@ -84,11 +84,17 @@ public class ShopController {
         double currentSummCost = 0.00;
         Date today = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Long id  ;
+        Long id;
         Double AllCost = 0.00;
+
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        User currentUser = userRepo.findByUsername(name);
+
         /*  DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");*/
         Date date = new Date();
-        ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByOrderByIdDesc();
+        ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByAuthorOrderByIdDesc(currentUser.getUsername());
         String currentReceiptNumber = String.valueOf(receiptNumber.getId());
         Integer productCounter = 0;
 
@@ -100,7 +106,7 @@ public class ShopController {
                     currentProduct.getRetailPrice(), date, "0", "0",
                     currentProduct.getRetailPrice(), "temp", currentProduct.getGender());
             receiptRepo.save(receipt);
-            id=  receipt.getId();
+            id = receipt.getId();
 
             model.put("id", id);
             model.put("showProduct", true);
@@ -117,16 +123,12 @@ public class ShopController {
         model.put("receipts", receipts);
         for (Receipt receipt1 : receipts) {
 
-            AllCost = AllCost +Double.parseDouble(receipt1.getCost());
+            AllCost = AllCost + Double.parseDouble(receipt1.getCost());
         }
 
 
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
         Iterable<Receipt> allReceipt =
-                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(),formatter.format(today));
+                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(), formatter.format(today));
         for (Receipt receipt : allReceipt) {
             currentProductCounter = currentProductCounter + Integer.parseInt(receipt.getCount());
             currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
@@ -164,15 +166,19 @@ public class ShopController {
     @PostMapping("/deleteFromReceipt")
     public String deleteFromReceipt(
             @RequestParam String myfilter, @RequestParam String id,
-                        Map<String, Object> model) {
+            Map<String, Object> model) {
         int currentProductCounter = 0;
         double currentSummCost = 0.00;
         Date today = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        User currentUser = userRepo.findByUsername(name);
+
         /*  DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");*/
         Double AllCost = 0.00;
-        ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByOrderByIdDesc();
+        ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByAuthorOrderByIdDesc(currentUser.getUsername());
         String currentReceiptNumber = String.valueOf(receiptNumber.getId());
         Integer productCounter = 0;
         Long longId = new Long(id);
@@ -186,14 +192,12 @@ public class ShopController {
         model.put("receipts", receipts);
         for (Receipt receipt1 : receipts) {
 
-            AllCost = AllCost +Double.parseDouble(receipt1.getCost());
+            AllCost = AllCost + Double.parseDouble(receipt1.getCost());
         }
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+
         Iterable<Receipt> allReceipt =
-                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(),formatter.format(today));
+                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(), formatter.format(today));
         for (Receipt receipt : allReceipt) {
             currentProductCounter = currentProductCounter + Integer.parseInt(receipt.getCount());
             currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
@@ -212,7 +216,6 @@ public class ShopController {
         model.put("allReceipt", allReceipt);
         model.put("currentProductCounter", currentProductCounter);
         model.put("currentSummCost", currentSummCost);
-
 
 
         Filter filter = new Filter(myfilter);
@@ -240,15 +243,19 @@ public class ShopController {
 
         Double AllCost = 0.00;
 
-        ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByOrderByIdDesc();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        User currentUser = userRepo.findByUsername(name);
+
+        ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByAuthorOrderByIdDesc(currentUser.getUsername());
         String currentReceiptNumber = String.valueOf(receiptNumber.getId());
         Integer productCounter = 0;
         Long longId = new Long(id);
         Receipt receiptCurrent = receiptRepo.findFirstById(longId);
         receiptCurrent.setCount(count);
         receiptCurrent.setDiscount(discount);
-        receiptCurrent.setCost(String.valueOf (Double.parseDouble(receiptCurrent.getRetailPrice()) *
-                (100-Integer.parseInt(discount))/100*Integer.parseInt(count)));
+        receiptCurrent.setCost(String.valueOf(Double.parseDouble(receiptCurrent.getRetailPrice()) *
+                (100 - Integer.parseInt(discount)) / 100 * Integer.parseInt(count)));
         receiptRepo.save(receiptCurrent);
 
         List<Product> products = new ArrayList<>();
@@ -259,17 +266,13 @@ public class ShopController {
         productCounter = receiptRepo.findAllByReceiptNumberOrderBySaleDateDesc(currentReceiptNumber).size();
         for (Receipt receipt1 : receipts) {
 
-            AllCost = AllCost +Double.parseDouble(receipt1.getCost());
+            AllCost = AllCost + Double.parseDouble(receipt1.getCost());
         }
         model.put("receipts", receipts);
 
 
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
         Iterable<Receipt> allReceipt =
-                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(),formatter.format(today));
+                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(), formatter.format(today));
         for (Receipt receipt : allReceipt) {
             currentProductCounter = currentProductCounter + Integer.parseInt(receipt.getCount());
             currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
