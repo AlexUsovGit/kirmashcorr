@@ -190,8 +190,22 @@ public class ProductController {
         product.setBarcode(getBarcodesText(product.getId()));
         productRepo.save(product);
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        User currentUser = userRepo.findByUsername(name);
+        Iterable<Product> products ;
 
-        Iterable<Product> products = productRepo.findFirst50ByOrderByIdDesc();
+        if(author.equals("admin")){
+            products = productRepo.findFirst50ByOrderByIdDesc();
+            AllCounter = productRepo.findAllByOrderByIdDesc().size();
+            PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
+        }else{
+            products = productRepo.findFirst50ByAuthor(currentUser.getUsername());
+            AllCounter = productRepo.findAllByAuthorOrderByIdDesc(currentUser.getUsername()).size();
+            PageCounter = productRepo.findFirst50ByAuthor(currentUser.getUsername()).size();
+        }
+
+
         model.put("products", products);
 
         Iterable<Composition> compositions = compositionRepo.findAll();
@@ -199,9 +213,7 @@ public class ProductController {
 
         Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
         model.put("productNames", productNames);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+
 
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
