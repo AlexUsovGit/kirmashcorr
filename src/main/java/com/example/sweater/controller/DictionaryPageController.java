@@ -20,7 +20,7 @@ public class DictionaryPageController {
 
 
     @GetMapping("/dictionary")
-    public String main(Map<String, Object> model) {
+    public String dictionary(Map<String, Object> model) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -34,5 +34,22 @@ public class DictionaryPageController {
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
         return "dictionarypage";
+    }
+
+    @GetMapping("/productname2")
+    public String getProductName (Map<String, Object> model) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.put("names", name);
+        currentUser= userRepo.findByUsername(name);
+        model.put("currentUser", currentUser);
+        model.put("currentRole", currentUser.getRoles().toString());
+        model.put("currentUserName", currentUser.getUsername());
+        model.put("showAdmin", currentUser.isShowAdmin());
+        model.put("showSklad", currentUser.isShowSklad());
+        model.put("showReport", currentUser.isShowReport());
+        model.put("showStore", currentUser.isShowStore());
+        return "productname";
     }
 }
