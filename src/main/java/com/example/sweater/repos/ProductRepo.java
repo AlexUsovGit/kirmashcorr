@@ -14,7 +14,7 @@ public interface ProductRepo extends CrudRepository<Product, Integer> {
     List<Product> findAllByOrderByIdDesc();
     List<Product> findAllByAuthorOrderByIdDesc(String author);
     List<Product> findFirst50ByOrderByIdDesc();
-    List<Product> findFirst50ByAuthor(String author);
+    List<Product> findFirst50ByAuthorOrderByIdDesc(String author);
     List<Product> findByBarcode(String barcode);
     Sort sort  = new Sort(Sort.Direction.ASC, "Name");
 

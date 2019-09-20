@@ -52,9 +52,9 @@ public class ProductController {
             AllCounter = productRepo.findAllByOrderByIdDesc().size();
             PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
         }else{
-            products = productRepo.findFirst50ByAuthor(author);
+            products = productRepo.findFirst50ByAuthorOrderByIdDesc(author);
             AllCounter = productRepo.findAllByAuthorOrderByIdDesc(author).size();
-            PageCounter = productRepo.findFirst50ByAuthor(author).size();
+            PageCounter = productRepo.findFirst50ByAuthorOrderByIdDesc(author).size();
         }
 
 
@@ -195,14 +195,14 @@ public class ProductController {
         User currentUser = userRepo.findByUsername(name);
         Iterable<Product> products ;
 
-        if(author.equals("admin")){
+        if(currentUser.isShowAdmin()){
             products = productRepo.findFirst50ByOrderByIdDesc();
             AllCounter = productRepo.findAllByOrderByIdDesc().size();
             PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
         }else{
-            products = productRepo.findFirst50ByAuthor(currentUser.getUsername());
+            products = productRepo.findFirst50ByAuthorOrderByIdDesc(currentUser.getUsername());
             AllCounter = productRepo.findAllByAuthorOrderByIdDesc(currentUser.getUsername()).size();
-            PageCounter = productRepo.findFirst50ByAuthor(currentUser.getUsername()).size();
+            PageCounter = productRepo.findFirst50ByAuthorOrderByIdDesc(currentUser.getUsername()).size();
         }
 
 
