@@ -104,7 +104,8 @@ public class ShopController {
             currentProduct = productRepo.findFirst1ByBarcode(myfilter.toUpperCase());
             Receipt receipt = new Receipt(currentProduct.getProductName(), currentReceiptNumber, currentProduct.getBarcode(),
                     currentProduct.getRetailPrice(), date, "0", "0",
-                    currentProduct.getRetailPrice(), "temp", currentProduct.getGender());
+                    currentProduct.getRetailPrice(), "temp", currentProduct.getGender(),
+                    currentUser.getStoreName(), currentUser.getUsername());
             receiptRepo.save(receipt);
             id = receipt.getId();
 
@@ -254,6 +255,8 @@ public class ShopController {
         Receipt receiptCurrent = receiptRepo.findFirstById(longId);
         receiptCurrent.setCount(count);
         receiptCurrent.setDiscount(discount);
+        receiptCurrent.setAuthor(currentUser.getUsername());
+        receiptCurrent.setStoreName(currentUser.getStoreName());
         double newCost = 0.00;
         newCost = Double.parseDouble(receiptCurrent.getRetailPrice()) * (1 - (double)Integer.parseInt(discount)/100)
                 * Integer.parseInt(count)*100.0;

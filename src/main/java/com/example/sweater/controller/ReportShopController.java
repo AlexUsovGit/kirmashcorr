@@ -1,18 +1,20 @@
 package com.example.sweater.controller;
 
-import com.example.sweater.domain.*;
+import com.example.sweater.domain.Product;
+import com.example.sweater.domain.Receipt;
+import com.example.sweater.domain.ReceiptNumber;
+import com.example.sweater.domain.User;
 import com.example.sweater.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +31,9 @@ public class ReportShopController {
     private ReceiptRepo receiptRepo;
     @Autowired
     ReceiptNumberRepo receiptNumberRepo;
+    @PersistenceContext
+    EntityManager entityManager;
+
 
     private int AllCounter;
     private int PageCounter;

@@ -22,7 +22,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(User user, String   role, Map<String,Object> model ){
+    public String addUser(User user, String role, String storeName , Map<String,Object> model ){
      /*
       User userFromDb =   userRepo.findByUsername(user.getUsername());
       if(userFromDb != null){
@@ -32,6 +32,7 @@ public class RegistrationController {
 
       */
         user.setActive(true);
+        user.setStoreName(storeName);
 
       if(role.equals("ADMIN")){
           user.setRoles(Collections.singleton(Role.ADMIN));

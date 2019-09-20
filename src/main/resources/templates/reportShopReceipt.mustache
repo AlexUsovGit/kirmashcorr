@@ -264,6 +264,8 @@
 
       <thead>
       <th>Номер чека</th>
+      <th>Подразделение</th>
+
       <th>Наименование</th>
       <th>Штрихкод</th>
       <th>Дата-время</th>
@@ -278,6 +280,7 @@
       {{#allReceipt}}
          <tr>
             <td> {{receiptNumber}} </td>
+            <td> {{storeName}} </td>
             <td>{{productName}} {{gender}}</td>
             <td>{{barcode}}</td>
             <td>{{saleDate}}</td>
@@ -299,142 +302,6 @@
 
 </div>
 
-<script>
-   function validate(evt) {
-      var theEvent = evt || window.event;
-
-      // Handle paste
-      if (theEvent.type === 'paste') {
-         key = event.clipboardData.getData('text/plain');
-      } else {
-         // Handle key press
-         var key = theEvent.keyCode || theEvent.which;
-         key = String.fromCharCode(key);
-      }
-      var regex = /[0-9]|\./;
-      if (!regex.test(key)) {
-         theEvent.returnValue = false;
-         if (theEvent.preventDefault) theEvent.preventDefault();
-      }
-   }
-
-   function selectInput() {
-
-   }
-
-</script>
-
-
 </body>
-<script>
-   window.onload = function () {
-      if (document.getElementById('currentcount') == null) {
-         if (document.getElementById('searchString') == null) {
 
-         } else {
-            document.getElementById('searchString').select();
-         }
-
-      } else {
-         document.getElementById('currentcount').select();
-      }
-
-
-   }
-</script>
-
-
-<!-- Trigger/Open The Modal -->
-<button id="myBtn" style="    visibility: hidden;">Open Modal</button>
-
-<!-- The Modal -->
-{{#showProduct}}
-   <div id="myModal" class="modal">
-
-      <!-- Modal content -->
-      <div class="modal-content">
-         <form method="get" action="/updateIntoReceipt">
-            <span class="close">&times;</span>
-            <h3 id="currentid" style="text-align: center; margin-block-end: 0px;">{{filterValue}}</h3>
-            <p style="text-align: center">Введите количество товара и размер скидки (символ % вводить не нужно).</p>
-            <div style="text-align: center">
-               Количество:
-               <input id="currentcount" type="text" autocomplete="off" name="count" value="1"
-                      style="width: 20%; height: 20px"
-                      placeholder="Количество">
-               Скидка,%:
-               <input type="text" autocomplete="off" name="discount" value="0"
-                      style="width: 20%; height: 20px"
-                      placeholder="Скидка">
-               <input type="text" name="myfilter" value="{{receiptNumber}}" style="display: none">
-
-
-               <div style="margin-top: 15px">
-                  <input type="text" name="id" value="{{id}}" style="display: none">
-                  <button type="submit" class="main-btn-form"
-                          style=" width: 100px;     background-color: #FFA073;">Добавить
-                  </button>
-               </div>
-            </div>
-         </form>
-      </div>
-
-   </div>
-{{/showProduct}}
-
-
-{{#showExeption}}
-   <div id="myModal" class="modal">
-
-      <!-- Modal content -->
-      <div class="modal-content">
-         <span class="close">&times;</span>
-         <p style="text-align:  center;">Товар не найден! Попробуйте отсканировать штрихкод еще раз.</p>
-         <div style="text-align: center">
-            <button type="button" class="main-btn-form" onclick="hideModal()"
-                    style="    width: 150px;     background-color: #FFA073;">Ок
-            </button>
-         </div>
-      </div>
-
-   </div>
-{{/showExeption}}
-
-<script>
-   // Get the modal
-   var modal = document.getElementById("myModal");
-
-   // Get the button that opens the modal
-   var btn = document.getElementById("myBtn");
-
-   // Get the <span> element that closes the modal
-   var span = document.getElementsByClassName("close")[0];
-
-   // When the user clicks the button, open the modal
-   btn.onclick = function () {
-      modal.style.display = "block";
-   }
-
-   // When the user clicks on <span> (x), close the modal
-   span.onclick = function () {
-      modal.style.display = "none";
-   }
-
-   // When the user clicks anywhere outside of the modal, close it
-   window.onclick = function (event) {
-      if (event.target == modal) {
-         modal.style.display = "none";
-      }
-   }
-
-   function hideModal() {
-      modal.style.display = "none";
-   }
-
-
-   function refreshCurrentData() {
-
-   }
-
-</script>
 </html>

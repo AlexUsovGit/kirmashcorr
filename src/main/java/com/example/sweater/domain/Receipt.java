@@ -5,8 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -25,6 +23,9 @@ public class Receipt implements Serializable {
     private String cost;
     private String status;
     private String gender;
+    private String storeName;
+    private String author;
+
 
 
 
@@ -33,7 +34,7 @@ public class Receipt implements Serializable {
     }
 
     public Receipt(String productName, String receiptNumber ,String barcode, String retailPrice, Date saleDate, String count, String discount,
-                   String cost, String status, String gender) {
+                   String cost, String status, String gender, String storeName, String author) {
         this.productName = productName;
         this.receiptNumber = receiptNumber;
         this.barcode = barcode;
@@ -44,6 +45,8 @@ public class Receipt implements Serializable {
         this.cost = cost;
         this.status = status;
         this.gender = gender;
+        this.storeName = storeName;
+        this.author = author;
     }
 
 
@@ -134,5 +137,21 @@ public class Receipt implements Serializable {
 
     public void setReceiptNumber(String receiptNumber) {
         this.receiptNumber = receiptNumber;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

@@ -12,6 +12,7 @@ public class User {
 
     private String username;
     private String password;
+    private String storeName;
 
     private boolean active;
     private  boolean showSklad;
@@ -98,4 +99,13 @@ public class User {
     public void setShowAdmin(boolean showAdmin) {
         this.showAdmin = showAdmin;
     }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
 }
+
