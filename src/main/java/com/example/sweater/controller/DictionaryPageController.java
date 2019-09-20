@@ -33,7 +33,7 @@ public class DictionaryPageController {
         model.put("showSklad", currentUser.isShowSklad());
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
-        return "dictionarypage";
+        return "adminpage";
     }
 
     @GetMapping("/productname2")
