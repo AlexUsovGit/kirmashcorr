@@ -205,19 +205,22 @@
                                 price = Math.round(document.getElementsByName("course")[0].value *
                                         document.getElementsByName("importPrice")[0].value *
                                         document.getElementsByName("coefficient")[0].value * 100) / 100;
-                                ost = Math.round((price - Math.floor(price)) * 100) / 100;
+                                retailPrice =  (Math.round(price*10)/10).toFixed(2);
+
+                              /*  ost = Math.round((price - Math.floor(price)) * 100) / 100;
+
                                 if (price <= 1) {
                                     retailPrice = Math.round(price * 10) / 10;
                                 } else {
                                     if (ost < 0.4 && ost != 0) {
-                                        /*retailPrice = Math.floor(price);  */
-                                        retailPrice = price;
+                                        /!*retailPrice = Math.floor(price);  *!/
+                                        retailPrice = price.toFixed(2);
                                     } else {
-                                        /*retailPrice = Math.ceil(price);*/
+                                        /!*retailPrice = Math.ceil(price);*!/
                                         retailPrice = price;
                                     }
 
-                                }
+                                }*/
                                 document.getElementsByName("retailPrice")[0].value = retailPrice;
                             }
                         </script>

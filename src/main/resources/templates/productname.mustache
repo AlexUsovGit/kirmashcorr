@@ -69,7 +69,7 @@
       <div class=" col-md-4"></div>
       <div class=" col-md-4">
 
-         <form method="post" class="form-inline">
+         <form method="post" class="form-inline" action="/productnameAdd">
             <input type="hidden" name="_csrf" value="{{_csrf.token}}">
             <div class=" col-md-8"><input type="text" class="form-control" name="label" placeholder="Наименование">
             </div>
@@ -108,16 +108,17 @@
                      <td>{{isActive}}</td>
                      <td>{{lastUpdate}}</td>
                      <td >
-                        <form method="post" action="">
+                        <form method="post" action="/editproductname">
                            <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-                           <input type="text" name="filter" value="{{id}}" style="display: none">
+                           <input type="text" name="id" value="{{id}}" style="display: none">
                            <button type="submit" class="edit-btn"></button>
                         </form>
                      </td>
                      <td>
-                        <form method="post" action="deletecomposition">
+                        <form method="post" action="/deleteproductname"
+                              onsubmit="return confirm('Вы действительно хотите удалить наименование товара из справочника?');">
                            <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-                           <input type="text" name="filter" value="{{id}}" style="display: none">
+                           <input type="text" name="id" value="{{id}}" style="display: none">
                            <button type="submit" class="delete-btn"></button>
                         </form>
 

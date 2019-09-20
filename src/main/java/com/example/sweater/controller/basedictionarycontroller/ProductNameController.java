@@ -25,11 +25,11 @@ public class ProductNameController {
 
     @GetMapping("/productname")
 
-    public String productname(Map<String, Object> model) {
+    public String productnameGet(Map<String, Object> model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         model.put("names", name);
-        currentUser= userRepo.findByUsername(name);
+        currentUser = userRepo.findByUsername(name);
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());
@@ -38,48 +38,149 @@ public class ProductNameController {
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
         Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
-        model.put("productNames",productNames);
+        model.put("productNames", productNames);
 
         return "productname";
     }
 
     @PostMapping("/productname")
-    public String add( String label, Map<String, Object> model)  {
-        ProductName productName = new ProductName(label,"autor","active",new Date(System.currentTimeMillis()));
-        productNameRepo.save(productName);
 
+    public String productnamePost(Map<String, Object> model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.put("names", name);
+        currentUser = userRepo.findByUsername(name);
+        model.put("currentUser", currentUser);
+        model.put("currentRole", currentUser.getRoles().toString());
+        model.put("currentUserName", currentUser.getUsername());
+        model.put("showAdmin", currentUser.isShowAdmin());
+        model.put("showSklad", currentUser.isShowSklad());
+        model.put("showReport", currentUser.isShowReport());
+        model.put("showStore", currentUser.isShowStore());
         Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
-        model.put("productNames",productNames);
+        model.put("productNames", productNames);
 
         return "productname";
     }
 
 
-    @PostMapping("filterproductname")
-    public String filter (@RequestParam String filter, Map<String, Object> model){
-        Iterable<ProductName> productNames;
 
-        if(filter!=null && !filter.isEmpty()){
-            productNames = productNameRepo.findByLabel(filter);
-        }else {
-            productNames = productNameRepo.findAll();
-        }
+    @PostMapping("/productnameAdd")
+    public String addProductName(String label, Map<String, Object> model) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.put("names", name);
+        currentUser = userRepo.findByUsername(name);
+        model.put("currentUser", currentUser);
+        model.put("currentRole", currentUser.getRoles().toString());
+        model.put("currentUserName", currentUser.getUsername());
+        model.put("showAdmin", currentUser.isShowAdmin());
+        model.put("showSklad", currentUser.isShowSklad());
+        model.put("showReport", currentUser.isShowReport());
+        model.put("showStore", currentUser.isShowStore());
+
+        ProductName productName = new ProductName(label, currentUser.getUsername(), "active", new Date(System.currentTimeMillis()));
+        productNameRepo.save(productName);
+
+        Iterable<ProductName> productNames = productNameRepo.findAllByOrderByLabelAsc();
         model.put("productNames", productNames);
+
         return "productname";
     }
 
     @PostMapping("deleteproductname")
-    public String delete (@RequestParam String filter, Map<String, Object> model){
+    public String deleteProductName(@RequestParam String id, Map<String, Object> model) {
         Iterable<ProductName> productNames;
 
-        if(filter!=null && !filter.isEmpty()){
-            productNameRepo.deleteById(Long.valueOf(filter));
-        }else {
-
+        if (id != null && !id.isEmpty()) {
+            productNameRepo.deleteById(Long.valueOf(id));
         }
         productNames = productNameRepo.findAll();
         model.put("productNames", productNames);
         return "productname";
     }
 
+
+    @PostMapping("editproductname")
+    public String editProductName(@RequestParam String id, Map<String, Object> model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.put("names", name);
+        currentUser = userRepo.findByUsername(name);
+        model.put("currentUser", currentUser);
+        model.put("currentRole", currentUser.getRoles().toString());
+        model.put("currentUserName", currentUser.getUsername());
+        model.put("showAdmin", currentUser.isShowAdmin());
+        model.put("showSklad", currentUser.isShowSklad());
+        model.put("showReport", currentUser.isShowReport());
+        model.put("showStore", currentUser.isShowStore());
+
+        Iterable<ProductName> productNames;
+        ProductName productName;
+
+        if (id != null && !id.isEmpty()) {
+            productName = productNameRepo.findAllById(Long.valueOf(id));
+            if (productName == null) {
+                productNames = productNameRepo.findAll();
+                model.put("productNames", productNames);
+                return "productname";
+
+            } else {
+                model.put("currentProductNameId", productName.getId());
+                model.put("currentProductNameLabel", productName.getLabel());
+                return "admin/productnameedit";
+            }
+
+        } else {
+            productNames = productNameRepo.findAll();
+            model.put("productNames", productNames);
+            return "productname";
+        }
+
+    }
+
+    @PostMapping("saveproductname")
+    public String saveProductName(@RequestParam String id, @RequestParam String label, Map<String, Object> model) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        model.put("names", name);
+        currentUser = userRepo.findByUsername(name);
+        model.put("currentUser", currentUser);
+        model.put("currentRole", currentUser.getRoles().toString());
+        model.put("currentUserName", currentUser.getUsername());
+        model.put("showAdmin", currentUser.isShowAdmin());
+        model.put("showSklad", currentUser.isShowSklad());
+        model.put("showReport", currentUser.isShowReport());
+        model.put("showStore", currentUser.isShowStore());
+
+        Iterable<ProductName> productNames;
+        ProductName productName;
+
+        if (id != null && !id.isEmpty()) {
+            productName = productNameRepo.findAllById(Long.valueOf(id));
+            if (productName == null) {
+                productNames = productNameRepo.findAll();
+                model.put("productNames", productNames);
+                return "productname";
+
+            } else {
+                productName.setLabel(label);
+                productName.setAuthor(currentUser.getUsername());
+                productName.setIsActive("active");
+                productName.setLastUpdate(new Date(System.currentTimeMillis()));
+                productNameRepo.save(productName);
+                productNames = productNameRepo.findAll();
+                model.put("productNames", productNames);
+                return "productname";
+            }
+
+        } else {
+            productNames = productNameRepo.findAll();
+            model.put("productNames", productNames);
+            return "productname";
+        }
+
+    }
 }

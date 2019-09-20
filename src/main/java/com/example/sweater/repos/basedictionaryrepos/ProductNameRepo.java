@@ -8,7 +8,9 @@ import java.util.List;
 public interface ProductNameRepo extends CrudRepository<ProductName, Long> {
     List<ProductName> findByLabel(String barcode);
     List<ProductName> findAllByOrderByLabelAsc();
+    ProductName findAllById(Long id);
 
 
     void deleteById(Long id);
+
 }
