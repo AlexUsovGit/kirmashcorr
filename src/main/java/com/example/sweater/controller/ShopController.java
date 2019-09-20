@@ -254,8 +254,11 @@ public class ShopController {
         Receipt receiptCurrent = receiptRepo.findFirstById(longId);
         receiptCurrent.setCount(count);
         receiptCurrent.setDiscount(discount);
-        receiptCurrent.setCost(String.valueOf(Double.parseDouble(receiptCurrent.getRetailPrice()) *
-                (100 - Integer.parseInt(discount)) / 100 * Integer.parseInt(count)));
+        double newCost = 0.00;
+        newCost = Double.parseDouble(receiptCurrent.getRetailPrice()) * (1 - (double)Integer.parseInt(discount)/100)
+                * Integer.parseInt(count)*100.0;
+        double roundNewCost = Math.round(newCost)/100.0;
+        receiptCurrent.setCost(String.valueOf(roundNewCost));
         receiptRepo.save(receiptCurrent);
 
         List<Product> products = new ArrayList<>();

@@ -38,7 +38,6 @@ public class ReportShopController {
     public String reportPage(Map<String, Object> model) {
         int currentProductCounter = 0;
         double currentSummCost = 0.00;
-
         Date today = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Double AllCost = 0.00;
@@ -53,7 +52,7 @@ public class ReportShopController {
         ReceiptNumber receiptNumber = new ReceiptNumber(name, date, "temp");
         receiptNumberRepo.save(receiptNumber);
         Iterable<Receipt> allReceipt =
-                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(),formatter.format(today));
+                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(), formatter.format(today));
         for (Receipt receipt : allReceipt) {
             currentProductCounter = currentProductCounter + Integer.parseInt(receipt.getCount());
             currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
@@ -78,13 +77,12 @@ public class ReportShopController {
     }
 
 
-
     @GetMapping("/reportShopReceipt")
     public String reportShopReceipt(@RequestParam String today, Map<String, Object> model) throws ParseException {
         int currentProductCounter = 0;
         double currentSummCost = 0.00;
-        Date today2=new SimpleDateFormat("yyyy-MM-dd").parse(today);
-  /*     Date today2 = new Date(today);*/
+        Date today2 = new SimpleDateFormat("yyyy-MM-dd").parse(today);
+        /*     Date today2 = new Date(today);*/
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Double AllCost = 0.00;
         Integer productCounter = 0;
@@ -94,11 +92,17 @@ public class ReportShopController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findByUsername(name);
-        Date date = new Date();
-        ReceiptNumber receiptNumber = new ReceiptNumber(name, date, "temp");
-        receiptNumberRepo.save(receiptNumber);
-        Iterable<Receipt> allReceipt =
-                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(),formatter.format(today2));
+//        Date date = new Date();
+//        ReceiptNumber receiptNumber = new ReceiptNumber(name, date, "temp");
+//        receiptNumberRepo.save(receiptNumber);
+        String author = currentUser.getUsername();
+        Iterable<Receipt> allReceipt;
+        if (currentUser.isShowAdmin()) {
+            allReceipt = receiptRepo.findAllOrderBySaleDateDesc(formatter.format(today2));
+        } else {
+            allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(author, formatter.format(today2));
+        }
+
         for (Receipt receipt : allReceipt) {
             currentProductCounter = currentProductCounter + Integer.parseInt(receipt.getCount());
             currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
@@ -111,7 +115,7 @@ public class ReportShopController {
         model.put("showSklad", currentUser.isShowSklad());
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
-        model.put("receiptNumber", receiptNumber.getId());
+//        model.put("receiptNumber", receiptNumber.getId());
         model.put("productCounter", productCounter);
         model.put("AllCost", AllCost);
         model.put("allReceipt", allReceipt);
@@ -121,8 +125,6 @@ public class ReportShopController {
 
         return "reportShopReceipt";
     }
-
-
 
 
 }

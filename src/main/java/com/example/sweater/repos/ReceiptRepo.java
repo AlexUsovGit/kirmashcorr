@@ -3,6 +3,7 @@ package com.example.sweater.repos;
 
 import com.example.sweater.domain.Product;
 import com.example.sweater.domain.Receipt;
+import com.example.sweater.domain.User;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -32,6 +33,13 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
             "where rn.author  = :author and cast(r.sale_date as date) =  Cast(:today as date) " +
             "order by r.sale_date Desc", nativeQuery = true)
     List<Receipt> findAllByAuthorOrderBySaleDateDesc(String author, String today);
+
+    @Query(value = "SELECT * from  receipt  r " +
+            "left JOIN receipt_number rn on  CAST(r.receipt_number as int8) = rn.id " +
+            "where Cast(r.sale_date as date) =  Cast(:today as date) " +
+            "order by r.sale_date Desc", nativeQuery = true)
+    List<Receipt> findAllOrderBySaleDateDesc(String today);
+
 
 
 
