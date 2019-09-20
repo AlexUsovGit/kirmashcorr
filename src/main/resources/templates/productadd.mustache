@@ -1,490 +1,418 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Товары</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/i18n/ru.js"></script>
-    <style>
+   <title>Товары</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!--===============================================================================================-->
+   <link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
+   <style>
+      body {
+         font-family: sans-serif;
+      }
 
-        .form-inline {
-            width: 100%;
-        }
+      input {
+         width: 96%;
+         margin: 2px;
+         font-size: 11pt;
+      }
 
-        .form-group {
-            width: 100%;
-        }
+      select {
+         width: 97%;
+         margin: 2px;
+         font-size: 11pt;
+      }
 
-        .table .thead-dark th {
-            color: #fff;
-            background-color: #6c757d;
-            border-color: #474d52;
-        }
+      .w30 {
+         width: 30.3%;
+      }
 
-        .p-15 {
-            padding-left: 0px;
-            padding-right: 0px;
+      .main-btn-form-exit {
+         font-size: 15px;
+         width: 100px;
+         background-color: #caccd1;
+         color: white;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+         border: none
+      }
 
-        }
-        .row{
-            padding: 5px;
-        }
+      .main-btn {
+         font-size: 20px;
+         width: 120px;
+         background-color: #179E98;
+         height: 40px;
+         text-decoration: none;
+         border-radius: 9px;
+      }
 
+      .main-btn2 {
+         font-size: 15px;
+         width: 100px;
+         background-color: #179E98;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+      }
 
+      .main-btn-form {
+         font-size: 15px;
+         width: 100px;
+         background-color: #179E98;
+         color: white;
+         height: 30px;
+         text-decoration: none;
+         border-radius: 9px;
+         border: none
+      }
 
-        .delete-btn {
-            background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3e%3cimage width='16' height='16' href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJN AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAJcEhZ cwAACxMAAAsTAQCanBgAAAAHdElNRQfjCRMFIwCr2uwGAAAAXUlEQVQoz9WQyw2AIAxAn4ozOYZh /wlwAwyxHECs0sSDJ18PbfL6SQonnoAgbKyYFC0I4S68UjraJlsbm74hCA5IjwyMb7O/aHCtWtiZ VK4M9Q89M+k6ETsdOUqRAYMYMdr6QGgrAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE5LTA5LTE5VDEy OjM1OjAwLTA3OjAwmZpnkwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOS0wOS0xOVQxMjozNTowMC0w NzowMOjH3y8AAAAASUVORK5CYII='/%3e%3c/svg%3e");
-            width: 16px;
-            border: none;
-            height: 16px;
-            margin-left: 0px;
-            background-position-x: 0px;
-            background-repeat: no-repeat;
-            background-size: 16px;
-        }
+      #customers {
+         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+         border-collapse: collapse;
+         width: 100%;
+      }
 
-        .edit-btn {
-            background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3e%3cimage width='16' height='16' href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJN AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAJcEhZ cwAACxMAAAsTAQCanBgAAAAHdElNRQfjCRMFLhuUEVunAAAAU0lEQVQoz6XPwQ3AIAhA0a8uxmYy mp2MHkyMpiCHcn0/oOCPolxGMWwm9ZJ1FJpLg4IAQmmf5cLYkie87T108p4EfCR1cc//bdGJf0zG ZEzGZPwCEUxKVKATzCQAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMDktMTlUMTI6NDY6MjctMDc6 MDDcFPDgAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTA5LTE5VDEyOjQ2OjI3LTA3OjAwrUlIXAAA AABJRU5ErkJggg=='/%3e%3c/svg%3e");
-            width: 16px;
-            border: none;
-            height: 16px;
-            margin-left: 0px;
-            background-position-x: 0px;
-            background-repeat: no-repeat;
-            background-size: 16px;
-        }
+      #customers td, #customers th {
+         border: 1px solid #ddd;
+         padding: 3px;
+         font-size: 13px;
+      }
 
-        input::-webkit-calendar-picker-indicator {
-            opacity: 100;
-            color: #727b6b;
-        }
-    </style>
+      #customers tr:nth-child(even) {
+         background-color: #f2f2f2;
+      }
+
+      #customers tr:hover {
+         background-color: #ddd;
+      }
+
+      #customers th {
+         padding-top: 10px;
+         padding-bottom: 10px;
+         text-align: center;
+         background-color: #727b6b;
+         color: white;
+         font-size: 12px;
+      }
+
+      input::-webkit-calendar-picker-indicator {
+         opacity: 100;
+         color: #727b6b;
+      }
+   </style>
 
 </head>
-<body style="line-height: 1">
-<div class="row-flex shadow p-3  bg-white rounded">
-    <div class="row ">
-        <div class="col-md-2">
-            <form action="/producttable" method="get" class="form-group">
-                <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
-                <input type="text" name="author" value="{{currentUserName}}" style="display: none">
-                <div><input type="submit" value="Список товаров" class="btn btn-info"/></div>
+<body>
+<script>
+   var productList = '';
+</script>
+
+<table border="0" cellpadding="2" cellspacing="2" align="center" style="width:100%; font-size: 11px">
+   <tr>
+      <td>
+         <div style="width: 50%">
+            <form method="get" action="/producttable">
+               <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
+               <input type="text" name="author" value="{{currentUserName}}" style="display: none">
+               <button type="submit" class="main-btn-form" style="width: 150px; background-color: #179E98">
+                  Список товаров.
+               </button>
             </form>
 
-        </div>
-        <div class="col-md-2 offset-md-8 ">
-            <form action="/logout" method="post" class="form-group text-right ">
-                <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
-                <div class="text-right"><input type="submit" value="Выйти" class="btn btn-secondary"/></div>
+         </div>
+      </td>
+      <td style="width: 50%">
+         <div>
+            <form action="/logout" method="post">
+               <p style=" text-align: right;">
+                  <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
+                  <button type="submit" class="main-btn-form-exit">Выйти
+                  </button>
+               </p>
             </form>
-        </div>
-    </div>
-    <div class="row ">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <form method="post" action="/producttable" class="form-group"
-                  onsubmit="return confirm('Подтверждаете правильность введенных данных?');">
-                <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
+         </div>
+      </td>
+   </tr>
 
-                        <div class="row">
-                            <div class="col-md-6 p-15">
-                                <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                       tabindex="13"
-                                       required autocomplete="off">
-                            </div>
-                            <div class="col-md-6 p-15">
-                                <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                       tabindex="13"
-                                       required autocomplete="off">
-                            </div>
+</table>
+{{#product}}
+   <div align="center">
+   <form method="post" action="/producttable"
+         onsubmit="return confirm('Подтверждаете правильность введенных данных?');">
 
-                        </div>
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
+      <input type="hidden" name="_csrf" value="{{_csrf.token}}">
 
-                        <div class="row">
-                            <div class="col-md-6 p-15">
-                                <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                       tabindex="13"
-                                       required autocomplete="off">
-                            </div>
-                            <div class="col-md-6 p-15">
-                                <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                       tabindex="13"
-                                       required autocomplete="off">
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
-                        <div class="row">
-                            <input class="form-control" type="text" name="importPrice" placeholder="Цена Ввоза"
-                                   tabindex="13"
-                                   required autocomplete="off">
-                        </div>
-                    </div>
+   <table align="center" border="0" cellpadding="0" cellspacing="1" style="width:80%">
+   <tbody>
+   <tr>
+      <td style="width: 45%">
+         <input list="productNames" name="productName" tabindex="1" required placeholder="Наименование"
+                autocomplete="off">
+         <datalist id="productNames">
+            {{#productNames}}
+               <option value="{{label}}">{{label}}</option>
+            {{/productNames}}
+         </datalist>
+      </td>
+      <td style="width: 10%">&nbsp;</td>
+      <td style="width: 45%">
 
 
-                </div>
+         <input type="text" name="quantity" placeholder="Количество" autocomplete="off" required
+                tabindex="10" class="w30" onkeypress='validate(event)'>
 
 
-                <div class="row text-center" ><input style="width: 100%" type="submit" value="Добавить" class="btn btn-success"/></div>
-            </form>
-        </div>
-        <div class="col-md-3"></div>
+         <input list="currencys" name="currency" placeholder="Валюта" value="{{currency}}"
+                autocomplete="off" required
+                tabindex="11" style="width: 30%;">
+         <datalist id="currencys">
+            <option value="RUB">RUB</option>
+            <option value="BYN">BYN</option>
+            <option value="USD">USD</option>
+
+         </datalist>
+         <input type="text" name="course" placeholder="Курс" value="{{course}}" autocomplete="off"
+                required
+                tabindex="12" class="w30" onkeypress='validate(event)' oninput='calculateSum()'>
+      </td>
+   </tr>
+   <tr>
+      <td>
+
+         <input list="genders" name="gender" placeholder="Пол" tabindex="2" required autocomplete="off">
+         <datalist id="genders">
+            <option value="-">-</option>
+            <option value="ДЕТ">ДЕТ</option>
+            <option value="ЖЕН">ЖЕН</option>
+            <option value="МУЖ">МУЖ</option>
+         </datalist>
+
+      </td>
+      <td>&nbsp;</td>
+      <td>
+         <input type="text" name="importPrice" placeholder="Цена Ввоза" tabindex="13" class="w30"
+                required
+                autocomplete="off" onkeypress='validate(event)' oninput='calculateSum()'>
+         <input type="text" name="coefficient" placeholder="Коэффициент" value="{{coefficient}}"
+                tabindex="14" required
+                class="w30" autocomplete="off" onkeypress='validate(event)' oninput='calculateSum()'>
+         <script>
+            function calculateSum() {
+               var price;
+               var ost;
+               var retailPrice;
+               price = Math.round(document.getElementsByName("course")[0].value *
+                       document.getElementsByName("importPrice")[0].value *
+                       document.getElementsByName("coefficient")[0].value * 100) / 100;
+               retailPrice = (Math.round(price * 10) / 10).toFixed(2);
+
+               /*  ost = Math.round((price - Math.floor(price)) * 100) / 100;
+
+                 if (price <= 1) {
+                     retailPrice = Math.round(price * 10) / 10;
+                 } else {
+                     if (ost < 0.4 && ost != 0) {
+                         /!*retailPrice = Math.floor(price);  *!/
+                         retailPrice = price.toFixed(2);
+                     } else {
+                         /!*retailPrice = Math.ceil(price);*!/
+                         retailPrice = price;
+                     }
+
+                 }*/
+               document.getElementsByName("retailPrice")[0].value = retailPrice;
+            }
+         </script>
 
 
-    </div>
+         <input type="text" name="retailPrice" placeholder="Цена Розничная" readonly tabindex="15"
+                class="w30"
+                autocomplete="off" onkeypress='validate(event)'>
+      </td>
 
-    {{#product}}
-    <div align="center">
-    <form method="post" action="/producttable"
-          onsubmit="return confirm('Подтверждаете правильность введенных данных?');">
+   </tr>
+   <tr>
+      <td>
+         <input type="text" name="trademark" placeholder="Торговая Марка" value="{{trademark}}"
+                autocomplete="off" tabindex="3"
+                required>
+      </td>
+      <td>&nbsp;</td>
+      <td>
+         <input list="seasons" name="season" tabindex="16" required autocomplete="off" value="{{season}}"
+                placeholder="Сезон">
+         <datalist id="seasons">
+            <option value="ДЕМИ">ДЕМИ</option>
+            <option value="ЗИМА">ЗИМА</option>
+            <option value="КРУГЛОСЕЗОННЫЙ">КРУГЛОСЕЗОННЫЙ</option>
+            <option value="ЛЕТО">ЛЕТО</option>
+         </datalist>
 
-        <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <input list="importers" name="importer" tabindex="4" value="{{importer}}" required
+                autocomplete="off" placeholder="Импортер">
+         <datalist id="importers">
+            <option
+                    value="ИП Роденя А.М. УНП 291482064 РБ  225254  Брестская обл., Ивацевичский р-н, аг.Воля, ул.Административная, 16">
+               ИП Роденя А.М. УНП 291482064 РБ 225254 Брестская обл., Ивацевичский р-н, аг.Воля,
+               ул.Административная, 16
+            </option>
+            <option
+                    value="ООО 'Вориор', 225295, Республика Беларусь, Брестская область, город Ивацевичи, улица Парковая, дом 2">
+               ООО 'Вориор', 225295, Республика Беларусь, Брестская область, город Ивацевичи, улица
+               Парковая, дом 2
+            </option>
 
-    <table align="center" border="0" cellpadding="0" cellspacing="1" style="width:80%">
-    <tbody>
-    <tr>
-        <td style="width: 45%">
-            <input list="productNames" name="productName" tabindex="1" required placeholder="Наименование"
-                   autocomplete="off">
-            <datalist id="productNames">
-                {{#productNames}}
-                    <option value="{{label}}">{{label}}</option>
-                {{/productNames}}
-            </datalist>
-        </td>
-        <td style="width: 10%">&nbsp;</td>
-        <td style="width: 45%">
+            <option
+                    value="ИП Роденя Т.В. УНП 291535496 РБ  225254  Брестская обл., Ивацевичский р-н, аг.Воля, ул.Административная, 1А">
+               ИП Роденя Т.В. УНП 291535496 РБ 225254 Брестская обл., Ивацевичский р-н, аг.Воля,
+               ул.Административная, 1А
+            </option>
 
-
-            <input type="text" name="quantity" placeholder="Количество" autocomplete="off" required
-                   tabindex="10" class="w30" onkeypress='validate(event)'>
-
-
-            <input list="currencys" name="currency" placeholder="Валюта" value="{{currency}}"
-                   autocomplete="off" required
-                   tabindex="11" style="width: 30%;">
-            <datalist id="currencys">
-                <option value="RUB">RUB</option>
-                <option value="BYN">BYN</option>
-                <option value="USD">USD</option>
-
-            </datalist>
-            <input type="text" name="course" placeholder="Курс" value="{{course}}" autocomplete="off"
-                   required
-                   tabindex="12" class="w30" onkeypress='validate(event)' oninput='calculateSum()'>
-        </td>
-    </tr>
-    <tr>
-        <td>
-
-            <input list="genders" name="gender" placeholder="Пол" tabindex="2" required autocomplete="off">
-            <datalist id="genders">
-                <option value="-">-</option>
-                <option value="ДЕТ">ДЕТ</option>
-                <option value="ЖЕН">ЖЕН</option>
-                <option value="МУЖ">МУЖ</option>
-            </datalist>
-
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <input type="text" name="importPrice" placeholder="Цена Ввоза" tabindex="13" class="w30"
-                   required
-                   autocomplete="off" onkeypress='validate(event)' oninput='calculateSum()'>
-            <input type="text" name="coefficient" placeholder="Коэффициент" value="{{coefficient}}"
-                   tabindex="14" required
-                   class="w30" autocomplete="off" onkeypress='validate(event)' oninput='calculateSum()'>
-            <script>
-                function calculateSum() {
-                    var price;
-                    var ost;
-                    var retailPrice;
-                    price = Math.round(document.getElementsByName("course")[0].value *
-                            document.getElementsByName("importPrice")[0].value *
-                            document.getElementsByName("coefficient")[0].value * 100) / 100;
-                    retailPrice = (Math.round(price * 10) / 10).toFixed(2);
-
-                    /*  ost = Math.round((price - Math.floor(price)) * 100) / 100;
-
-                      if (price <= 1) {
-                          retailPrice = Math.round(price * 10) / 10;
-                      } else {
-                          if (ost < 0.4 && ost != 0) {
-                              /!*retailPrice = Math.floor(price);  *!/
-                              retailPrice = price.toFixed(2);
-                          } else {
-                              /!*retailPrice = Math.ceil(price);*!/
-                              retailPrice = price;
-                          }
-
-                      }*/
-                    document.getElementsByName("retailPrice")[0].value = retailPrice;
-                }
-            </script>
+            <option
+                    value="ИП Роденя М.М. УНП 291577243 РБ  225254  Брестская обл., Ивацевичский р-н, аг.Воля, ул.Административная, 1А">
+               ИП Роденя М.М. УНП 291577243 РБ 225254 Брестская обл., Ивацевичский р-н, аг.Воля,
+               ул.Административная, 1А
+            </option>
+         </datalist>
 
 
-            <input type="text" name="retailPrice" placeholder="Цена Розничная" readonly tabindex="15"
-                   class="w30"
-                   autocomplete="off" onkeypress='validate(event)'>
-        </td>
+      </td>
+      <td>&nbsp;</td>
+      <td>
+         <input list="countryOfEntrys" name="countryOfEntry" value="{{countryOfEntry}}" tabindex="17"
+                required autocomplete="off"
+                placeholder="Страна ввоза">
+         <datalist id="countryOfEntrys">
+            <option value="КНДР">КНДР</option>
+            <option value="РФ">РФ</option>
+            <option value="РБ">РБ</option>
+         </datalist>
 
-    </tr>
-    <tr>
-        <td>
-            <input type="text" name="trademark" placeholder="Торговая Марка" value="{{trademark}}"
-                   autocomplete="off" tabindex="3"
-                   required>
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <input list="seasons" name="season" tabindex="16" required autocomplete="off" value="{{season}}"
-                   placeholder="Сезон">
-            <datalist id="seasons">
-                <option value="ДЕМИ">ДЕМИ</option>
-                <option value="ЗИМА">ЗИМА</option>
-                <option value="КРУГЛОСЕЗОННЫЙ">КРУГЛОСЕЗОННЫЙ</option>
-                <option value="ЛЕТО">ЛЕТО</option>
-            </datalist>
-
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <input list="importers" name="importer" tabindex="4" value="{{importer}}" required
-                   autocomplete="off" placeholder="Импортер">
-            <datalist id="importers">
-                <option
-                        value="ИП Роденя А.М. УНП 291482064 РБ  225254  Брестская обл., Ивацевичский р-н, аг.Воля, ул.Административная, 16">
-                    ИП Роденя А.М. УНП 291482064 РБ 225254 Брестская обл., Ивацевичский р-н, аг.Воля,
-                    ул.Административная, 16
-                </option>
-                <option
-                        value="ООО 'Вориор', 225295, Республика Беларусь, Брестская область, город Ивацевичи, улица Парковая, дом 2">
-                    ООО 'Вориор', 225295, Республика Беларусь, Брестская область, город Ивацевичи, улица
-                    Парковая, дом 2
-                </option>
-
-                <option
-                        value="ИП Роденя Т.В. УНП 291535496 РБ  225254  Брестская обл., Ивацевичский р-н, аг.Воля, ул.Административная, 1А">
-                    ИП Роденя Т.В. УНП 291535496 РБ 225254 Брестская обл., Ивацевичский р-н, аг.Воля,
-                    ул.Административная, 1А
-                </option>
-
-                <option
-                        value="ИП Роденя М.М. УНП 291577243 РБ  225254  Брестская обл., Ивацевичский р-н, аг.Воля, ул.Административная, 1А">
-                    ИП Роденя М.М. УНП 291577243 РБ 225254 Брестская обл., Ивацевичский р-н, аг.Воля,
-                    ул.Административная, 1А
-                </option>
-            </datalist>
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <input list="manufacturers" name="manufacturer" value="{{manufacturer}}" tabindex="5" required
+                autocomplete="off"
+                placeholder="Производитель">
+         <datalist id="manufacturers">
+            <option value="Unionwin Import & Export Co. Limited, адрес: ГОНКОНГ, Room 905 WorkingbergComm BLDG 41-47 Marble RD">
+               Unionwin Import & Export Co. Limited, адрес: ГОНКОНГ, Room 905 WorkingbergComm BLDG
+               41-47 Marble RD
+            </option>
+            <option value="-">-</option>
+         </datalist>
 
 
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <input list="countryOfEntrys" name="countryOfEntry" value="{{countryOfEntry}}" tabindex="17"
-                   required autocomplete="off"
-                   placeholder="Страна ввоза">
-            <datalist id="countryOfEntrys">
-                <option value="КНДР">КНДР</option>
-                <option value="РФ">РФ</option>
-                <option value="РБ">РБ</option>
-            </datalist>
-
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <input list="manufacturers" name="manufacturer" value="{{manufacturer}}" tabindex="5" required
-                   autocomplete="off"
-                   placeholder="Производитель">
-            <datalist id="manufacturers">
-                <option value="Unionwin Import & Export Co. Limited, адрес: ГОНКОНГ, Room 905 WorkingbergComm BLDG 41-47 Marble RD">
-                    Unionwin Import & Export Co. Limited, адрес: ГОНКОНГ, Room 905 WorkingbergComm BLDG
-                    41-47 Marble RD
-                </option>
-                <option value="-">-</option>
-            </datalist>
-
-
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <input type="text" name="note" placeholder="Примечание" value="{{note}}" autocomplete="off"
-                   tabindex="18">
-        </td>
-    </tr>
-    <tr>
-        <td>
+      </td>
+      <td>&nbsp;</td>
+      <td>
+         <input type="text" name="note" placeholder="Примечание" value="{{note}}" autocomplete="off"
+                tabindex="18">
+      </td>
+   </tr>
+   <tr>
+      <td>
                <span> <input type="text" name="article" placeholder="Артикул" value="{{article}}" required tabindex="6"
                              autocomplete="off"
                              style=" width: 47%;"> </span>
-            <span> <input type="text" name="code" placeholder="Внешний Код" value="{{code}}" required
-                          tabindex="7" autocomplete="off"
-                          style="    width: 46.6%;"> </span>
-        </td>
-        <td>&nbsp;</td>
-        <td><input type="text" name="boxNumber" placeholder="Номер коробки" value="{{boxNumber}}" autocomplete="off"
-                   tabindex="19" required></td>
-    </tr>
-    <tr>
-        <td>
+         <span> <input type="text" name="code" placeholder="Внешний Код" value="{{code}}" required
+                       tabindex="7" autocomplete="off"
+                       style="    width: 46.6%;"> </span>
+      </td>
+      <td>&nbsp;</td>
+      <td><input type="text" name="boxNumber" placeholder="Номер коробки" value="{{boxNumber}}" autocomplete="off"
+                 tabindex="19" required></td>
+   </tr>
+   <tr>
+      <td>
 
-            <input list="compositions" name="composition" value="{{composition}}" tabindex="8" required
-                   autocomplete="off"
-                   placeholder="Состав">
-            <datalist id="compositions">
-                {{#compositions}}
-                    <option value="{{label}}">{{label}}</option>
+         <input list="compositions" name="composition" value="{{composition}}" tabindex="8" required
+                autocomplete="off"
+                placeholder="Состав">
+         <datalist id="compositions">
+            {{#compositions}}
+               <option value="{{label}}">{{label}}</option>
 
-                {{/compositions}}
-            </datalist>
+            {{/compositions}}
+         </datalist>
 
-        </td>
-        <td>&nbsp;</td>
-        <td>
-            <input type="text" name="size" placeholder="Размер" value="{{size}}" autocomplete="off"
-                   tabindex="20">
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <input type="date" name="dateArrive" placeholder="Дата прихода" value="{{dateArrive}}"
-                   autocomplete="off" tabindex="9" required>
+      </td>
+      <td>&nbsp;</td>
+      <td>
+         <input type="text" name="size" placeholder="Размер" value="{{size}}" autocomplete="off"
+                tabindex="20">
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <input type="date" name="dateArrive" placeholder="Дата прихода" value="{{dateArrive}}"
+                autocomplete="off" tabindex="9" required>
 
-        </td>
+      </td>
 
-        <td>
-            <input type="text" name="barcode" placeholder="Штрихкод" autocomplete="off"
-                   style="display: none">
-        </td>
-    </tr>
-    {{/product}}
+      <td>
+         <input type="text" name="barcode" placeholder="Штрихкод" autocomplete="off"
+                style="display: none">
+      </td>
+   </tr>
+{{/product}}
 <tr style="display: none;">
-    <td>
-        <input type="text" name="author" value="{{currentUserName}}" autocomplete="off"
-        ></td>
+   <td >
+      <input type="text" name="author" value="{{currentUserName}}" autocomplete="off"
+      ></td>
 </tr>
 
 
 </tbody>
 </table>
-    <button type="submit" class="main-btn-form" tabindex="21" style="background-color: #FFA073">Добавить
-    </button>
+   <button type="submit" class="main-btn-form" tabindex="21" style="background-color: #FFA073">Добавить
+   </button>
 
 </form>
 </div>
 
-    <script>
-        function show_confirm() {
-            confirm("Подтвердите введенные данные!");
-        }
+<script>
+   function show_confirm() {
+      confirm("Подтвердите введенные данные!");
+   }
 
-        function validate(evt) {
-            var theEvent = evt || window.event;
-            // Handle paste
-            if (theEvent.type === 'paste') {
-                key = event.clipboardData.getData('text/plain');
-            } else {
-                // Handle key press
-                var key = theEvent.keyCode || theEvent.which;
-                key = String.fromCharCode(key);
-            }
-            var regex = /[0-9]|\./;
-            if (!regex.test(key)) {
-                theEvent.returnValue = false;
-                if (theEvent.preventDefault) theEvent.preventDefault();
-            }
-        }
+   function validate(evt) {
+      var theEvent = evt || window.event;
+      // Handle paste
+      if (theEvent.type === 'paste') {
+         key = event.clipboardData.getData('text/plain');
+      } else {
+         // Handle key press
+         var key = theEvent.keyCode || theEvent.which;
+         key = String.fromCharCode(key);
+      }
+      var regex = /[0-9]|\./;
+      if (!regex.test(key)) {
+         theEvent.returnValue = false;
+         if (theEvent.preventDefault) theEvent.preventDefault();
+      }
+   }
 
-        window.onload = function () {
-            var checkBoxes = document.querySelectorAll('input[type="checkbox"]');
-            for (var i = 0; i < checkBoxes.length; i++) {
-                if (checkBoxes[i].parentElement.parentElement.children[17].innerText == "1") {
-                    // alert('true');
-                    checkBoxes[i].checked = true;
-                } else {
-                    checkBoxes[i].checked = false;
-                    //alert('false');
-                }
-            }
-        }
-    </script>
+   window.onload = function () {
+      var checkBoxes = document.querySelectorAll('input[type="checkbox"]');
+      for (var i = 0; i < checkBoxes.length; i++) {
+         if (checkBoxes[i].parentElement.parentElement.children[17].innerText == "1") {
+            // alert('true');
+            checkBoxes[i].checked = true;
+         } else {
+            checkBoxes[i].checked = false;
+            //alert('false');
+         }
+      }
+   }
+</script>
 
-</div>
+
 </body>
 </html>
