@@ -67,19 +67,19 @@
 
 
     <div class="row">
-        <div class=" col-md-4"></div>
-        <div class=" col-md-4">
+        <div class=" col-md-3"></div>
+        <div class=" col-md-5">
 
             <form method="post" class="form-inline" action="/saveproductname">
                 <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-                <div class=" col-md-2"><input type="text" class="form-control"
+                <div class=" col-md-3"><input type="text" class="form-control"
                                               value="{{currentProductNameId}}" name="id" readonly
                 ></div>
                 <div class=" col-md-6"><input type="text" class="form-control" value="{{currentProductNameLabel}}"
                                               name="label"
                                               placeholder="Наименование">
                 </div>
-                <div class=" col-md-4">
+                <div class=" col-md-3">
                     <button type="submit" class="btn btn-success ">Сохранить</button>
                 </div>
             </form>

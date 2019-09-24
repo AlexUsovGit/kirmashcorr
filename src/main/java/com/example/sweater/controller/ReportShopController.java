@@ -4,131 +4,103 @@ import com.example.sweater.domain.Product;
 import com.example.sweater.domain.Receipt;
 import com.example.sweater.domain.ReceiptNumber;
 import com.example.sweater.domain.User;
-import com.example.sweater.repos.*;
+import com.example.sweater.repos.ReceiptNumberRepo;
+import com.example.sweater.repos.ReceiptRepo;
+import com.example.sweater.repos.UserRepo;
+import com.example.sweater.service.AuthenticationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @Controller
 public class ReportShopController {
-    @Autowired
-    private ProductRepo productRepo;
-    @Autowired
-    private UserRepo userRepo;
-    @Autowired
-    private FilterRepo filterRepo;
+
+
     @Autowired
     private ReceiptRepo receiptRepo;
     @Autowired
     ReceiptNumberRepo receiptNumberRepo;
-    @PersistenceContext
-    EntityManager entityManager;
+    @Autowired
+    AuthenticationInfo authenticationInfo;
 
-
-    private int AllCounter;
-    private int PageCounter;
-    private Product currentProduct;
-
-    @GetMapping("/reportPage")
+    @PostMapping("/reportPage")
     public String reportPage(Map<String, Object> model) {
-        int currentProductCounter = 0;
-        double currentSummCost = 0.00;
+
+        int productCounter = 0;
+
+        double allCost = 0.00;
+        String currentUserName;
         Date today = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Double AllCost = 0.00;
-        Integer productCounter = 0;
-        Iterable<Product> products = null;
-        /*       products= productRepo.findFirst50ByOrderByIdDesc();*/
-        model.put("products", products);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
-        Date date = new Date();
-        ReceiptNumber receiptNumber = new ReceiptNumber(name, date, "temp");
+        currentUserName = authenticationInfo.getCurrentUser().getUsername();
+        ReceiptNumber receiptNumber = new ReceiptNumber(currentUserName, today, "temp");
         receiptNumberRepo.save(receiptNumber);
         Iterable<Receipt> allReceipt =
-                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUser.getUsername(), formatter.format(today));
-        for (Receipt receipt : allReceipt) {
-            currentProductCounter = currentProductCounter + Integer.parseInt(receipt.getCount());
-            currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
-        }
-
-        model.put("currentUser", currentUser);
-        model.put("currentRole", currentUser.getRoles().toString());
-        model.put("currentUserName", currentUser.getUsername());
-        model.put("showAdmin", currentUser.isShowAdmin());
-        model.put("showSklad", currentUser.isShowSklad());
-        model.put("showReport", currentUser.isShowReport());
-        model.put("showStore", currentUser.isShowStore());
+                receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUserName, formatter.format(today));
+        model.put("currentUserName", currentUserName);
         model.put("receiptNumber", receiptNumber.getId());
         model.put("productCounter", productCounter);
-        model.put("AllCost", AllCost);
+        model.put("AllCost", allCost);
         model.put("allReceipt", allReceipt);
-        model.put("currentProductCounter", currentProductCounter);
-        model.put("currentSummCost", currentSummCost);
+        model.put("currentProductCounter",  getCurrentProductCounter(allReceipt));
+        model.put("currentSummCost", getCurrentSummCost(allReceipt));
 
+        model.putAll(authenticationInfo.getPermission(model));
 
         return "reportpage";
     }
 
 
-    @GetMapping("/reportShopReceipt")
-    public String reportShopReceipt(@RequestParam String today, Map<String, Object> model) throws ParseException {
-        int currentProductCounter = 0;
-        double currentSummCost = 0.00;
-        Date today2 = new SimpleDateFormat("yyyy-MM-dd").parse(today);
-        /*     Date today2 = new Date(today);*/
+    @PostMapping("/reportShopReceipt")
+    public String reportShopReceipt(@RequestParam String today,
+                                    @RequestParam String department ,Map<String, Object> model) throws ParseException {
+
+        int productCounter = 0;
+        double allCost = 0.00;
+        String currentUserName;
+        Date todayDate = new SimpleDateFormat("yyyy-MM-dd").parse(today);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Double AllCost = 0.00;
-        Integer productCounter = 0;
-        Iterable<Product> products = null;
-        /*       products= productRepo.findFirst50ByOrderByIdDesc();*/
-        model.put("products", products);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
-//        Date date = new Date();
-//        ReceiptNumber receiptNumber = new ReceiptNumber(name, date, "temp");
-//        receiptNumberRepo.save(receiptNumber);
-        String author = currentUser.getUsername();
+        currentUserName = authenticationInfo.getCurrentUser().getUsername();
         Iterable<Receipt> allReceipt;
-        if (currentUser.isShowAdmin()) {
-            allReceipt = receiptRepo.findAllOrderBySaleDateDesc(formatter.format(today2));
+        if (authenticationInfo.getCurrentUser().isShowAdmin()) {
+//            allReceipt = receiptRepo.findAllOrderBySaleDateDesc(formatter.format(todayDate));
+            allReceipt = receiptRepo.findAllBySaleDateAndDepartmentOrderBySaleDateDesc(formatter.format(todayDate),department);
         } else {
-            allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(author, formatter.format(today2));
+            allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUserName, formatter.format(todayDate));
         }
-
-        for (Receipt receipt : allReceipt) {
-            currentProductCounter = currentProductCounter + Integer.parseInt(receipt.getCount());
-            currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
-        }
-
-        model.put("currentUser", currentUser);
-        model.put("currentRole", currentUser.getRoles().toString());
-        model.put("currentUserName", currentUser.getUsername());
-        model.put("showAdmin", currentUser.isShowAdmin());
-        model.put("showSklad", currentUser.isShowSklad());
-        model.put("showReport", currentUser.isShowReport());
-        model.put("showStore", currentUser.isShowStore());
-//        model.put("receiptNumber", receiptNumber.getId());
+        model.put("currentUserName", currentUserName);
         model.put("productCounter", productCounter);
-        model.put("AllCost", AllCost);
+        model.put("AllCost", allCost);
         model.put("allReceipt", allReceipt);
-        model.put("currentProductCounter", currentProductCounter);
-        model.put("currentSummCost", currentSummCost);
-
+        model.put("currentProductCounter",  getCurrentProductCounter(allReceipt));
+        model.put("currentSummCost", getCurrentSummCost(allReceipt));
+        model.putAll(authenticationInfo.getPermission(model));
 
         return "reportShopReceipt";
+    }
+
+    public int getCurrentProductCounter(Iterable<Receipt> allReceipt) {
+        int currentProductCounter = 0;
+        for (Receipt receipt : allReceipt) {
+            currentProductCounter = currentProductCounter + Integer.parseInt(receipt.getCount());
+        }
+        return currentProductCounter;
+    }
+
+    public double getCurrentSummCost(Iterable<Receipt> allReceipt) {
+        double currentSummCost = 0.00;
+        for (Receipt receipt : allReceipt) {
+            currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
+        }
+        return Math.round(currentSummCost*100.0)/100.0;
     }
 
 

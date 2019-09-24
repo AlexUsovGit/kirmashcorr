@@ -37,6 +37,12 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
             "order by r.sale_date Desc", nativeQuery = true)
     List<Receipt> findAllOrderBySaleDateDesc(String today);
 
+    @Query(value = "SELECT * from  receipt  r " +
+            "left JOIN receipt_number rn on  CAST(r.receipt_number as int8) = rn.id " +
+            "where Cast(r.sale_date as date) =  Cast(:today as date) and store_name  = :department " +
+            "order by r.sale_date Desc", nativeQuery = true)
+    List<Receipt> findAllBySaleDateAndDepartmentOrderBySaleDateDesc(String today, String department);
+
 
 
 

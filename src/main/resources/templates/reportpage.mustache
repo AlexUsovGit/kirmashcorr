@@ -112,10 +112,11 @@
    {{#showStore}}
       <tr>
          <td style=" padding-top: 15px;">
-            <form method="get" action="/reportShopReceipt">
+            <form method="post" action="/reportShopReceipt">
                <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
                <input type="text" name="author" value="{{currentUserName}}" style="display: none">
                <input type="text" id="date" name="today"  style="display: none" >
+               <input type="text" name="department" value="Админ"  style="display: none" >
                <button type="submit" class="menu-btn-form">
                   Продажи.
                </button>

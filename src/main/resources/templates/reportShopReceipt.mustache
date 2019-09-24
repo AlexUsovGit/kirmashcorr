@@ -5,299 +5,191 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <!--===============================================================================================-->
-   <link rel="icon" type="image/png" href="../images/icons/shop.ico"/>
+
+   <link rel="icon" type="image/png" href="../../images/icons/favicon.ico"/>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/i18n/ru.js"></script>
+
+   <script>
+
+      // In your Javascript (external .js resource or <script> tag)
+      $(document).ready(function () {
+         $('.js-example-basic-single').select2();
+      });
+   </script>
+
+
    <style>
-      body {
-         font-family: sans-serif;
+      .btn-w100 {
+         width: 100%;
+         font-size: 20px;
       }
 
-      input {
-         width: 96%;
-         margin: 2px;
-         font-size: 11pt;
-
-      }
-
-      select {
-         width: 97%;
-         margin: 2px;
-         font-size: 11pt;
-      }
-
-
-      .main-btn-form-exit {
-         font-size: 15px;
-         width: 100px;
-         background-color: #caccd1;
-         color: white;
-         height: 30px;
-         text-decoration: none;
-         border-radius: 9px;
-         border: none
-      }
-
-
-      .main-btn-form {
-         font-size: 15px;
-         width: 100px;
-         background-color: #179E98;
-         color: white;
-         height: 30px;
-         text-decoration: none;
-         border-radius: 9px;
-         border: none
-      }
-
-      .sort_ico_asc {
-         background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3cpath d='M0 0h24v24H0z' fill='none'/%3e%3c/svg%3e");
-
-         width: 18px;
-         border: none;
-         height: 20px;
-
-      }
-
-      .sort_ico_desc {
-         background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18'%3e%3cpath d='M7 14l5-5 5 5z'/%3e%3cpath d='M0 0h24v24H0z' fill='none'/%3e%3c/svg%3e");
-         width: 18px;
-         border: none;
-         height: 20px;
-
-      }
-
-      .select_all {
-         /*  background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18'%3e%3cpath d='M0 0h24v24H0z' fill='none'/%3e%3cpath d='M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3e%3c/svg%3e");*/
-         /*   background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath fill='%23646b5e' d='M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3e%3c/g%3e%3c/svg%3e");
-         */
-         background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath stroke='null' stroke-opacity='null' stroke-width='null' fill='%23666' d='M3.967 4.93h15.738v14.098H3.967z'/%3e%3cpath fill='%23fff' d='M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3e%3c/g%3e%3c/svg%3e");
-         width: 18px;
-         border: none;
-         height: 18px;
-      }
-
-      .deselect_all {
-         /* background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath stroke='null' stroke-opacity='null' stroke-width='null' fill='%23fff' d='M2.689 3h18v18h-18z'/%3e%3c/g%3e%3c/svg%3e");
-        */
-         background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath stroke='null' stroke-opacity='null' stroke-width='null' fill='%23fff' d='M3.967 4.93h15.738v14.098H3.967z'/%3e%3cpath fill='%23fff' d='M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3e%3c/g%3e%3c/svg%3e");
-         width: 18px;
-         border: none;
-         height: 20px;
-      }
-
-      .download-btn {
-         background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath fill='%23facb1d' d='M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z'/%3e%3c/g%3e%3c/svg%3e");
-         width: 20px;
-         border: none;
-         height: 18px;
-         margin-left: -5px;
-         background-position-x: center;
-         background-position-y: 3px;
-         background-repeat: no-repeat;
-         background-size: 24px;
-      }
-
-      .delete-btn {
-         /*   background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath fill='%23de4215' d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'/%3e%3c/g%3e%3c/svg%3e");
-         */
-         background: url("data:image/svg+xml;charset=UTF-8,%3csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='none' d='M-1-1h582v402H-1z'/%3e%3cg%3e%3cpath fill='none' d='M0 0h24v24H0V0z'/%3e%3cpath fill='%23de4215' d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'/%3e%3c/g%3e%3c/svg%3e");
-         width: 25px;
-         border: none;
-         height: 25px;
-         margin-left: 5px;
-         background-position-x: -2px;
-         background-repeat: no-repeat;
-         background-size: 24px;
-      }
-
-      #customers {
-         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-         border-collapse: collapse;
+      .form-inline .form-control {
          width: 100%;
       }
 
-      #customers td, #customers th {
-         border: 1px solid #ddd;
-         padding: 3px;
-         font-size: 16px;
+      .table .thead-dark th {
+         color: #fff;
+         background-color: #6c757d;
+         border-color: #474d52;
       }
 
-      #customers tr:nth-child(even) {
-         background-color: #f2f2f2;
-      }
 
-      #customers tr:hover {
-         background-color: #ddd;
-      }
-
-      #customers th {
-         padding-top: 0px;
-         padding-bottom: 0px;
-         text-align: center;
-         background-color: #727b6b;
-         color: white;
-         font-size: 16px;
+     /* .select2-container .select2-selection--single {
+         height: 36px;
+         line-height: 1.5;
 
       }
 
-      input::-webkit-calendar-picker-indicator {
-         opacity: 100;
-         color: #727b6b;
+      .select2-container--default .select2-selection--single .select2-selection__rendered {
+         padding: .375rem .75rem;
       }
 
-      /* The Modal (background) */
-      .modal {
-         /*  display: none;*/ /* Hidden by default */
-         position: fixed; /* Stay in place */
-         z-index: 1; /* Sit on top */
-         padding-top: 100px; /* Location of the box */
-         left: 0;
-         top: 0;
-         width: 100%; /* Full width */
-         height: 100%; /* Full height */
-         overflow: auto; /* Enable scroll if needed */
-         background-color: rgb(0, 0, 0); /* Fallback color */
-         background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-      }
+      .select2-container--default .select2-selection--single .select2-selection__arrow {
+         height: 36px;
+      }*/
 
-      /* Modal Content */
-      .modal-content {
-         background-color: #fefefe;
-         margin: auto;
-         padding: 20px;
-         border: 1px solid #888;
-         width: 50%;
-      }
 
-      /* The Close Button */
-      .close {
-         color: #aaaaaa;
-         float: right;
-         font-size: 28px;
-         font-weight: bold;
-      }
-
-      .close:hover,
-      .close:focus {
-         color: #000;
-         text-decoration: none;
-         cursor: pointer;
-      }
    </style>
 
 </head>
-<body>
-<script>
-   var productList = '';
-</script>
-
-<table border="0" cellpadding="2" cellspacing="2" align="center" style="width:100%; font-size: 11px">
-   <tr>
-      <td>
-         <div style="width: 50%">
-
-            <form method="get" action="/main">
-               <button type="submit" class="main-btn-form">Главная
-               </button>
-            </form>
-         </div>
-      </td>
-      <td style="width: 50%">
-         <div>
-            <form action="/logout" method="post">
-               <p style=" text-align: right;">
-                  <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
-
-                  <button type="submit" class="main-btn-form-exit">Выйти
-                  </button>
-               </p>
-            </form>
-         </div>
-      </td>
-   </tr>
-
-</table>
+<body style="line-height: 1">
+<div class="row-flex shadow p-3  bg-white rounded">
+   <div class="row ">
+      <div class="col-md-2"><a class="btn btn-info" href="/main" role="button">Главная</a>
+      </div>
+      <div class="col-md-2 offset-md-8 ">
+         <form action="/logout" method="post" class="form-group text-right ">
+            <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
+            <div class="text-right"><input type="submit" value="Выйти" class="btn btn-secondary"/></div>
+         </form>
 
 
+      </div>
+   </div>
 
-<div style="margin-top: 10px">
-   <table>
+   <script>
+      var productList = '';
+   </script>
+   <div class="row">
+      <div class=" col-md-1"></div>
+      <div class=" col-md-10">
 
-      <tr>
-         <td style="width: 20%; text-align: right"><h3>Все продажи на </h3></td>
-         <td style="width: 20%; text-align: left">
-            <input type="date" name="selectedDate" placeholder="Дата продажи" autocomplete="off" >
-         </td>
-         <td style="width: 20%; text-align: left">
-            <form method="get" action="/reportShopReceipt" onsubmit="copyDateValue()">
-               <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
-               <input type="text" name="author" value="{{currentUserName}}" style="display: none">
+         <form method="post" class="form-inline" action="/reportShopReceipt" onsubmit="copyDateValue()">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}">
 
-              <input type="text" name="today"  style="display: none">
-               <button type="submit" class="main-btn-form" style="background-color: #ffa073">
-                  Показать
-               </button>
-            </form>
-         </td>
-         <td style="width: 20%; text-align: right"><h3>Всего товаров (шт) - {{currentProductCounter}};</h3></td>
-         <td style="width: 20%; text-align: right"><h3>Всего на сумму (BYN) - {{currentSummCost}}</h3></td>
-      </tr>
-   </table>
+            <div class=" col-md-6" style="display: none"><input type="text" name="author"
+                                                                value="{{currentUserName}}" class="form-control">
+            </div>
+            <div class=" col-md-3"><input type="date" class="form-control" value="2000-01-01"
+                                          name="dateFrom">
+            </div>
+            <div class=" col-md-3"><input type="date" class="form-control" value="2015-01-01"
+                                          name="dateTo">
+            </div>
+            <div class=" col-md-3">
 
-<script>
-   function copyDateValue() {
-       if(document.getElementsByName('selectedDate')[0].value == ""){
-          document.getElementsByName('today')[0].value = "2000-01-01"
-       }else{
-          document.getElementsByName('today')[0].value =
-                  document.getElementsByName('selectedDate')[0].value;
-       }
+               <select class="js-example-basic-single form-control" name="department">
+                  <option value="Админ">Админ</option>
+                  <option value="Пинск-2">Пинск-2</option>
+               </select>
+            </div>
 
-   }
-</script>
-</div>
+            <div class=" col-md-3">
+               <button type="submit" class="btn btn-success ">Показать</button>
+            </div>
+         </form>
 
-<div>
+      </div>
+   </div>
+   <div class="row mt-3">
+      <div class=" col-md-4"></div>
+      <div class=" col-md-4 text-right">
+         <h5>Всего товаров (шт) - {{currentProductCounter}};</h5>
+      </div>
+      <div class=" col-md-4 text-right">
 
-   <table style="width: 100%" id="customers">
+         <h5>Всего на сумму (BYN) - {{currentSummCost}}</h5>
+      </div>
+   </div>
+   <script>
+      function copyDateValue() {
+         if (document.getElementsByName('selectedDate')[0].value == "") {
+            document.getElementsByName('today')[0].value = "2000-01-01"
+         } else {
+            document.getElementsByName('today')[0].value =
+                    document.getElementsByName('selectedDate')[0].value;
+         }
 
+      }
+   </script>
 
-      <thead>
-      <th>Номер чека</th>
-      <th>Подразделение</th>
-
-      <th>Наименование</th>
-      <th>Штрихкод</th>
-      <th>Дата-время</th>
-      <th>Цена, BYN</th>
-
-      <th>Количество</th>
-      <th>Скидка,%</th>
-      <th>Итого, BYN</th>
-
-
-      </thead>
-      {{#allReceipt}}
-         <tr>
-            <td> {{receiptNumber}} </td>
-            <td> {{storeName}} </td>
-            <td>{{productName}} {{gender}}</td>
-            <td>{{barcode}}</td>
-            <td>{{saleDate}}</td>
-            <td style="text-align: center">{{retailPrice}}</td>
-
-            <td style="text-align: center"> {{count}}</td>
-            <td style="text-align: center"> {{discount}}</td>
+   <div class="row mt-3">
+      <div class="col-md-12">
+         <table class="table table-striped table-hover centered table-sm">
 
 
-            <td style="text-align: center">{{cost}}</td>
 
-            <td style="text-align: center; display: none">{{id}}</td>
+            <thead class="thead-dark">
+            <th>Номер чека</th>
+            <th>Подразделение</th>
+
+            <th>Наименование</th>
+            <th>Штрихкод</th>
+            <th>Дата-время</th>
+            <th>Цена, BYN</th>
+
+            <th>Количество</th>
+            <th>Скидка,%</th>
+            <th>Итого, BYN</th>
 
 
-         </tr>
-      {{/allReceipt}}
-   </table>
+            </thead>
+            <tbody>
+            {{#allReceipt}}
+               <div>
 
+
+                  <tr style="text-align:left; font-size:18px">
+
+                     <td> {{receiptNumber}} </td>
+                     <td> {{storeName}} </td>
+                     <td>{{productName}} {{gender}}</td>
+                     <td>{{barcode}}</td>
+                     <td>{{saleDate}}</td>
+                     <td style="text-align: center">{{retailPrice}}</td>
+
+                     <td style="text-align: center"> {{count}}</td>
+                     <td style="text-align: center"> {{discount}}</td>
+
+
+                     <td style="text-align: center">{{cost}}</td>
+
+                     <td style="text-align: center; display: none">{{id}}</td>
+
+
+
+
+                  </tr>
+               </div>
+            {{/allReceipt}}
+            </tbody>
+         </table>
+
+      </div>
+
+
+
+
+
+
+
+   </div>
 
 </div>
 
