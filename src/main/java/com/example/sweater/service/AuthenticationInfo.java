@@ -35,7 +35,9 @@ public class AuthenticationInfo {
 
 
     public Map<String, Object> getDepartmentList(Map<String, Object> model) {
+
         List<String> departmentList = userRepo.findAllDepartmentOrderByNameAsc();
+        departmentList.add(0," - Отобразить все - ");
         model.put("departmentList", departmentList);
         return model;
     }

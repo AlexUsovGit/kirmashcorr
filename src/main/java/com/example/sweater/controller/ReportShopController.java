@@ -71,17 +71,22 @@ public class ReportShopController {
 
         int productCounter = 0;
         double allCost = 0.00;
-        String currentUserDepartment;
+        String currentUserDepartment, correctDepartment;
         Date dateFromDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateFrom);
         Date dateToDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateTo);
-
+        if(department.equals(" - Отобразить все - ")){
+            correctDepartment = "";
+        }else{
+            correctDepartment = department;
+        }
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         currentUserDepartment = authenticationInfo.getCurrentUser().getStoreName();
         Iterable<Receipt> allReceipt;
         if (authenticationInfo.getCurrentUser().isShowAdmin()) {
 //            allReceipt = receiptRepo.findAllOrderBySaleDateDesc(formatter.format(todayDate));
             allReceipt = receiptRepo.findAllBySaleDate2AndDepartmentOrderBySaleDateDesc(formatter.format(dateFromDate),
-                    formatter.format(dateToDate), department);
+                    formatter.format(dateToDate), correctDepartment);
+
             model.putAll(authenticationInfo.getDepartmentList(model));
         } else {
           /*  allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUserName, formatter.format(dateFromDate));*/
