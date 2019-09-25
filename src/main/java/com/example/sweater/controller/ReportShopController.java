@@ -1,11 +1,9 @@
 package com.example.sweater.controller;
 
-import com.example.sweater.domain.Product;
-import com.example.sweater.domain.Receipt;
-import com.example.sweater.domain.ReceiptNumber;
-import com.example.sweater.domain.User;
+import com.example.sweater.domain.*;
 import com.example.sweater.repos.ReceiptNumberRepo;
 import com.example.sweater.repos.ReceiptRepo;
+import com.example.sweater.repos.ReportShopReceiptFilterRepo;
 import com.example.sweater.repos.UserRepo;
 import com.example.sweater.service.AuthenticationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -30,6 +30,9 @@ public class ReportShopController {
     ReceiptNumberRepo receiptNumberRepo;
     @Autowired
     AuthenticationInfo authenticationInfo;
+    @Autowired
+    ReportShopReceiptFilterRepo reportShopReceiptFilterRepo;
+
 
     @PostMapping("/reportPage")
     public String reportPage(Map<String, Object> model) {
@@ -45,13 +48,15 @@ public class ReportShopController {
         receiptNumberRepo.save(receiptNumber);
         Iterable<Receipt> allReceipt =
                 receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUserName, formatter.format(today));
+
+
         model.put("currentUserName", currentUserName);
         model.put("department", authenticationInfo.getCurrentUser().getStoreName());
         model.put("receiptNumber", receiptNumber.getId());
         model.put("productCounter", productCounter);
         model.put("AllCost", allCost);
         model.put("allReceipt", allReceipt);
-        model.put("currentProductCounter",  getCurrentProductCounter(allReceipt));
+        model.put("currentProductCounter", getCurrentProductCounter(allReceipt));
         model.put("currentSummCost", getCurrentSummCost(allReceipt));
 
         model.putAll(authenticationInfo.getPermission(model));
@@ -62,34 +67,52 @@ public class ReportShopController {
 
     @PostMapping("/reportShopReceipt")
     public String reportShopReceipt(@RequestParam String dateFrom, @RequestParam String dateTo,
-                                    @RequestParam String department ,Map<String, Object> model) throws ParseException {
+                                    @RequestParam String department, Map<String, Object> model) throws ParseException {
 
         int productCounter = 0;
         double allCost = 0.00;
-        String currentUserName;
+        String currentUserDepartment;
         Date dateFromDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateFrom);
         Date dateToDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateTo);
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        currentUserName = authenticationInfo.getCurrentUser().getUsername();
+        currentUserDepartment = authenticationInfo.getCurrentUser().getStoreName();
         Iterable<Receipt> allReceipt;
         if (authenticationInfo.getCurrentUser().isShowAdmin()) {
 //            allReceipt = receiptRepo.findAllOrderBySaleDateDesc(formatter.format(todayDate));
             allReceipt = receiptRepo.findAllBySaleDate2AndDepartmentOrderBySaleDateDesc(formatter.format(dateFromDate),
-                    formatter.format(dateToDate),department);
+                    formatter.format(dateToDate), department);
+            model.putAll(authenticationInfo.getDepartmentList(model));
         } else {
-            allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUserName, formatter.format(dateFromDate));
-        }
+          /*  allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUserName, formatter.format(dateFromDate));*/
+            allReceipt = receiptRepo.findAllBySaleDate2AndDepartmentOrderBySaleDateDesc(formatter.format(dateFromDate),
+                    formatter.format(dateToDate), currentUserDepartment);
+            List<String> departmentList = new ArrayList<>();
+            departmentList.add(authenticationInfo.getCurrentUser().getStoreName());
+            model.put("departmentList", departmentList);
 
-        model.put("currentUserName", currentUserName);
-        model.put("todayDate", formatter.format(dateFromDate));
+        }
+        ReportShopReceiptFilter reportShopReceiptFilter = new ReportShopReceiptFilter(department, dateFrom, dateTo);
+        reportShopReceiptFilterRepo.save(reportShopReceiptFilter);
+
+        ReportShopReceiptFilter reportShopReceiptFilterRestore = reportShopReceiptFilterRepo.findFirstByOrderById();
+
+        model.put("reportShopReceiptFilterRestore", reportShopReceiptFilterRestore.getDateFrom());
+        model.put("currentUserName", currentUserDepartment);
+
+        model.put("dateFrom", reportShopReceiptFilterRestore.getDateFrom());
+        model.put("dateTo", reportShopReceiptFilterRestore.getDateTo());
+        model.put("department", reportShopReceiptFilterRestore.getDepartment());
+
         model.put("productCounter", productCounter);
         model.put("AllCost", allCost);
         model.put("allReceipt", allReceipt);
-        model.put("currentProductCounter",  getCurrentProductCounter(allReceipt));
+        model.put("currentProductCounter", getCurrentProductCounter(allReceipt));
         model.put("currentSummCost", getCurrentSummCost(allReceipt));
+
         model.putAll(authenticationInfo.getPermission(model));
-        model.putAll(authenticationInfo.getDepartmentList(model));
+
+
 
 
         return "reportShopReceipt";
@@ -108,7 +131,7 @@ public class ReportShopController {
         for (Receipt receipt : allReceipt) {
             currentSummCost = currentSummCost + Double.parseDouble(receipt.getCost());
         }
-        return Math.round(currentSummCost*100.0)/100.0;
+        return Math.round(currentSummCost * 100.0) / 100.0;
     }
 
 
