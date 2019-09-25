@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -29,6 +30,13 @@ public class AuthenticationInfo {
         model.put("showSklad", currentUser.isShowSklad());
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
+        return model;
+    }
+
+
+    public Map<String, Object> getDepartmentList(Map<String, Object> model) {
+        List<String> departmentList = userRepo.findAllDepartmentOrderByNameAsc();
+        model.put("departmentList", departmentList);
         return model;
     }
 }

@@ -46,6 +46,7 @@ public class ReportShopController {
         Iterable<Receipt> allReceipt =
                 receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUserName, formatter.format(today));
         model.put("currentUserName", currentUserName);
+        model.put("department", authenticationInfo.getCurrentUser().getStoreName());
         model.put("receiptNumber", receiptNumber.getId());
         model.put("productCounter", productCounter);
         model.put("AllCost", allCost);
@@ -60,29 +61,36 @@ public class ReportShopController {
 
 
     @PostMapping("/reportShopReceipt")
-    public String reportShopReceipt(@RequestParam String today,
+    public String reportShopReceipt(@RequestParam String dateFrom, @RequestParam String dateTo,
                                     @RequestParam String department ,Map<String, Object> model) throws ParseException {
 
         int productCounter = 0;
         double allCost = 0.00;
         String currentUserName;
-        Date todayDate = new SimpleDateFormat("yyyy-MM-dd").parse(today);
+        Date dateFromDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateFrom);
+        Date dateToDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateTo);
+
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         currentUserName = authenticationInfo.getCurrentUser().getUsername();
         Iterable<Receipt> allReceipt;
         if (authenticationInfo.getCurrentUser().isShowAdmin()) {
 //            allReceipt = receiptRepo.findAllOrderBySaleDateDesc(formatter.format(todayDate));
-            allReceipt = receiptRepo.findAllBySaleDateAndDepartmentOrderBySaleDateDesc(formatter.format(todayDate),department);
+            allReceipt = receiptRepo.findAllBySaleDate2AndDepartmentOrderBySaleDateDesc(formatter.format(dateFromDate),
+                    formatter.format(dateToDate),department);
         } else {
-            allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUserName, formatter.format(todayDate));
+            allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUserName, formatter.format(dateFromDate));
         }
+
         model.put("currentUserName", currentUserName);
+        model.put("todayDate", formatter.format(dateFromDate));
         model.put("productCounter", productCounter);
         model.put("AllCost", allCost);
         model.put("allReceipt", allReceipt);
         model.put("currentProductCounter",  getCurrentProductCounter(allReceipt));
         model.put("currentSummCost", getCurrentSummCost(allReceipt));
         model.putAll(authenticationInfo.getPermission(model));
+        model.putAll(authenticationInfo.getDepartmentList(model));
+
 
         return "reportShopReceipt";
     }

@@ -38,6 +38,12 @@
          background-color: #6c757d;
          border-color: #474d52;
       }
+      .select2-container--default .select2-selection--single .select2-selection__arrow {
+          height: 36px;
+      }
+      .select2-container--default .select2-selection--single {
+        height: 36px;
+      }
 
 
      /* .select2-container .select2-selection--single {
@@ -86,17 +92,19 @@
             <div class=" col-md-6" style="display: none"><input type="text" name="author"
                                                                 value="{{currentUserName}}" class="form-control">
             </div>
-            <div class=" col-md-3"><input type="date" class="form-control" value="2000-01-01"
+            <div class=" col-md-3"><input type="date" class="form-control" value="{{todayDate}}"
                                           name="dateFrom">
             </div>
-            <div class=" col-md-3"><input type="date" class="form-control" value="2015-01-01"
+            <div class=" col-md-3"><input type="date" class="form-control" value="{{todayDate}}"
                                           name="dateTo">
             </div>
             <div class=" col-md-3">
 
                <select class="js-example-basic-single form-control" name="department">
-                  <option value="Админ">Админ</option>
-                  <option value="Пинск-2">Пинск-2</option>
+                  {{#departmentList}}
+                   <option value="{{.}}">{{.}}</option>
+                   {{/departmentList}}
+                          <!--<option value="Пинск-2">Пинск-2</option>-->
                </select>
             </div>
 

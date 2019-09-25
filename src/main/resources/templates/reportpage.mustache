@@ -115,8 +115,9 @@
             <form method="post" action="/reportShopReceipt">
                <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
                <input type="text" name="author" value="{{currentUserName}}" style="display: none">
-               <input type="text" id="date" name="today"  style="display: none" >
-               <input type="text" name="department" value="Админ"  style="display: none" >
+               <input type="text" id="dateFrom" name="dateFrom"  style="display: none" >
+               <input type="text" id="dateTo" name="dateTo"  style="display: none" >
+               <input type="text" name="department" value="{{department}}"  style="display: none" >
                <button type="submit" class="menu-btn-form">
                   Продажи.
                </button>
@@ -128,7 +129,8 @@
          var current_datetime = new Date();
          var formatted_date = current_datetime.getFullYear() +  "-" + ("0" + (current_datetime.getMonth() + 1)).slice(-2) + "-" +current_datetime.getDate()  ;
 
-         document.getElementById("date").value = formatted_date;
+         document.getElementById("dateFrom").value = formatted_date;
+         document.getElementById("dateTo").value = formatted_date;
       </script>
    {{/showStore}}
 
