@@ -136,18 +136,28 @@
 
 
    {{#showAdmin}}
-
       <tr>
          <td style=" padding-top: 15px;">
-            <form method="get" action="/shop">
+            <form method="post" action="/reportShopReceiptChart">
                <input type="hidden" name="_csrf" value="{{_csrf.token}}" style="display: none">
                <input type="text" name="author" value="{{currentUserName}}" style="display: none">
+               <input type="text" id="dateFrom2" name="dateFrom"  style="display: none" >
+               <input type="text" id="dateTo2" name="dateTo"  style="display: none" >
+               <input type="text" name="department" value="{{department}}"  style="display: none" >
                <button type="submit" class="menu-btn-form">
-                  Состав.
+                  Графики.
                </button>
             </form>
          </td>
       </tr>
+
+      <script>
+         var current_datetime = new Date();
+         var formatted_date = current_datetime.getFullYear() +  "-" + ("0" + (current_datetime.getMonth() + 1)).slice(-2) + "-" +current_datetime.getDate()  ;
+
+         document.getElementById("dateFrom2").value = formatted_date;
+         document.getElementById("dateTo2").value = formatted_date;
+      </script>
    {{/showAdmin}}
 
    </tbody>
