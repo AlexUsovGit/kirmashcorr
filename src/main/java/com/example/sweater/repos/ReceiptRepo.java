@@ -62,6 +62,7 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
     List<Receipt> findAllBySaleDate2AndDepartmentOrderBySaleDateDesc(String dateFrom, String dateTo, String department);
 
 
-
+    @Query(value = "SELECT Cast(cost as decimal ) from  receipt", nativeQuery = true)
+    List<Double> findAllCost();
 }
 

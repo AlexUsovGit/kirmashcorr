@@ -3,11 +3,12 @@ package com.example.sweater.domain.basedictionary;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 
-public class Composition {
+public class Composition implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;

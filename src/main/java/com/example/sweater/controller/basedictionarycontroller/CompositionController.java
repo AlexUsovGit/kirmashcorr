@@ -7,11 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
+@RestController
 @Controller
 public class CompositionController {
     @Autowired
@@ -24,6 +26,8 @@ public class CompositionController {
 
         return "composition";
     }
+
+
 
     @PostMapping("/composition")
     public String add( String label, Map<String, Object> model)  {

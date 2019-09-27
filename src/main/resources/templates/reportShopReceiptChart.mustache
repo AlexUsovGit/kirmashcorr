@@ -145,6 +145,7 @@
         <div><input type="button" value="Update Chart" onclick="updateData(myChart,[0,15,0,15,0]);"></div>
         <div><input type="button" value="fffff" onclick="f()"></div>
         <div><input type="button" value="fffff1" onclick="f1()"></div>
+        <div><input type="button" value="fffff1" onclick="f3(myChart)"></div>
     </div>
 
 
@@ -169,6 +170,36 @@
         }
 
         request.send()
+    }
+
+
+</script>
+
+
+<script>
+    function f3(chart) {
+        var request = new XMLHttpRequest()
+
+        request.open('GET', 'http://localhost:8080/receiptCostJSON', true)
+        request.onload = function() {
+            // Begin accessing JSON data here
+            var data2 = JSON.parse(this.response)
+
+            if (request.status >= 200 && request.status < 400) {
+                data2.forEach(movie => {
+                    console.log(movie)
+                })
+                chart.data.datasets[0].data = data2;
+                chart.update();
+            } else {
+                console.log('error')
+            }
+        }
+
+        request.send()
+
+
+
     }
 
 
