@@ -93,6 +93,7 @@ public class ReportShopController {
             allReceipt = receiptRepo.findAllBySaleDate2AndDepartmentOrderBySaleDateDesc(formatter.format(dateFromDate),
                     formatter.format(dateToDate), currentUserDepartment);
             List<String> departmentList = new ArrayList<>();
+
             departmentList.add(authenticationInfo.getCurrentUser().getStoreName());
             model.put("departmentList", departmentList);
 
@@ -146,7 +147,7 @@ public class ReportShopController {
             allReceipt = receiptRepo.findAllBySaleDate2AndDepartmentOrderBySaleDateDesc(formatter.format(dateFromDate),
                     formatter.format(dateToDate), correctDepartment);
 
-            model.putAll(authenticationInfo.getDepartmentList(model));
+            model.putAll(authenticationInfo.getDepartmentListV(model));
         } else {
             /*  allReceipt = receiptRepo.findAllByAuthorOrderBySaleDateDesc(currentUserName, formatter.format(dateFromDate));*/
             allReceipt = receiptRepo.findAllBySaleDate2AndDepartmentOrderBySaleDateDesc(formatter.format(dateFromDate),

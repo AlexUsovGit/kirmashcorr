@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/sweater.iml" filepath="$PROJECT_DIR$/sweater.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/kirmashcorr-add-chart.iml" filepath="$PROJECT_DIR$/.idea/kirmashcorr-add-chart.iml" />
     </modules>
   </component>
 </project>

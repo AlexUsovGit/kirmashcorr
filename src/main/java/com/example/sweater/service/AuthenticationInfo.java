@@ -41,4 +41,10 @@ public class AuthenticationInfo {
         model.put("departmentList", departmentList);
         return model;
     }
+    public Map<String, Object> getDepartmentListV(Map<String, Object> model) {
+
+        List<String> departmentList = userRepo.findAllDepartmentOrderByNameAsc();
+        model.put("departmentList", departmentList);
+        return model;
+    }
 }

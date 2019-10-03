@@ -1,167 +1,183 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
-    <title>Магазин</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
+   <title>Магазин</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!--===============================================================================================-->
 
-    <link rel="icon" type="image/png" href="../../images/icons/favicon.ico"/>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/i18n/ru.js"></script>
+   <link rel="icon" type="image/png" href="../../images/icons/favicon.ico"/>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/i18n/ru.js"></script>
 
-    <script>
+   <script>
 
-        // In your Javascript (external .js resource or <script> tag)
-        $(document).ready(function () {
-            $('.js-example-basic-single').select2();
-        });
-    </script>
-
-
-    <style>
-        .btn-w100 {
-            width: 100%;
-            font-size: 20px;
-        }
-
-        .form-inline .form-control {
-            width: 100%;
-        }
-
-        .table .thead-dark th {
-            color: #fff;
-            background-color: #6c757d;
-            border-color: #474d52;
-        }
-
-        .select2-container--default .select2-selection--single .select2-selection__arrow {
-            height: 36px;
-        }
-
-        .select2-container--default .select2-selection--single {
-            height: 36px;
-        }
-
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-
-            line-height: 33px;
-        }
-
-        /* .select2-container .select2-selection--single {
-            height: 36px;
-            line-height: 1.5;
-
-         }
-
-         .select2-container--default .select2-selection--single .select2-selection__rendered {
-            padding: .375rem .75rem;
-         }
-
-         .select2-container--default .select2-selection--single .select2-selection__arrow {
-            height: 36px;
-         }*/
+      // In your Javascript (external .js resource or <script> tag)
+      $(document).ready(function () {
+         $('.js-example-basic-single').select2();
+      });
+   </script>
 
 
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+   <style>
+      .btn-w100 {
+         width: 100%;
+         font-size: 20px;
+      }
+
+      .form-inline .form-control {
+         width: 100%;
+      }
+
+      .table .thead-dark th {
+         color: #fff;
+         background-color: #6c757d;
+         border-color: #474d52;
+      }
+
+      .select2-container--default .select2-selection--single .select2-selection__arrow {
+         height: 36px;
+      }
+
+      .select2-container--default .select2-selection--single {
+         height: 36px;
+      }
+
+      .select2-container--default .select2-selection--single .select2-selection__rendered {
+
+         line-height: 33px;
+      }
+
+      /* .select2-container .select2-selection--single {
+          height: 36px;
+          line-height: 1.5;
+
+       }
+
+       .select2-container--default .select2-selection--single .select2-selection__rendered {
+          padding: .375rem .75rem;
+       }
+
+       .select2-container--default .select2-selection--single .select2-selection__arrow {
+          height: 36px;
+       }*/
+
+
+   </style>
+   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
 </head>
 <body style="line-height: 1">
 <div class="row-flex shadow p-3  bg-white rounded">
-    <div class="row ">
-        <div class="col-md-2"><a class="btn btn-info" href="/main" role="button">Главная</a>
-        </div>
-        <div class="col-md-2 offset-md-8 ">
-            <form action="/logout" method="post" class="form-group text-right ">
-                <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
-                <div class="text-right"><input type="submit" value="Выйти" class="btn btn-secondary"/></div>
-            </form>
+   <div class="row ">
+      <div class="col-md-2"><a class="btn btn-info" href="/main" role="button">Главная</a>
+      </div>
+      <div class="col-md-2 offset-md-8 ">
+         <form action="/logout" method="post" class="form-group text-right ">
+            <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
+            <div class="text-right"><input type="submit" value="Выйти" class="btn btn-secondary"/></div>
+         </form>
 
 
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="chart-container col-md-8" style="position: relative; height:250px; width:80%">
-            <canvas id="myChart" width="400" height="400"></canvas>
-            <script>
-                var ctx = document.getElementById('myChart').getContext('2d');
-                var config = {
-                    type: 'line',
-                    data: {
-                        labels: ['21.09', '22.09', '23.09', '24.09', '25.09', '26.09'],
-                        datasets: [{
-                            label: 'NONE',
-                            data: [0, 0, 0, 0, 0, 0],
-                            fill: false,
-                            borderColor:
-                                    'rgba(255, 99, 132, 1)',
-                            backgroundColor:
-                                    'rgba(255, 99, 132, 1)',
-                            borderWidth: 1
+      </div>
+   </div>
+   <div class="row">
+
+      <div class="chart-container col-md-8" style="position: relative; height:250px; width:80%">
+         <canvas id="myChart" width="400" height="400"></canvas>
+         <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var config = {
+               type: 'line',
+               data: {
+                  labels: ['21.09', '22.09', '23.09', '24.09', '25.09', '26.09'],
+                  datasets: [{
+                     label: 'NONE',
+                     data: [0, 0, 0, 0, 0, 0],
+                     fill: false,
+                     borderColor:
+                             'rgba(0, 105, 217)',
+                     backgroundColor:
+                             'rgba(0, 105, 217)',
+                     borderWidth: 1
+                  }
+                  ]
+               },
+               options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  scales: {
+                     yAxes: [{
+                        ticks: {
+                           beginAtZero: false
                         }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: false
-                                }
-                            }]
-                        }
-                    }
-                };
-                var myChart = new Chart(ctx, config);
+                     }]
+                  }
+               }
+            };
+            var myChart = new Chart(ctx, config);
 
 
-            </script>
+         </script>
 
 
-        </div>
-        <div><input type="button" value="Update Chart" onclick="updateData(myChart,[0,15,0,15,0]);"></div>
-        <div><input type="button" value="111111111111111" onclick="f3()"></div>
-        <div><input type="button" value="fffff1" onclick="f1()"></div>
-    </div>
+      </div>
+      <div class=" col-md-3">
+         <div class="row">
+            <div class="col-md-8">
+               <select class="js-example-basic-single form-control" name="department">
+                  {{#departmentList}}
+                     <option value="{{.}}">{{.}}</option>
+                  {{/departmentList}}
+               </select>
+               <script>
+                  $('[name=department]').val("{{department}}");
+               </script>
 
+            </div>
+            <div class="col-md-4">
+               <button type="submit" class="btn btn-success" onclick="f3(myChart)">Обновить</button>
+            </div>
+         </div>
+
+      </div>
+
+      <div class="col-md-1"></div>
+   </div>
 
 
 </div>
-<<script>
-    function f3(chart) {
-        var request = new XMLHttpRequest()
 
-        request.open('GET', 'http://localhost:8080/mainInfo/receiptData?store_name=Пинск-2', true)
-        request.onload = function() {
-            // Begin accessing JSON data here
-            var data2 = JSON.parse(this.response)
+<script>
+   function f3(chart) {
+      var request = new XMLHttpRequest()
+      store_name = document.getElementsByName('department')[0].value;
 
-            if (request.status >= 200 && request.status < 400) {
-                /*data2.forEach(movie => {
-                    console.log(movie)
-                })*/
-                console.log(data2[0]);
-                chart.data.datasets[0].data = data2[0].saleCost;
+      request.open('GET', 'http://localhost:8080/mainInfo/receiptData?store_name=' + store_name, true)
+      request.onload = function () {
+         // Begin accessing JSON data here
+         var data2 = JSON.parse(this.response)
 
-                chart.data.labels = data2[0].saleDate;
-                chart.update();
-            } else {
-                console.log('error')
-            }
-        }
+         if (request.status >= 200 && request.status < 400) {
 
-        request.send()
+            console.log(data2[0]);
+            chart.data.datasets[0].data = data2[0].saleCost;
+            chart.data.datasets[0].label = store_name;
+            chart.data.labels = data2[0].saleDate;
+            chart.update();
+         } else {
+            console.log('error')
+         }
+      }
+
+      request.send()
 
 
-
-    }
+   }
 
 
 </script>
