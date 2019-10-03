@@ -157,7 +157,8 @@
       var request = new XMLHttpRequest()
       store_name = document.getElementsByName('department')[0].value;
 
-      request.open('GET', 'http://localhost:8080/mainInfo/receiptData?store_name=' + store_name, true)
+  //    request.open('GET', 'http://localhost:8080/mainInfo/receiptData?store_name=' + store_name, true)
+      request.open('GET', 'https://kirmashstore.herokuapp.com/mainInfo/receiptData?store_name=' + store_name, true)
       request.onload = function () {
          // Begin accessing JSON data here
          var data2 = JSON.parse(this.response)
