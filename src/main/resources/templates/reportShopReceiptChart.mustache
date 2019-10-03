@@ -96,26 +96,15 @@
                     data: {
                         labels: ['21.09', '22.09', '23.09', '24.09', '25.09', '26.09'],
                         datasets: [{
-                            label: 'Пинск-2',
-                            data: [12, 19, 3, 5, 2, 3],
+                            label: 'NONE',
+                            data: [0, 0, 0, 0, 0, 0],
                             fill: false,
                             borderColor:
                                     'rgba(255, 99, 132, 1)',
                             backgroundColor:
                                     'rgba(255, 99, 132, 1)',
                             borderWidth: 1
-                        },
-                            {
-                                label: 'Барановичи-2',
-                                data: [10, 19, 30, 15, 8, 0],
-                                fill: false,
-                                borderColor:
-                                        'rgba(54, 162, 235, 1)',
-                                backgroundColor:
-                                        'rgba(54, 162, 235, 1)',
-                                borderWidth: 1
-                            }
-
+                        }
                         ]
                     },
                     options: {
@@ -124,7 +113,7 @@
                         scales: {
                             yAxes: [{
                                 ticks: {
-                                    beginAtZero: true
+                                    beginAtZero: false
                                 }
                             }]
                         }
@@ -133,95 +122,49 @@
                 var myChart = new Chart(ctx, config);
 
 
-                function updateData(chart, data) {
-                    chart.data.datasets[0].data = data;
-                    chart.update();
-                }
-
             </script>
 
 
         </div>
         <div><input type="button" value="Update Chart" onclick="updateData(myChart,[0,15,0,15,0]);"></div>
-        <div><input type="button" value="fffff" onclick="f()"></div>
+        <div><input type="button" value="111111111111111" onclick="f3()"></div>
         <div><input type="button" value="fffff1" onclick="f1()"></div>
     </div>
 
 
 
 </div>
-<script>
-    function f() {
+<<script>
+    function f3(chart) {
         var request = new XMLHttpRequest()
 
-        request.open('GET', 'https://ghibliapi.herokuapp.com/films', true)
+        request.open('GET', 'http://localhost:8080/mainInfo/receiptData?store_name=Пинск-2', true)
         request.onload = function() {
             // Begin accessing JSON data here
-            var data = JSON.parse(this.response)
+            var data2 = JSON.parse(this.response)
 
             if (request.status >= 200 && request.status < 400) {
-                data.forEach(movie => {
-                    console.log(movie.title)
-                })
+                /*data2.forEach(movie => {
+                    console.log(movie)
+                })*/
+                console.log(data2[0]);
+                chart.data.datasets[0].data = data2[0].saleCost;
+
+                chart.data.labels = data2[0].saleDate;
+                chart.update();
             } else {
                 console.log('error')
             }
         }
 
         request.send()
+
+
+
     }
 
 
 </script>
-<div id="root"></div>
-
-<script>
-    function f1() {
-
-        const app = document.getElementById('root')
-
-        const logo = document.createElement('img')
-        logo.src = 'logo.png'
-
-        const container = document.createElement('div')
-        container.setAttribute('class', 'container')
-
-        app.appendChild(logo)
-        app.appendChild(container)
-
-        var request = new XMLHttpRequest()
-        request.open('GET', 'https://ghibliapi.herokuapp.com/films', true)
-        request.onload = function() {
-            // Begin accessing JSON data here
-            var data = JSON.parse(this.response)
-            if (request.status >= 200 && request.status < 400) {
-                data.forEach(movie => {
-                    const card = document.createElement('div')
-                    card.setAttribute('class', 'card')
-
-                    const h1 = document.createElement('h1')
-                    h1.textContent = movie.title
-
-                    const p = document.createElement('p')
-                    movie.description = movie.description.substring(0, 300)
-                    p.textContent = `${movie.description}...`
-
-                    container.appendChild(card)
-                    card.appendChild(h1)
-                    card.appendChild(p)
-                })
-            } else {
-                const errorMessage = document.createElement('marquee')
-                errorMessage.textContent = `Gah, it's not working!`
-                app.appendChild(errorMessage)
-            }
-        }
-
-        request.send()
-    }
-
-</script>
-
 </body>
 
 </html>
