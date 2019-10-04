@@ -187,8 +187,8 @@
         dateFrom = document.getElementsByName('dateFrom')[0].value;
         dateTo = document.getElementsByName('dateTo')[0].value;
 
-        request.open('GET', 'http://localhost:8080/mainInfo/receiptData?dateFrom=' + dateFrom+'&dateTo='+dateTo, true)
-        // request.open('GET', 'https://kirmashstore.herokuapp.com/mainInfo/receiptData?store_name=' + store_name, true)
+      //  request.open('GET', 'http://localhost:8080/mainInfo/receiptData?dateFrom=' + dateFrom+'&dateTo='+dateTo, true)
+         request.open('GET', 'https://kirmashstore.herokuapp.com/mainInfo/receiptData?dateFrom=' + dateFrom+'&dateTo='+dateTo, true)
         request.onload = function () {
             // Begin accessing JSON data here
             var data2 = JSON.parse(this.response)
