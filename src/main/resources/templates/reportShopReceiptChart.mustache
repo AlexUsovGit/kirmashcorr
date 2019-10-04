@@ -1,184 +1,220 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
-   <title>Магазин</title>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <!--===============================================================================================-->
+    <title>Магазин</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
 
-   <link rel="icon" type="image/png" href="../../images/icons/favicon.ico"/>
-   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-   <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
-   <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-   <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-   <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/i18n/ru.js"></script>
+    <link rel="icon" type="image/png" href="../../images/icons/favicon.ico"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/i18n/ru.js"></script>
 
-   <script>
+    <script>
 
-      // In your Javascript (external .js resource or <script> tag)
-      $(document).ready(function () {
-         $('.js-example-basic-single').select2();
-      });
-   </script>
-
-
-   <style>
-      .btn-w100 {
-         width: 100%;
-         font-size: 20px;
-      }
-
-      .form-inline .form-control {
-         width: 100%;
-      }
-
-      .table .thead-dark th {
-         color: #fff;
-         background-color: #6c757d;
-         border-color: #474d52;
-      }
-
-      .select2-container--default .select2-selection--single .select2-selection__arrow {
-         height: 36px;
-      }
-
-      .select2-container--default .select2-selection--single {
-         height: 36px;
-      }
-
-      .select2-container--default .select2-selection--single .select2-selection__rendered {
-
-         line-height: 33px;
-      }
-
-      /* .select2-container .select2-selection--single {
-          height: 36px;
-          line-height: 1.5;
-
-       }
-
-       .select2-container--default .select2-selection--single .select2-selection__rendered {
-          padding: .375rem .75rem;
-       }
-
-       .select2-container--default .select2-selection--single .select2-selection__arrow {
-          height: 36px;
-       }*/
+        // In your Javascript (external .js resource or <script> tag)
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
 
 
-   </style>
-   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <style>
+        .btn-w100 {
+            width: 100%;
+            font-size: 20px;
+        }
+
+        .form-inline .form-control {
+            width: 100%;
+        }
+
+        .table .thead-dark th {
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #474d52;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 36px;
+        }
+
+        .select2-container--default .select2-selection--single {
+            height: 36px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+
+            line-height: 33px;
+        }
+
+        /* .select2-container .select2-selection--single {
+            height: 36px;
+            line-height: 1.5;
+
+         }
+
+         .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding: .375rem .75rem;
+         }
+
+         .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 36px;
+         }*/
+
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
 </head>
 <body style="line-height: 1">
 <div class="row-flex shadow p-3  bg-white rounded">
-   <div class="row ">
-      <div class="col-md-2"><a class="btn btn-info" href="/main" role="button">Главная</a>
-      </div>
-      <div class="col-md-2 offset-md-8 ">
-         <form action="/logout" method="post" class="form-group text-right ">
-            <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
-            <div class="text-right"><input type="submit" value="Выйти" class="btn btn-secondary"/></div>
-         </form>
+    <div class="row ">
+        <div class="col-md-2"><a class="btn btn-info" href="/main" role="button">Главная</a>
+        </div>
+        <div class="col-md-2 offset-md-8 ">
+            <form action="/logout" method="post" class="form-group text-right ">
+                <input name="_csrf" type="hidden" value="{{_csrf.token}}"/>
+                <div class="text-right"><input type="submit" value="Выйти" class="btn btn-secondary"/></div>
+            </form>
 
 
-      </div>
-   </div>
-   <div class="row">
+        </div>
+    </div>
+    <div class="row">
 
-      <div class="chart-container col-md-8" style="position: relative; height:250px; width:80%">
-         <canvas id="myChart" width="400" height="400"></canvas>
-         <script>
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var config = {
-               type: 'line',
-               data: {
-                  labels: ['21.09', '22.09', '23.09', '24.09', '25.09', '26.09'],
-                  datasets: [{
-                     label: 'NONE',
-                     data: [0, 0, 0, 0, 0, 0],
-                     fill: false,
-                     borderColor:
-                             'rgba(0, 105, 217)',
-                     backgroundColor:
-                             'rgba(0, 105, 217)',
-                     borderWidth: 1
-                  }
-                  ]
-               },
-               options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  scales: {
-                     yAxes: [{
-                        ticks: {
-                           beginAtZero: false
+        <div class="chart-container col-md-8" style="position: relative; height:250px; width:80%">
+            <canvas id="myChart" width="400" height="400"></canvas>
+            <script>
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var config = {
+                    type: 'line',
+                    data: {
+                        labels: ['0', '1'],
+                        datasets: [{
+                            label: 'NONE',
+                            data: [0, 0],
+                            fill: false,
+                            borderColor:
+                                    'rgba(0, 105, 217)',
+                            backgroundColor:
+                                    'rgba(0, 105, 217)',
+                            borderWidth: 1
+                        },
+                            {
+                                label: 'NONE',
+                                data: [0, 0],
+                                fill: false,
+                                borderColor:
+                                        'rgba(180, 45, 237)',
+                                backgroundColor:
+                                        'rgba(180, 45, 237)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'NONE',
+                                data: [0, 0],
+                                fill: false,
+                                borderColor:
+                                        'rgba(45, 237, 205)',
+                                backgroundColor:
+                                        'rgba(45, 237, 205)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'NONE',
+                                data: [0, 0],
+                                fill: false,
+                                borderColor:
+                                        'rgba(237, 80, 45)',
+                                backgroundColor:
+                                        'rgba(237, 80, 45)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: false
+                                }
+                            }]
                         }
-                     }]
-                  }
-               }
-            };
-            var myChart = new Chart(ctx, config);
+                    }
+                };
+                var myChart = new Chart(ctx, config);
 
 
-         </script>
+            </script>
 
 
-      </div>
-      <div class=" col-md-3">
-         <div class="row">
-            <div class="col-md-8">
-               <select class="js-example-basic-single form-control" name="department">
-                  {{#departmentList}}
-                     <option value="{{.}}">{{.}}</option>
-                  {{/departmentList}}
-               </select>
-               <script>
-                  $('[name=department]').val("{{department}}");
-               </script>
-
+        </div>
+        <div class=" col-md-3">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class=" col-md-6"><input type="date" class="form-control"
+                                                      name="dateFrom">
+                        </div>
+                        <div class=" col-md-6"><input type="date" class="form-control"
+                                                      name="dateTo">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success" onclick="f3(myChart)">Обновить</button>
+                </div>
             </div>
-            <div class="col-md-4">
-               <button type="submit" class="btn btn-success" onclick="f3(myChart)">Обновить</button>
-            </div>
-         </div>
 
-      </div>
+        </div>
 
-      <div class="col-md-1"></div>
-   </div>
+        <div class="col-md-1"></div>
+    </div>
 
 
 </div>
 
 <script>
-   function f3(chart) {
-      var request = new XMLHttpRequest()
-      store_name = document.getElementsByName('department')[0].value;
+    function f3(chart) {
+        var request = new XMLHttpRequest()
+        dateFrom = document.getElementsByName('dateFrom')[0].value;
+        dateTo = document.getElementsByName('dateTo')[0].value;
 
-  //    request.open('GET', 'http://localhost:8080/mainInfo/receiptData?store_name=' + store_name, true)
-      request.open('GET', 'https://kirmashstore.herokuapp.com/mainInfo/receiptData?store_name=' + store_name, true)
-      request.onload = function () {
-         // Begin accessing JSON data here
-         var data2 = JSON.parse(this.response)
+        request.open('GET', 'http://localhost:8080/mainInfo/receiptData?dateFrom=' + dateFrom+'&dateTo='+dateTo, true)
+        // request.open('GET', 'https://kirmashstore.herokuapp.com/mainInfo/receiptData?store_name=' + store_name, true)
+        request.onload = function () {
+            // Begin accessing JSON data here
+            var data2 = JSON.parse(this.response)
 
-         if (request.status >= 200 && request.status < 400) {
+            if (request.status >= 200 && request.status < 400) {
 
-            console.log(data2[0]);
-            chart.data.datasets[0].data = data2[0].saleCost;
-            chart.data.datasets[0].label = store_name;
-            chart.data.labels = data2[0].saleDate;
-            chart.update();
-         } else {
-            console.log('error')
-         }
-      }
+                console.log(data2[0]);
+                chart.data.datasets[0].data = data2[0].saleCost;
+                chart.data.datasets[0].label = data2[0].storeName;
+                chart.data.datasets[1].data = data2[1].saleCost;
+                chart.data.datasets[1].label = data2[1].storeName;
+                chart.data.datasets[2].data = data2[2].saleCost;
+                chart.data.datasets[2].label = data2[2].storeName;
+                chart.data.datasets[3].data = data2[3].saleCost;
+                chart.data.datasets[3].label = data2[3].storeName;
+                chart.data.labels = data2[0].saleDate;
+                chart.update();
+            } else {
+                console.log('error')
+            }
+        }
 
-      request.send()
+        request.send()
 
 
-   }
+    }
 
 
 </script>

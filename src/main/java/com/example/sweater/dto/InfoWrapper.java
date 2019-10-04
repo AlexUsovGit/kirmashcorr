@@ -5,13 +5,15 @@ import java.util.List;
 public class InfoWrapper {
     private List<Double> saleCost;
     private List<String> saleDate;
+    private String storeName;
 
     public InfoWrapper() {
     }
 
-    public InfoWrapper(List<Double> saleCost, List<String> saleDate) {
+    public InfoWrapper(List<Double> saleCost, List<String> saleDate, String storeName) {
         this.saleCost = saleCost;
         this.saleDate = saleDate;
+        this.storeName = storeName;
     }
 
     public List<Double> getSaleCost() {
@@ -28,5 +30,13 @@ public class InfoWrapper {
 
     public void setSaleDate(List<String> saleDate) {
         this.saleDate = saleDate;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 }
