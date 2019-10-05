@@ -53,13 +53,14 @@ public class MainInfoController {
     private /*List<Double>*/ List<InfoWrapper> getReceiptSumCostData(@RequestParam String dateFrom, @RequestParam String dateTo) {
         LocalDate dateFromDate;
         LocalDate dateToDate;
+        System.out.println("dateFrom = " + dateFrom + "; dateTo = " + dateTo);
 
         DateTimeFormatter formatterForREST = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 
         dateFromDate = LocalDate.parse(dateFrom, formatterForREST);
-        dateToDate = LocalDate.parse(dateTo, formatterForREST);
-
+        dateToDate = LocalDate.parse(dateTo, formatterForREST).plusDays(1);
+        System.out.println("dateFromDate = " + dateFromDate + "; dateToDate = " + dateToDate);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER);
         DateTimeFormatter formatterDay = DateTimeFormatter.ofPattern(DATE_FORMATTER_DAY);
@@ -85,15 +86,19 @@ public class MainInfoController {
 
             List<ReceiptInfoDTO> receiptInfoDTOList = new ArrayList<>();
             receiptInfoDTOList.addAll(this.jdbcTemplate.query(query, new ReceiptInfoDTOMapper(),department, dateFromDate,dateToDate));
-//        receiptInfoDTOList.addAll(this.jdbcTemplate.query(query, new ReceiptInfoDTOMapper(), store_name));
+
+
+            //        receiptInfoDTOList.addAll(this.jdbcTemplate.query(query, new ReceiptInfoDTOMapper(), store_name));
 
             List<Double> dataCost = new ArrayList<>();
             List<String> dateSale = new ArrayList<>();
             for (LocalDate localDate : localDateList) {
-
+                System.out.println("localDate = " + localDate);
+                System.out.println("department = " + department);
 
                 for (ReceiptInfoDTO receiptInfoDTO : receiptInfoDTOList) {
-                    if (receiptInfoDTO.getSaleDate().equals(localDate)) {
+                    System.out.println(receiptInfoDTO.getSaleDate() + ":" + localDate);
+                    if (receiptInfoDTO.getSaleDate().toString().equals(localDate.toString())) {
                         dataCost.add(Double.valueOf(receiptInfoDTO.getSaleCost()));
                         dateSale.add(localDate.format(formatter) + "(" + localDate.format(formatterDay) + ")");
                         break;
