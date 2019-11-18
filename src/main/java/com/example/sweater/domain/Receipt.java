@@ -25,7 +25,8 @@ public class Receipt implements Serializable {
     private String gender;
     private String storeName;
     private String author;
-
+    private String dateArrive;
+    private String boxNumber;
 
 
 
@@ -34,7 +35,8 @@ public class Receipt implements Serializable {
     }
 
     public Receipt(String productName, String receiptNumber ,String barcode, String retailPrice, Date saleDate, String count, String discount,
-                   String cost, String status, String gender, String storeName, String author) {
+                   String cost, String status, String gender, String storeName, String author,
+                    String dateArrive,String boxNumber) {
         this.productName = productName;
         this.receiptNumber = receiptNumber;
         this.barcode = barcode;
@@ -47,6 +49,8 @@ public class Receipt implements Serializable {
         this.gender = gender;
         this.storeName = storeName;
         this.author = author;
+        this.dateArrive = dateArrive;
+        this.boxNumber = boxNumber;
     }
 
 
@@ -153,5 +157,21 @@ public class Receipt implements Serializable {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getDateArrive() {
+        return dateArrive;
+    }
+
+    public void setDateArrive(String dateArrive) {
+        this.dateArrive = dateArrive;
+    }
+
+    public String getBoxNumber() {
+        return boxNumber;
+    }
+
+    public void setBoxNumber(String boxNumber) {
+        this.boxNumber = boxNumber;
     }
 }

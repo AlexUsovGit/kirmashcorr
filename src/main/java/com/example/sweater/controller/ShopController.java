@@ -105,7 +105,8 @@ public class ShopController {
             Receipt receipt = new Receipt(currentProduct.getProductName(), currentReceiptNumber, currentProduct.getBarcode(),
                     currentProduct.getRetailPrice(), date, "0", "0",
                     currentProduct.getRetailPrice(), "temp", currentProduct.getGender(),
-                    currentUser.getStoreName(), currentUser.getUsername());
+                    currentUser.getStoreName(), currentUser.getUsername(),
+                    currentProduct.getDateArrive(), currentProduct.getBoxNumber());
             receiptRepo.save(receipt);
             id = receipt.getId();
 
