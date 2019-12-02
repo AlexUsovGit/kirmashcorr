@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,9 @@ public class ExportController {
     private ProductRepo productRepo;
 
 
+
     @PostMapping("/exportAllProducts")
-    public String exportAllProducts(Map<String, Object> model) {
+      public String exportAllProducts(Map<String, Object> model) {
         Iterable<Product> products = productRepo.findAllByOrderByIdDesc();
 
         model.put("products", products);
@@ -38,6 +40,7 @@ public class ExportController {
     }
 
     @RequestMapping(value = "/getProducts", method = RequestMethod.POST)
+
     public ResponseEntity<byte[]> getExcel(@RequestParam String myfilter) throws IOException {
         List<Product> products = new ArrayList<>();
 
