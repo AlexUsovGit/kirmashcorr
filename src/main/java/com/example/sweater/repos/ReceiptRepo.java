@@ -39,7 +39,13 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
             "and cast(r.sale_date as date) >=  Cast(:dateTo as date) " +
             "order by r.sale_date Desc", nativeQuery = true)
     List<Receipt> findAllByAuthor2OrderBySaleDateDesc(String author, String dateFrom, String dateTo);
+//select * from receipt where sale_date >= to_date('10.07.2020', 'dd.MM.yyyy') and sale_date <= to_date('11.07.2020', 'dd.MM.yyyy');
 
+    @Query(value = "SELECT * from  receipt  r " +
+            "where cast(r.sale_date as date) >=  Cast(:dateFrom as date) " +
+            "and cast(r.sale_date as date) <=  Cast(:dateTo as date) " +
+            "order by r.sale_date Desc", nativeQuery = true)
+    List<Receipt> findAllBySaleDate(String dateFrom, String dateTo);
 
     @Query(value = "SELECT * from  receipt  r " +
             "left JOIN receipt_number rn on  CAST(r.receipt_number as int8) = rn.id " +

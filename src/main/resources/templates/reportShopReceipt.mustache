@@ -43,13 +43,19 @@
             height: 36px;
         }
 
+        .my_block {
+            border: dashed 1px gray;
+            padding-top: 5px;
+            padding-bottom: 5PX;
+        }
+
         .select2-container--default .select2-selection--single {
             height: 36px;
         }
 
         .select2-container--default .select2-selection--single .select2-selection__rendered {
 
-           line-height: 33px;
+            line-height: 33px;
         }
 
         /* .select2-container .select2-selection--single {
@@ -115,6 +121,8 @@
 
                     <script>
                         $('[name=department]').val("{{department}}");
+                        $('[name=dateFrom2]').val("{{dateFrom}}");
+                        $('[name=dateTo2]').val("{{dateTo}}");
 
                     </script>
                 </div>
@@ -123,9 +131,43 @@
                 <div class=" col-md-3">
                     <button type="submit" class="btn btn-success ">Показать</button>
                 </div>
+
             </form>
+
+        </div>
+
+    </div>
+    {{#showAdmin}}
+    <div class="row" style="padding-top: 10px">
+        <div class=" col-md-1"></div>
+        <div class=" col-md-10 my_block">
+
+                <form method="post" action="getReceipts" class="form-inline">
+                    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+                    <div class=" col-md-6" style="display: none"><input type="text" name="author"
+                                                                        value="{{currentUserName}}"
+                                                                        class="form-control">
+                    </div>
+
+                    <div class=" col-md-3"><input type="date" class="form-control"
+                                                  value="{{dateFrom}}"
+                                                  name="dateFrom">
+                    </div>
+                    <div class=" col-md-3"><input type="date" class="form-control"
+                                                  value="{{dateTo}}"
+                                                  name="dateTo">
+                    </div>
+                    <div class=" col-md-3"></div>
+                    <div class=" col-md-3">
+                        <button type="submit" class="btn btn-success ">
+                            Выгрузить в Excel
+                        </button>
+                    </div>
+                </form>
+
         </div>
     </div>
+    {{/showAdmin}}
     <div class="row mt-3">
         <div class=" col-md-4"></div>
         <div class=" col-md-4 text-right">
