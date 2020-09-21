@@ -27,7 +27,7 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
 
     @Query(value = "SELECT * from  receipt  r " +
             "left JOIN receipt_number rn on  CAST(r.receipt_number as int8) = rn.id " +
-            "where rn.author  = :author and cast(r.sale_date as date) =  Cast(:today as date) " +
+            "where rn.author  = :author and cast(rn.date as date) =  Cast(:today as date) " +
             "order by r.sale_date Desc limit 500", nativeQuery = true)
     List<Receipt> findAllByAuthorOrderBySaleDateDesc(String author, String today);
 
