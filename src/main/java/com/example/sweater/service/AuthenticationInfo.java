@@ -17,13 +17,13 @@ public class AuthenticationInfo {
 
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userRepo.findByUsername(auth.getName());
+        User currentUser = userRepo.findFirstByUsername(auth.getName());
         return currentUser;
     }
 
     public Map<String, Object> getPermission(Map<String, Object> model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userRepo.findByUsername(auth.getName());
+        User currentUser = userRepo.findFirstByUsername(auth.getName());
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("showAdmin", currentUser.isShowAdmin());

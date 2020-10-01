@@ -37,7 +37,7 @@ public class MainController {
         model.put("names", name);
         model.put("roles", roles);
 
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
 
         model.put("currentUser", currentUser);
         boolean active;

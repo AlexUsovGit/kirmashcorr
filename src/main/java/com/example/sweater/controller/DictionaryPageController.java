@@ -25,7 +25,7 @@ public class DictionaryPageController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         model.put("names", name);
-        currentUser= userRepo.findByUsername(name);
+        currentUser= userRepo.findFirstByUsername(name);
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());
@@ -42,7 +42,7 @@ public class DictionaryPageController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         model.put("names", name);
-        currentUser= userRepo.findByUsername(name);
+        currentUser= userRepo.findFirstByUsername(name);
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());

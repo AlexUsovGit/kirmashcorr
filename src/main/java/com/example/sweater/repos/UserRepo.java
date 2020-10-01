@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface UserRepo extends JpaRepository <User, Long>{
-    User findByUsername(String username);
+    User findFirstByUsername(String username);
 
     @Query(value = "SELECT DISTINCT store_name from  usr  " +
             " order by store_name Asc", nativeQuery = true)

@@ -61,7 +61,7 @@ public class ProductController {
         model.put("products", products);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
 
         model.put("AllCounter", AllCounter);
         model.put("PageCounter", PageCounter);
@@ -104,7 +104,7 @@ public class ProductController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
 
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
@@ -141,7 +141,7 @@ public class ProductController {
         model.put("productNames", productNames);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());
@@ -192,7 +192,7 @@ public class ProductController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
         Iterable<Product> products ;
 
         if(currentUser.isShowAdmin()){
@@ -272,7 +272,7 @@ public class ProductController {
         model.put("productNames", productNames);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
 
         model.put("AllCounter", AllCounter);
         model.put("PageCounter", PageCounter);
@@ -329,7 +329,7 @@ public class ProductController {
         model.put("productNames", productNames);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
 
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
@@ -389,7 +389,7 @@ public class ProductController {
         model.put("productNames", productNames);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
 
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
@@ -465,7 +465,7 @@ public class ProductController {
         model.put("productNames", productNames);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
 
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
@@ -532,7 +532,7 @@ public class ProductController {
         model.put("productNames", productNames);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
 
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());

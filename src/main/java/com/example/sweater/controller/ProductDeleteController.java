@@ -31,7 +31,7 @@ public class ProductDeleteController {
         model.put("products", products);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
         AllCounter = productRepo.findAllByOrderByIdDesc().size();
         //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
         PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();

@@ -48,7 +48,7 @@ public class ShopController {
         model.put("products", products);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
         Date date = new Date();
         ReceiptNumber receiptNumber = new ReceiptNumber(name, date, "temp");
         receiptNumberRepo.save(receiptNumber);
@@ -90,7 +90,7 @@ public class ShopController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
 
         /*  DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");*/
         Date date = new Date();
@@ -176,7 +176,7 @@ public class ShopController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
 
         /*  DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");*/
         Double AllCost = 0.00;
@@ -247,7 +247,7 @@ public class ShopController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        User currentUser = userRepo.findByUsername(name);
+        User currentUser = userRepo.findFirstByUsername(name);
 
         ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByAuthorOrderByIdDesc(currentUser.getUsername());
         String currentReceiptNumber = String.valueOf(receiptNumber.getId());

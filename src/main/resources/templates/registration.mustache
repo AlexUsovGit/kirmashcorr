@@ -1,68 +1,113 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-   <title>Пользователи </title>
+    <title>Пользователи</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/i18n/ru.js"></script>
+
+    <style>
+
+        .form-inline .form-control {
+            width: 100%;
+        }
+
+        .table .thead-dark th {
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #474d52;
+        }
+
+        .delete-btn {
+            background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3e%3cimage width='16' height='16' href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJN AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAJcEhZ cwAACxMAAAsTAQCanBgAAAAHdElNRQfjCRMFIwCr2uwGAAAAXUlEQVQoz9WQyw2AIAxAn4ozOYZh /wlwAwyxHECs0sSDJ18PbfL6SQonnoAgbKyYFC0I4S68UjraJlsbm74hCA5IjwyMb7O/aHCtWtiZ VK4M9Q89M+k6ETsdOUqRAYMYMdr6QGgrAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE5LTA5LTE5VDEy OjM1OjAwLTA3OjAwmZpnkwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOS0wOS0xOVQxMjozNTowMC0w NzowMOjH3y8AAAAASUVORK5CYII='/%3e%3c/svg%3e");
+            width: 16px;
+            border: none;
+            height: 16px;
+            margin-left: 0px;
+            background-position-x: 0px;
+            background-repeat: no-repeat;
+            background-size: 16px;
+        }
+
+        .edit-btn {
+            background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3e%3cimage width='16' height='16' href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJN AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAJcEhZ cwAACxMAAAsTAQCanBgAAAAHdElNRQfjCRMFLhuUEVunAAAAU0lEQVQoz6XPwQ3AIAhA0a8uxmYy mp2MHkyMpiCHcn0/oOCPolxGMWwm9ZJ1FJpLg4IAQmmf5cLYkie87T108p4EfCR1cc//bdGJf0zG ZEzGZPwCEUxKVKATzCQAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMDktMTlUMTI6NDY6MjctMDc6 MDDcFPDgAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTA5LTE5VDEyOjQ2OjI3LTA3OjAwrUlIXAAA AABJRU5ErkJggg=='/%3e%3c/svg%3e");
+            width: 16px;
+            border: none;
+            height: 16px;
+            margin-left: 0px;
+            background-position-x: 0px;
+            background-repeat: no-repeat;
+            background-size: 16px;
+        }
+    </style>
+
 </head>
-<body>
-<div align="center">Добавить нового пользователя</div>
+<body style="line-height: 1">
+<div align="center"><h3> Добавить нового пользователя</h3></div>
 <p style="    text-align: center;    color: red;">
-   {{#message}}
-      {{message}}
-   {{/message}}
+    {{#message}}
+        {{message}}
+    {{/message}}
 </p>
-
-<form action="/registration" method="post">
-   <div>
-      <table align="center" border="0" cellpadding="2" cellspacing="1" style="width:500px">
-         <tbody>
-         <tr>
-            <td style="text-align:right">New User Name :</td>
-            <td><input name="username" type="text"/></td>
-         </tr>
+<div align="center">
+    <form action="/registration" method="post" class="form-group">
+        <div>
+            <table align="center" border="0" cellpadding="2" cellspacing="1" style="width:50%">
+                <tbody>
                 <tr>
-            <td style="text-align:right">New Password:</td>
-            <td><input name="password" type="password"/></td>
-         </tr>
-         <tr>
-             <td style="text-align:right">Store Name :</td>
-             <td><input name="storeName" type="text"/></td>
-         </tr>
-         <tr>
-         <tr>
-            <td style="text-align:right">Role:</td>
-            <td><input name="role" type="text"/></td>
-         </tr>
-         <tr>
-
-         <tr>
-            <td style="text-align:right">showAdmin</td>
-            <td><input name="showAdmin" type="checkbox"/></td>
-         </tr>
-         <tr>
-            <td style="text-align:right">showSklad</td>
-            <td><input name="showSklad" type="checkbox"/></td>
-         </tr>
-         <tr>
-            <td style="text-align:right">showReport</td>
-            <td><input name="showReport" type="checkbox"/></td>
-         </tr>
-         <tr>
-            <td style="text-align:right">showStore</td>
-            <td><input name="showStore" type="checkbox"/></td>
-         </tr>
-
-            <td>&nbsp;</td>
-            <td><input name="_csrf" type="hidden" value="{{_csrf.token}}"/></td>
-         </tr>
-         <tr>
-            <td>&nbsp;</td>
-            <td><input type="submit" value="Зарегистрировать"/></td>
-         </tr>
-         </tbody>
-      </table>
-
-      <p>&nbsp;</p>
-   </div>
-</form>
+                    <td style="text-align:right"><p>Имя нового пользователя:</p></td>
+                    <td><input name="username" type="text" style="margin: 10px"/></td>
+                    <td><p>только на латинице (pinsk_1, minsk_8)</p></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">Пароль:</td>
+                    <td><input name="password" type="text" style="margin: 10px"/></td>
+                    <td><p>только на латинице</p></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right"><p>Название магазина:</p></td>
+                    <td><input name="storeName" type="text" style="margin: 10px"/></td>
+                    <td><p>например: Брест-1, Барановичи-2</p></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">Роль:</td>
+                    <td><input name="role" type="text"  style="margin: 10px" value="USER"/></td>
+                    <td><p>ТОЛЬКО USER</p></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">Доступ к админке</td>
+                    <td><input name="showAdmin" type="checkbox"/></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">Доступ к складу</td>
+                    <td><input name="showSklad" type="checkbox" checked/></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">Доступ к отчетам</td>
+                    <td><input name="showReport" type="checkbox" checked/></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">Доступ к магазинам</td>
+                    <td><input name="showStore" type="checkbox" checked/></td>
+                </tr>
+                <tr>
+                    <td><input name="_csrf" type="hidden" value="{{_csrf.token}}"/></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" class="btn btn-success " style="margin: 10px" value="Зарегистрировать"/></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
 </body>
 </html>
