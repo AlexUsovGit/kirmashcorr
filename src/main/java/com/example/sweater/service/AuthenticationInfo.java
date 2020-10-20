@@ -7,8 +7,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class AuthenticationInfo {
@@ -37,10 +39,23 @@ public class AuthenticationInfo {
     public Map<String, Object> getDepartmentList(Map<String, Object> model) {
 
         List<String> departmentList = userRepo.findAllDepartmentOrderByNameAsc();
-        departmentList.add(0," - Отобразить все - ");
+        Set<String> linkedHashSet = new LinkedHashSet<>();
+        for (String s : departmentList) {
+            if (s.equalsIgnoreCase("Пинск-1") || s.equalsIgnoreCase("Пинск-2") || s.equalsIgnoreCase("Барановичи-2")) {
+                linkedHashSet.add(s);
+            }
+        }
+        linkedHashSet.addAll(departmentList);
+        for (String sd : linkedHashSet) {
+            System.out.println(sd);
+        }
+        departmentList.clear();
+        departmentList.add(0, " - Отобразить все - ");
+        departmentList.addAll(linkedHashSet);
         model.put("departmentList", departmentList);
         return model;
     }
+
     public Map<String, Object> getDepartmentListV(Map<String, Object> model) {
 
         List<String> departmentList = userRepo.findAllDepartmentOrderByNameAsc();
