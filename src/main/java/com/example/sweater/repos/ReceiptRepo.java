@@ -2,9 +2,9 @@ package com.example.sweater.repos;
 
 
 import com.example.sweater.domain.Receipt;
+import com.example.sweater.dto.CommonInfoDTO;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-
 import java.util.List;
 
 public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
@@ -13,7 +13,7 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
 
     List<Receipt> findAllByReceiptNumberOrderBySaleDateDesc(String receiptNumber);
 
-      @Query(value = "Select * from product where UPPER(product_name) like %:filter% " +
+    @Query(value = "Select * from product where UPPER(product_name) like %:filter% " +
             " or UPPER(article) like %:filter%  or UPPER(barcode) like %:filter%" +
             " or UPPER(gender) like %:filter%" +
             " or UPPER(season) like %:filter%" +
@@ -23,14 +23,13 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
             " ORDER by Id DESC", nativeQuery = true)
     List<Receipt> findByFilterOrderByIdAsc(String filter);
 
-      Receipt findFirstById(Long id);
+    Receipt findFirstById(Long id);
 
     @Query(value = "SELECT * from  receipt  r " +
             "left JOIN receipt_number rn on  CAST(r.receipt_number as int8) = rn.id " +
             "where rn.author  = :author and cast(rn.date as date) =  Cast(:today as date) " +
             "order by r.sale_date Desc limit 500", nativeQuery = true)
     List<Receipt> findAllByAuthorOrderBySaleDateDesc(String author, String today);
-
 
 
     @Query(value = "SELECT * from  receipt  r " +
@@ -53,6 +52,13 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
             "order by r.sale_date Desc", nativeQuery = true)
     List<Receipt> findAllOrderBySaleDateDesc(String today);
 
+    @Query(value = "SELECT r.store_name as store, sum(cast(r.count as float8)) as counting, sum(cast(r.cost as float8)) as summa from  receipt  r  " +
+            "         left JOIN receipt_number rn on  CAST(r.receipt_number as int8) = rn.id  " +
+            "         where Cast(r.sale_date as date) =  Cast(:today as date)  " +
+            "         GROUP BY r.store_name " +
+            "         order by r.store_name asc", nativeQuery = true)
+    List<CommonInfoDTO> findAllReceiptBySaleDateDesc(String today);
+
     @Query(value = "SELECT * from  receipt  r " +
             "left JOIN receipt_number rn on  CAST(r.receipt_number as int8) = rn.id " +
             "where Cast(r.sale_date as date) =  Cast(:today as date) and store_name  = :department " +
@@ -66,7 +72,6 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
             " and store_name  like  %:department% " +
             " order by r.sale_date Desc", nativeQuery = true)
     List<Receipt> findAllBySaleDate2AndDepartmentOrderBySaleDateDesc(String dateFrom, String dateTo, String department);
-
 
 
 }
