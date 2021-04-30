@@ -128,8 +128,8 @@ public class NewLabel {
             e.printStackTrace();
         }
         // Font font = FontFactory.getFont(String.valueOf(Font.FontFamily.TIMES_ROMAN), "Cp1250", true);
-        Font font = new Font(/*Font.FontFamily.HELVETICA*/ bf, 4.1f, Font.NORMAL);
-        Font font10 = new Font(/*Font.FontFamily.HELVETICA*/ bf, 10.0f, Font.BOLD);
+        Font font = new Font(/*Font.FontFamily.HELVETICA*/ bf, 4.0f, Font.NORMAL);
+        Font font8 = new Font(/*Font.FontFamily.HELVETICA*/ bf, 8.0f, Font.BOLD);
         PdfPCell cell;
 
         float[] columnWidths = {1.9F, 5.1F};
@@ -209,10 +209,10 @@ public class NewLabel {
         cell.setFixedHeight(20);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Цена", font10));
+        cell = new PdfPCell(new Phrase("Цена", font8));
         cell.setFixedHeight(12);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase(product.getRetailPrice() + " BYN", font10));
+        cell = new PdfPCell(new Phrase(product.getRetailPrice() + " BYN", font8));
         table.addCell(cell);
 
         // cell = new PdfPCell(new Phrase("Штрихкод",font));
