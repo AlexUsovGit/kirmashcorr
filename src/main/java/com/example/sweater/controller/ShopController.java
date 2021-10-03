@@ -2,6 +2,7 @@ package com.example.sweater.controller;
 
 import com.example.sweater.domain.*;
 import com.example.sweater.repos.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Controller
 public class ShopController {
     @Autowired
@@ -237,6 +239,7 @@ public class ShopController {
     public String updateIntoReceipt(
             @RequestParam String myfilter, @RequestParam String id,
             @RequestParam String count, @RequestParam String discount,
+            @RequestParam String barcode,
             Map<String, Object> model) {
         int currentProductCounter = 0;
         double currentSummCost = 0.00;
@@ -266,7 +269,15 @@ public class ShopController {
         receiptRepo.save(receiptCurrent);
 
         List<Product> products = new ArrayList<>();
-        products.addAll(productRepo.findByBarcodeOrderByIdAsc(myfilter.toUpperCase()));
+        List<Product> temp = productRepo.findByBarcodeOrderByIdAsc(barcode.toUpperCase());
+        for (Product product : temp) {
+            System.out.println(product.getBarcode());
+            System.out.println(product.getBalance());
+
+            product.setBalance(String.valueOf( Integer.parseInt(product.getBalance()) - Integer.parseInt(count)));
+            productRepo.save(product);
+        }
+        products.addAll(productRepo.findByBarcodeOrderByIdAsc(barcode.toUpperCase()));
 
 
         Iterable<Receipt> receipts = receiptRepo.findAllByReceiptNumberOrderBySaleDateDesc(currentReceiptNumber);

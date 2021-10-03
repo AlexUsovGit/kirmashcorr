@@ -37,6 +37,8 @@ public class Product implements Serializable {
     private Integer isDistrib;
     private String boxNumber;
     private String author;
+    private String balance;
+
 
 
 
@@ -79,6 +81,46 @@ public class Product implements Serializable {
         this.isDistrib = isDistrib;
         this.boxNumber = boxNumber;
         this.author = author;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public Product(long id, String productName, String gender, String size, String trademark, String importer,
+                   String manufacturer, String article, String code, String composition, String season,
+                   String barcode, String note, String quantity, String dateArrive, String importPrice,
+                   String coefficient, String retailPrice, String countryOfEntry, String currency,
+                   String course, Integer isDistrib, String boxNumber, String author, String balance) {
+        this.id = id;
+        this.productName = productName;
+        this.gender = gender;
+        this.size = size;
+        this.trademark = trademark;
+        this.importer = importer;
+        this.manufacturer = manufacturer;
+        this.article = article;
+        this.code = code;
+        this.composition = composition;
+        this.season = season;
+        this.barcode = barcode;
+        this.note = note;
+        this.quantity = quantity;
+        this.dateArrive = dateArrive;
+        this.importPrice = importPrice;
+        this.coefficient = coefficient;
+        this.retailPrice = retailPrice;
+        this.countryOfEntry = countryOfEntry;
+        this.currency = currency;
+        this.course = course;
+        this.isDistrib = isDistrib;
+        this.boxNumber = boxNumber;
+        this.author = author;
+        this.balance = balance;
     }
 
     public String getStringDate(){

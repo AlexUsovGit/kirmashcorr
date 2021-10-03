@@ -184,6 +184,7 @@ public class ProductController {
                 course, isDistrib, boxNumber, author);
 
         product.setIsDistrib(0);
+        product.setBalance(quantity);
         productRepo.save(product);
 
 
