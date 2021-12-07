@@ -41,9 +41,10 @@ public class AuthenticationInfo {
         List<String> departmentList = userRepo.findAllDepartmentOrderByNameAsc();
         Set<String> linkedHashSet = new LinkedHashSet<>();
         for (String s : departmentList) {
-            if (s.equalsIgnoreCase("Пинск-1") || s.equalsIgnoreCase("Пинск-2") || s.equalsIgnoreCase("Барановичи-2")) {
-                linkedHashSet.add(s);
-            }
+//            if (s.equalsIgnoreCase("Пинск-1") || s.equalsIgnoreCase("Пинск-2") || s.equalsIgnoreCase("Барановичи-2")) {
+//                linkedHashSet.add(s);
+//            }
+            linkedHashSet.add(s);
         }
         linkedHashSet.addAll(departmentList);
         for (String sd : linkedHashSet) {
