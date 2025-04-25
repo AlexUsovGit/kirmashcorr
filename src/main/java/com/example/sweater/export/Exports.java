@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class Exports {
     private static final String FILE_NAME = "products.xlsx";
     private static final String FILE_NAME_RECEIPTS = "receipts.xlsx";
 
-    public void createXlsx(Iterable<Product> products) {
+    public static byte[] createXlsx(Iterable<Product> products, long count) {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
 
@@ -80,6 +81,8 @@ public class Exports {
             cell.setCellValue(header);
 
         }
+        Cell rowCell = row.createCell(headers.length + 1);
+        rowCell.setCellValue("Only " + count + " records");
 
         for (Product product : products) {
             row = sheet.createRow(rowNum++);
@@ -167,20 +170,21 @@ public class Exports {
         }*/
 
         try {
-            FileOutputStream outputStream = new FileOutputStream(FILE_NAME);
-            workbook.write(outputStream);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            workbook.write(bos);
             workbook.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Done");
+            return bos.toByteArray();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new byte[0];
         }
 
-        System.out.println("Done");
+
     }
 
 
-    public void createXlsxReceipts(Iterable<Receipt> receipts) {
+    public static void createXlsxReceipts(Iterable<Receipt> receipts) {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
 
@@ -297,7 +301,7 @@ public class Exports {
         System.out.println("Done");
     }
 
-    public byte[] getXLS() throws IOException {
+    public static byte[] getXLS() throws IOException {
 
         byte[] myByteFile = new byte[0];
         try {
@@ -309,7 +313,7 @@ public class Exports {
 
     }
 
-    public byte[] getXLSReceipts() throws IOException {
+    public static byte[] getXLSReceipts() throws IOException {
 
         byte[] myByteFile = new byte[0];
         try {

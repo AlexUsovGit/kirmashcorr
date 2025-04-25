@@ -32,11 +32,17 @@ public class ExportController {
 
     @PostMapping("/exportAllProducts")
     public String exportAllProducts(Map<String, Object> model) {
-        Iterable<Product> products = productRepo.findAllByOrderByIdDesc();
+        long count = productRepo.count();
+        Iterable<Product> products;
+        if (count < 10000) {
+            products = productRepo.findAllByOrderByIdDesc();
+        } else {
+            products = productRepo.findFirst10000ByOrderByIdDesc();
+        }
+
 
         model.put("products", products);
-        Exports exports = new Exports();
-        exports.createXlsx(products);
+        Exports.createXlsx(products, count);
 
         return "producttable";
     }
@@ -45,7 +51,7 @@ public class ExportController {
 
     public ResponseEntity<byte[]> getExcel(@RequestParam String myfilter) throws IOException {
         List<Product> products;
-
+        long count = productRepo.count();
 
         ResponseEntity<byte[]> response = null;
         if (myfilter != null && !myfilter.isEmpty()) {
@@ -56,13 +62,15 @@ public class ExportController {
 //            products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
 //            products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
         } else {
-            products = productRepo.findAllByOrderByIdDesc();
+
+            if (count < 10000) {
+                products = productRepo.findAllByOrderByIdDesc();
+            } else {
+                products = productRepo.findFirst10000ByOrderByIdDesc();
+            }
+
         }
-
-
-        Exports exports = new Exports();
-        exports.createXlsx(products);
-        byte[] contents = exports.getXLS();
+        byte[] contents = Exports.createXlsx(products, count);
 
 
         HttpHeaders headers = new HttpHeaders();
@@ -91,10 +99,8 @@ public class ExportController {
         if (dateFrom != null && dateTo != null && !dateFrom.isEmpty() && !dateTo.isEmpty()) {
             receipts = receiptRepo.findAllBySaleDate(dateFrom, dateTo);
         }
-
-        Exports exports = new Exports();
-        exports.createXlsxReceipts(receipts);
-        byte[] contents = exports.getXLSReceipts();
+        Exports.createXlsxReceipts(receipts);
+        byte[] contents = Exports.getXLSReceipts();
 
 
         HttpHeaders headers = new HttpHeaders();
