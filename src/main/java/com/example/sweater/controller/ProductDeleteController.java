@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -19,24 +19,23 @@ public class ProductDeleteController {
     private ProductRepo productRepo;
     @Autowired
     private UserRepo userRepo;
-    private int AllCounter;
-    private int PageCounter;
 
     @PostMapping("/productDelete")
     public String productDelete(String filter, Map<String, Object> model) {
-        Product  product = productRepo.findFirst1ByBarcode(filter);
-
+        Product product = productRepo.findFirst1ByBarcode(filter);
+        long recordsCount;
+        long recordsOnPageCount;
         productRepo.delete(product);
-        Iterable<Product> products = productRepo.findFirst50ByOrderByIdDesc();
+        List<Product> products = productRepo.findFirst50ByOrderByIdDesc();
         model.put("products", products);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findFirstByUsername(name);
-        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+        recordsCount = productRepo.count();
         //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        model.put("AllCounter", AllCounter);
-        model.put("PageCounter", PageCounter);
+        recordsOnPageCount = products.size();
+        model.put("recordsCount", recordsCount);
+        model.put("recordsOnPageCount", recordsOnPageCount);
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());

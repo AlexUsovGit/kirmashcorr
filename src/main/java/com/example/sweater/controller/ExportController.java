@@ -44,17 +44,17 @@ public class ExportController {
     @RequestMapping(value = "/getProducts", method = RequestMethod.POST)
 
     public ResponseEntity<byte[]> getExcel(@RequestParam String myfilter) throws IOException {
-        List<Product> products = new ArrayList<>();
+        List<Product> products;
 
 
         ResponseEntity<byte[]> response = null;
         if (myfilter != null && !myfilter.isEmpty()) {
-            products.addAll(productRepo.findByBarcode(myfilter));
-            products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByBarcode(myfilter));
+            products = productRepo.findByFilterOrderByIdAsc(myfilter);
+//            products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
         } else {
             products = productRepo.findAllByOrderByIdDesc();
         }

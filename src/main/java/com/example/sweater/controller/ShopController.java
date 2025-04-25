@@ -30,9 +30,6 @@ public class ShopController {
     private ReceiptRepo receiptRepo;
     @Autowired
     ReceiptNumberRepo receiptNumberRepo;
-
-    private int AllCounter;
-    private int PageCounter;
     private Product currentProduct;
 
 

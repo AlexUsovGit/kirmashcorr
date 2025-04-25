@@ -40,22 +40,21 @@ public class ProductController {
     private UserRepo userRepo;
     @Autowired
     private FilterRepo filterRepo;
-    private int AllCounter;
-    private int PageCounter;
 
 
     @GetMapping("/producttable")
     public String producttable(@RequestParam String author, Map<String, Object> model) {
-        Iterable<Product> products;
-        if(author.equals("admin")){
+        List<Product> products;
+        long recordsCount;
+        long recordsOnPageCount;
+        if (author.equals("admin")) {
             products = productRepo.findFirst50ByOrderByIdDesc();
-            AllCounter = productRepo.findAllByOrderByIdDesc().size();
-            PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        }else{
+            recordsCount = productRepo.count();
+        } else {
             products = productRepo.findFirst50ByAuthorOrderByIdDesc(author);
-            AllCounter = productRepo.findAllByAuthorOrderByIdDesc(author).size();
-            PageCounter = productRepo.findFirst50ByAuthorOrderByIdDesc(author).size();
+            recordsCount = productRepo.countProductByAuthor(author);
         }
+        recordsOnPageCount = products.size();
 
 
         model.put("products", products);
@@ -63,8 +62,8 @@ public class ProductController {
         String name = auth.getName();
         User currentUser = userRepo.findFirstByUsername(name);
 
-        model.put("AllCounter", AllCounter);
-        model.put("PageCounter", PageCounter);
+        model.put("recordsCount", recordsCount);
+        model.put("recordsOnPageCount", recordsOnPageCount);
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());
@@ -83,22 +82,21 @@ public class ProductController {
     @PostMapping("/producttableFilter")
     public String producttableFilter(@RequestParam String myfilter, @RequestParam String author, Map<String, Object> model) {
 
-        List<Product> products = new ArrayList<>();
-        if(myfilter.equals("")){
-            products.addAll(productRepo.findFirst50ByOrderByIdDesc());
-        }else{
-            products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter.toUpperCase()));
+        List<Product> products;
+        long recordsCount;
+        long recordsOnPageCount;
+        if (myfilter.isEmpty()) {
+            products = productRepo.findFirst50ByOrderByIdDesc();
+        } else {
+            products = productRepo.findByFilterOrderByIdAsc(myfilter.toUpperCase());
         }
 
-        if(author.equals("admin")){
-
-            AllCounter = productRepo.findAllByOrderByIdDesc().size();
-            PageCounter = products.size();
-        }else{
-            AllCounter = productRepo.findAllByAuthorOrderByIdDesc(author).size();
-            PageCounter = products.size();
+        if (author.equals("admin")) {
+            recordsCount = productRepo.count();
+        } else {
+            recordsCount = productRepo.countProductByAuthor(author);
         }
-
+        recordsOnPageCount = products.size();
 
         model.put("products", products);
 
@@ -124,14 +122,16 @@ public class ProductController {
             filterValue = filter1.getValue();
         }
         model.put("filterValue", filterValue);
-        model.put("AllCounter", AllCounter);
-        model.put("PageCounter", PageCounter);
+        model.put("recordsCount", recordsCount);
+        model.put("recordsOnPageCount", recordsOnPageCount);
         return "producttable";
     }
 
     @GetMapping("/productadd")
     public String productadd(Map<String, Object> model) {
-        Iterable<Product> products = productRepo.findFirst50ByOrderByIdDesc();
+        long recordsCount;
+        long recordsOnPageCount;
+        List<Product> products = productRepo.findFirst50ByOrderByIdDesc();
         model.put("products", products);
 
         Iterable<Composition> compositions = compositionRepo.findAll();
@@ -150,11 +150,11 @@ public class ProductController {
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
 
-        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+        recordsCount = productRepo.count();
         //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        model.put("AllCounter", AllCounter);
-        model.put("PageCounter", PageCounter);
+        recordsOnPageCount = products.size();
+        model.put("recordsCount", recordsCount);
+        model.put("recordsOnPageCount", recordsOnPageCount);
 
         //  Product product = productRepo.findFirst1ByOrderByIdDesc();
         Product product;
@@ -190,22 +190,21 @@ public class ProductController {
 
         product.setBarcode(getBarcodesText(product.getId()));
         productRepo.save(product);
-
+        long recordsCount;
+        long recordsOnPageCount;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findFirstByUsername(name);
-        Iterable<Product> products ;
+        List<Product> products;
 
-        if(currentUser.isShowAdmin()){
+        if (currentUser.isShowAdmin()) {
             products = productRepo.findFirst50ByOrderByIdDesc();
-            AllCounter = productRepo.findAllByOrderByIdDesc().size();
-            PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        }else{
+            recordsCount = productRepo.count();
+        } else {
             products = productRepo.findFirst50ByAuthorOrderByIdDesc(currentUser.getUsername());
-            AllCounter = productRepo.findAllByAuthorOrderByIdDesc(currentUser.getUsername()).size();
-            PageCounter = productRepo.findFirst50ByAuthorOrderByIdDesc(currentUser.getUsername()).size();
+            recordsCount = productRepo.countProductByAuthor(currentUser.getUsername());
         }
-
+        recordsOnPageCount = products.size();
 
         model.put("products", products);
 
@@ -224,11 +223,8 @@ public class ProductController {
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
 
-        AllCounter = productRepo.findAllByOrderByIdDesc().size();
-        //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        model.put("AllCounter", AllCounter);
-        model.put("PageCounter", PageCounter);
+        model.put("recordsCount", recordsCount);
+        model.put("recordsOnPageCount", recordsOnPageCount);
 
         String filterValue = "";
         model.put("filterValue", filterValue);
@@ -238,7 +234,9 @@ public class ProductController {
 
     @PostMapping("/searchdoc")
     public String filter(@RequestParam String filter, Map<String, Object> model) throws IOException {
-        Iterable<Product> products;
+        List<Product> products;
+        long recordsCount;
+        long recordsOnPageCount;
 
         if (filter != null && !filter.isEmpty()) {
             products = productRepo.findByBarcodeOrderByIdAsc(filter);
@@ -274,9 +272,10 @@ public class ProductController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User currentUser = userRepo.findFirstByUsername(name);
-
-        model.put("AllCounter", AllCounter);
-        model.put("PageCounter", PageCounter);
+        recordsCount = productRepo.count();
+        recordsOnPageCount = Math.max(products.size(), 50);
+        model.put("recordsCount", recordsCount);
+        model.put("recordsOnPageCount", recordsOnPageCount);
         model.put("currentUser", currentUser);
         model.put("currentRole", currentUser.getRoles().toString());
         model.put("currentUserName", currentUser.getUsername());
@@ -290,30 +289,26 @@ public class ProductController {
 
     @PostMapping("/addToDistrib")
     public String setDistrib(@RequestParam String id, @RequestParam String myfilter, Map<String, Object> model) throws IOException {
-        List<Product> products = new ArrayList<>();
-
+        List<Product> products;
 
         if (id != null && !id.isEmpty()) {
             Long longId = Long.parseLong(id);
-            products = productRepo.findByIdOrderByIdAsc(longId);
+            List<Product> productList = productRepo.findByIdOrderByIdAsc(longId);
 
-            for (Product product : products) {
+            for (Product product : productList) {
                 product.setIsDistrib(1);
-
-                productRepo.save(product);
-
             }
-            products.clear();
+            productRepo.saveAll(productList);
         }
 
 
         if (myfilter != null && !myfilter.isEmpty()) {
-            products.addAll(productRepo.findByBarcode(myfilter));
-            products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByBarcode(myfilter));
+            products = productRepo.findByFilterOrderByIdAsc(myfilter);
+//            products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
 
         } else {
             Filter filter = new Filter(myfilter);
@@ -353,27 +348,25 @@ public class ProductController {
     @PostMapping("/deleteFromDistrib")
     public String delDistrib(@RequestParam String id, @RequestParam String myfilter, Map<String, Object> model) throws IOException {
         List<Product> products = new ArrayList<>();
-
+        long recordsCount;
+        long recordsOnPageCount;
 
         if (id != null && !id.isEmpty()) {
             Long longId = Long.parseLong(id);
-            products = productRepo.findByIdOrderByIdAsc(longId);
+            List<Product> productList = productRepo.findByIdOrderByIdAsc(longId);
 
-            for (Product product : products) {
+            for (Product product : productList) {
                 product.setIsDistrib(0);
-
-                productRepo.save(product);
-
             }
-            products.clear();
+            productRepo.saveAll(productList);
         }
         if (myfilter != null && !myfilter.isEmpty()) {
-            products.addAll(productRepo.findByBarcode(myfilter));
-            products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByBarcode(myfilter));
+            products = (productRepo.findByFilterOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
 
         } else {
             Filter filter = new Filter(myfilter);
@@ -400,11 +393,11 @@ public class ProductController {
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
 
-        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+        recordsCount = productRepo.count();
+        recordsOnPageCount = Math.max(products.size(), 50);
         //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        model.put("AllCounter", AllCounter);
-        model.put("PageCounter", PageCounter);
+        model.put("recordsCount", recordsCount);
+        model.put("recordsOnPageCount", recordsOnPageCount);
 
         String filterValue = "";
 
@@ -420,17 +413,18 @@ public class ProductController {
     @PostMapping("/addAllToDistrib")
     public String setAllDistrib(@RequestParam String myfilter, Map<String, Object> model) {
 
-        List<Product> products = new ArrayList<>();
-
+        List<Product> products;
+        long recordsCount;
+        long recordsOnPageCount;
 
         if (myfilter != null && !myfilter.isEmpty()) {
-            products.addAll(productRepo.findByBarcode(myfilter));
-            products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByAuthorOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByBarcode(myfilter));
+            products = productRepo.findByFilterOrderByIdAsc(myfilter);
+//            products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByAuthorOrderByIdAsc(myfilter));
             for (Product product : products) {
                 product.setIsDistrib(1);
 
@@ -476,11 +470,11 @@ public class ProductController {
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
 
-        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+        recordsCount = productRepo.count();
         //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        model.put("AllCounter", AllCounter);
-        model.put("PageCounter", PageCounter);
+        recordsOnPageCount = Math.max(products.size(), 50);
+        model.put("recordsCount", recordsCount);
+        model.put("recordsOnPageCount", recordsOnPageCount);
 
 
         return "producttable";
@@ -490,14 +484,16 @@ public class ProductController {
     public String delAllDistrib(@RequestParam String myfilter, Map<String, Object> model) throws IOException {
         List<Product> products = new ArrayList<>();
 
+        long recordsCount;
+        long recordsOnPageCount;
 
         if (myfilter != null && !myfilter.isEmpty()) {
-            products.addAll(productRepo.findByBarcode(myfilter));
-            products.addAll(productRepo.findByFilterOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
-            products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByBarcode(myfilter));
+            products = (productRepo.findByFilterOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByGenderOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByTrademarkOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findBySeasonOrderByIdAsc(myfilter));
+//            products.addAll(productRepo.findByBoxNumberOrderByIdAsc(myfilter));
 
             for (Product product : products) {
                 product.setIsDistrib(0);
@@ -543,11 +539,12 @@ public class ProductController {
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
 
-        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+        recordsCount = productRepo.count();
         //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        model.put("AllCounter", AllCounter);
-        model.put("PageCounter", PageCounter);
+
+        recordsOnPageCount = Math.max(products.size(), 50);
+        model.put("recordsCount", recordsCount);
+        model.put("recordsOnPageCount", recordsOnPageCount);
 
 
         return "producttable";
@@ -686,11 +683,10 @@ public class ProductController {
         model.put("showReport", currentUser.isShowReport());
         model.put("showStore", currentUser.isShowStore());
 
-        AllCounter = productRepo.findAllByOrderByIdDesc().size();
+
         //   FiltredCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        PageCounter = productRepo.findFirst50ByOrderByIdDesc().size();
-        model.put("AllCounter", AllCounter);
-        model.put("PageCounter", PageCounter);
+
+
 
         String filterValue = "";
         model.put("filterValue", filterValue);*/
