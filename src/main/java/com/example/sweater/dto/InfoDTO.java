@@ -1,14 +1,14 @@
 package com.example.sweater.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class InfoDTO {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String orderNumber;
     private String outletName;
@@ -18,9 +18,9 @@ public class InfoDTO {
     private String sex;
     private double costBYN;
     private String startDate;
-    private  String storeName;
-    private  double countOnStore;
-    private  double currencyRate;
+    private String storeName;
+    private double countOnStore;
+    private double currencyRate;
 
     public InfoDTO() {
     }

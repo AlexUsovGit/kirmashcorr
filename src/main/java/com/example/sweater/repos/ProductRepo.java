@@ -2,8 +2,6 @@ package com.example.sweater.repos;
 
 
 import com.example.sweater.domain.Product;
-import net.bytebuddy.TypeCache;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -18,21 +16,28 @@ public interface ProductRepo extends CrudRepository<Product, Integer> {
 //    List<Product> findAllByAuthorOrderByIdDesc(String author);
 
     long countProductByAuthor(String author);
+
     List<Product> findFirst50ByOrderByIdDesc();
+
     List<Product> findFirst10000ByOrderByIdDesc();
+
     List<Product> findFirst50ByAuthorOrderByIdDesc(String author);
-//    List<Product> findByBarcode(String barcode);
+
+    //    List<Product> findByBarcode(String barcode);
 //    Sort sort  = new Sort(Sort.Direction.ASC, "Name");
 //
 //    List<Product> findAllByOrderByProductNameAsc();
 //    List<Product> findAllByOrderByProductNameDesc();
 //    List<Product> findAllByOrderByGenderAsc();
-    Product findFirst1ByOrderByIdDesc ();
+    Product findFirst1ByOrderByIdDesc();
+
     Product findFirst1ByBarcode(String barcode);
-    Product findFirst1ByAuthorOrderByIdDesc (String author);
+
+    Product findFirst1ByAuthorOrderByIdDesc(String author);
 
     List<Product> findByBarcodeOrderByIdAsc(String filter);
-//    List<Product> findByAuthorOrderByIdAsc(String filter);
+
+    //    List<Product> findByAuthorOrderByIdAsc(String filter);
     @Query(value = "Select * from product where UPPER(product_name) like %:filter% " +
             " or UPPER(article) like %:filter%  or UPPER(barcode) like %:filter%" +
             " or UPPER(gender) like %:filter%" +
@@ -48,9 +53,9 @@ public interface ProductRepo extends CrudRepository<Product, Integer> {
 //    List<Product> findByBoxNumberOrderByIdAsc(String filter);
 
     List<Product> findByIdOrderByIdAsc(Long id);
-//    List<Product> findById(Long id);
-    List<Product> findByisDistrib(Integer id);
 
+    //    List<Product> findById(Long id);
+    List<Product> findByisDistrib(Integer id);
 
 
 }

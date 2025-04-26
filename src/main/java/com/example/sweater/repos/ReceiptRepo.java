@@ -25,10 +25,28 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
 
     Receipt findFirstById(Long id);
 
-    @Query(value = "SELECT * from  receipt  r " +
-            "left JOIN receipt_number rn on  CAST(r.receipt_number as int8) = rn.id " +
-            "where rn.author  = :author and cast(rn.date as date) =  Cast(:today as date) " +
-            "order by r.sale_date Desc limit 500", nativeQuery = true)
+    @Query(value = "SELECT " +
+            "    r.id," +
+            "    r.product_name," +
+            "    r.receipt_number," +
+            "    r.barcode," +
+            "    r.retail_price," +
+            "    r.sale_date," +
+            "    r.count," +
+            "    r.discount," +
+            "    r.cost," +
+            "    r.status," +
+            "    r.gender," +
+            "    r.store_name," +
+            "    r.author," +
+            "    r.date_arrive," +
+            "    r.box_number" +
+            " FROM receipt r " +
+            " LEFT JOIN receipt_number rn ON CAST(r.receipt_number AS int8) = rn.id " +
+            " WHERE rn.author = :author " +
+            "  AND CAST(rn.date AS date) = CAST(:today AS date) " +
+            " ORDER BY r.sale_date DESC " +
+            " LIMIT 500", nativeQuery = true)
     List<Receipt> findAllByAuthorOrderBySaleDateDesc(String author, String today);
 
 
@@ -40,10 +58,26 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
     List<Receipt> findAllByAuthor2OrderBySaleDateDesc(String author, String dateFrom, String dateTo);
 //select * from receipt where sale_date >= to_date('10.07.2020', 'dd.MM.yyyy') and sale_date <= to_date('11.07.2020', 'dd.MM.yyyy');
 
-    @Query(value = "SELECT * from  receipt  r " +
-            "where cast(r.sale_date as date) >=  Cast(:dateFrom as date) " +
-            "and cast(r.sale_date as date) <=  Cast(:dateTo as date) " +
-            "order by r.sale_date Desc", nativeQuery = true)
+    @Query(value = "SELECT " +
+            "    r.id," +
+            "    r.product_name," +
+            "    r.receipt_number," +
+            "    r.barcode," +
+            "    r.retail_price," +
+            "    r.sale_date," +
+            "    r.count," +
+            "    r.discount," +
+            "    r.cost," +
+            "    r.status," +
+            "    r.gender," +
+            "    r.store_name," +
+            "    r.author," +
+            "    r.date_arrive," +
+            "    r.box_number" +
+            " from  receipt  r " +
+            " where cast(r.sale_date as date) >=  Cast(:dateFrom as date) " +
+            " and cast(r.sale_date as date) <=  Cast(:dateTo as date) " +
+            " order by r.sale_date Desc", nativeQuery = true)
     List<Receipt> findAllBySaleDate(String dateFrom, String dateTo);
 
     @Query(value = "SELECT * from  receipt  r " +
@@ -66,9 +100,25 @@ public interface ReceiptRepo extends CrudRepository<Receipt, Long> {
     List<Receipt> findAllBySaleDateAndDepartmentOrderBySaleDateDesc(String today, String department);
 
 
-    @Query(value = "SELECT * from  receipt  r " +
-            "left JOIN receipt_number rn on  CAST(r.receipt_number as int8) = rn.id " +
-            "where Cast(r.sale_date as date) >= Cast(:dateFrom as date) and Cast(r.sale_date as date) <=  Cast(:dateTo as date)" +
+    @Query(value = "SELECT " +
+            "    r.id," +
+            "    r.product_name," +
+            "    r.receipt_number," +
+            "    r.barcode," +
+            "    r.retail_price," +
+            "    r.sale_date," +
+            "    r.count," +
+            "    r.discount," +
+            "    r.cost," +
+            "    r.status," +
+            "    r.gender," +
+            "    r.store_name," +
+            "    r.author," +
+            "    r.date_arrive," +
+            "    r.box_number " +
+            " from  receipt  r " +
+            " left JOIN receipt_number rn on  CAST(r.receipt_number as int8) = rn.id " +
+            " where Cast(r.sale_date as date) >= Cast(:dateFrom as date) and Cast(r.sale_date as date) <=  Cast(:dateTo as date)" +
             " and store_name  like  %:department% " +
             " order by r.sale_date Desc", nativeQuery = true)
     List<Receipt> findAllBySaleDate2AndDepartmentOrderBySaleDateDesc(String dateFrom, String dateTo, String department);

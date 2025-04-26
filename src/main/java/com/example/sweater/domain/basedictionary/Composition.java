@@ -1,15 +1,14 @@
 package com.example.sweater.domain.basedictionary;
 
-import org.springframework.security.access.prepost.PreAuthorize;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 
 public class Composition {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String label;

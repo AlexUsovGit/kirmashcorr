@@ -1,17 +1,19 @@
 package com.example.sweater.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 public class Product implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String productName;
@@ -29,17 +31,15 @@ public class Product implements Serializable {
     private String quantity;
     private String dateArrive;
     private String importPrice;
-    private String coefficient ;
+    private String coefficient;
     private String retailPrice;
-    private String countryOfEntry ;
+    private String countryOfEntry;
     private String currency;
     private String course;
     private Integer isDistrib;
     private String boxNumber;
     private String author;
     private String balance;
-
-
 
 
     public Product() {
@@ -123,13 +123,13 @@ public class Product implements Serializable {
         this.balance = balance;
     }
 
-    public String getStringDate(){
+    public String getStringDate() {
         Date date1;
         String dateStr;
         try {
-            date1 =new SimpleDateFormat("yyyy-MM-dd").parse(dateArrive);
-            dateStr =  theMonth(Integer.parseInt(new SimpleDateFormat("M").format(date1))-1) +
-            " " + new SimpleDateFormat("yyyy").format(date1)
+            date1 = new SimpleDateFormat("yyyy-MM-dd").parse(dateArrive);
+            dateStr = theMonth(Integer.parseInt(new SimpleDateFormat("M").format(date1)) - 1) +
+                    " " + new SimpleDateFormat("yyyy").format(date1)
             ;
         } catch (ParseException e) {
             e.printStackTrace();
@@ -138,25 +138,29 @@ public class Product implements Serializable {
 
         return dateStr;
     }
-    public static String theMonth(int month){
+
+    public static String theMonth(int month) {
         String[] monthNames = {"январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август",
                 "сентябрь", "октябрь", "ноябрь", "декабрь"};
         return monthNames[month];
     }
+
     public double getDoubleQuantity() {
-        if(quantity == null || quantity.isEmpty()){
+        if (quantity == null || quantity.isEmpty()) {
             return 0;
         }
         return Double.parseDouble(quantity);
     }
+
     public double getDoubleImportPrice() {
-        if(importPrice == null || importPrice.isEmpty()){
+        if (importPrice == null || importPrice.isEmpty()) {
             return 0;
         }
         return Double.parseDouble(importPrice);
     }
+
     public double getDoubleRetailPrice() {
-        if(retailPrice == null || retailPrice.isEmpty()){
+        if (retailPrice == null || retailPrice.isEmpty()) {
             return 0;
         }
         return Double.parseDouble(retailPrice);
@@ -347,7 +351,6 @@ public class Product implements Serializable {
     public void setIsDistrib(Integer isDistrib) {
         this.isDistrib = isDistrib;
     }
-
 
 
 }

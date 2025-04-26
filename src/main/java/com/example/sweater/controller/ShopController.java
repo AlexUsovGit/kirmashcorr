@@ -165,9 +165,7 @@ public class ShopController {
     }
 
     @PostMapping("/deleteFromReceipt")
-    public String deleteFromReceipt(
-            @RequestParam String myfilter, @RequestParam String id,
-            Map<String, Object> model) {
+    public String deleteFromReceipt(@RequestParam String myfilter, @RequestParam String id, Map<String, Object> model) {
         int currentProductCounter = 0;
         double currentSummCost = 0.00;
         Date today = new Date();
@@ -182,7 +180,7 @@ public class ShopController {
         ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByAuthorOrderByIdDesc(currentUser.getUsername());
         String currentReceiptNumber = String.valueOf(receiptNumber.getId());
         Integer productCounter = 0;
-        Long longId = new Long(id);
+        Long longId = Long.parseLong(id);
         receiptRepo.deleteById(longId);
         List<Product> products = new ArrayList<>();
         products.addAll(productRepo.findByBarcodeOrderByIdAsc(myfilter.toUpperCase()));
@@ -252,16 +250,16 @@ public class ShopController {
         ReceiptNumber receiptNumber = receiptNumberRepo.findFirst1ByAuthorOrderByIdDesc(currentUser.getUsername());
         String currentReceiptNumber = String.valueOf(receiptNumber.getId());
         Integer productCounter = 0;
-        Long longId = new Long(id);
+        Long longId =  Long.parseLong(id);
         Receipt receiptCurrent = receiptRepo.findFirstById(longId);
         receiptCurrent.setCount(count);
         receiptCurrent.setDiscount(discount);
         receiptCurrent.setAuthor(currentUser.getUsername());
         receiptCurrent.setStoreName(currentUser.getStoreName());
         double newCost = 0.00;
-        newCost = Double.parseDouble(receiptCurrent.getRetailPrice()) * (1 - (double)Integer.parseInt(discount)/100)
-                * Integer.parseInt(count)*100.0;
-        double roundNewCost = Math.round(newCost)/100.0;
+        newCost = Double.parseDouble(receiptCurrent.getRetailPrice()) * (1 - (double) Integer.parseInt(discount) / 100)
+                * Integer.parseInt(count) * 100.0;
+        double roundNewCost = Math.round(newCost) / 100.0;
         receiptCurrent.setCost(String.valueOf(roundNewCost));
         receiptRepo.save(receiptCurrent);
 
@@ -271,7 +269,7 @@ public class ShopController {
             System.out.println(product.getBarcode());
             System.out.println(product.getBalance());
 
-            product.setBalance(String.valueOf( Integer.parseInt(product.getBalance()) - Integer.parseInt(count)));
+            product.setBalance(String.valueOf(Integer.parseInt(product.getBalance()) - Integer.parseInt(count)));
             productRepo.save(product);
         }
         products.addAll(productRepo.findByBarcodeOrderByIdAsc(barcode.toUpperCase()));

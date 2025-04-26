@@ -1,6 +1,7 @@
 package com.example.sweater.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.util.Set;
 
 @Entity
@@ -15,12 +16,10 @@ public class User {
     private String storeName;
 
     private boolean active;
-    private  boolean showSklad;
-    private  boolean showReport;
-    private  boolean showStore;
-    private  boolean showAdmin;
-
-
+    private boolean showSklad;
+    private boolean showReport;
+    private boolean showStore;
+    private boolean showAdmin;
 
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
