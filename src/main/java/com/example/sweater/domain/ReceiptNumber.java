@@ -1,17 +1,16 @@
 package com.example.sweater.domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
 @Entity
 public class ReceiptNumber {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "receipt_numb_seq")
+    @SequenceGenerator(name = "receipt_numb_seq", sequenceName = "hibernate_sequence", allocationSize = 1)
+
     private long id;
 
     private String author;

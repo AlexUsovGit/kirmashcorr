@@ -9,7 +9,8 @@ import java.util.Date;
 @Table(name = "distr_doc")
 public class DistributionDoc  implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "distr_seq")
+    @SequenceGenerator(name = "distr_seq", sequenceName = "hibernate_sequence", allocationSize = 1)
     private long id;
 
     private Integer docNumber;

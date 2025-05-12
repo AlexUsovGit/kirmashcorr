@@ -1,14 +1,13 @@
 package com.example.sweater.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class DocumentPdf {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pdf_seq")
+    @SequenceGenerator(name = "pdf_seq", sequenceName = "hibernate_sequence", allocationSize = 1)
+
     private long id;
 
     private String productName;
