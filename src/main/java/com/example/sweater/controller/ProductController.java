@@ -185,11 +185,11 @@ public class ProductController {
 
         product.setIsDistrib(0);
         product.setBalance(quantity);
-        productRepo.save(product);
+        Product saved = productRepo.save(product);
 
 
-        product.setBarcode(getBarcodesText(product.getId()));
-        productRepo.save(product);
+        saved.setBarcode(getBarcodesText(saved.getId()));
+        productRepo.save(saved);
         long recordsCount;
         long recordsOnPageCount;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -648,10 +648,10 @@ public class ProductController {
                             "box-" + i,
                             authorS);
 
-                    productRepo.save(product);
+                    Product saved = productRepo.save(product);
 
-                    product.setBarcode(getBarcodesText(product.getId()));
-                    productRepo.save(product);
+                    saved.setBarcode(getBarcodesText(saved.getId()));
+                    productRepo.save(saved);
 
 
                 }
